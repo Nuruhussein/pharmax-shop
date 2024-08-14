@@ -29,12 +29,22 @@ class MedicineController extends Controller
             'supplier_id' => 'required|exists:suppliers,id',
             'quantity' => 'required|integer',
             'expiry_date' => 'required|date',
-        ]);
+            'price' => 'required|numeric',
+        'image' => 'nullable|image|mimes:jpeg,png,jpg,gif|max:2048', // Validate image
+    ]);
 
-        Medicine::create($request->all());
-        return redirect()->route('dashboard')->with('success', 'Medicine added successfully.');
+    $medicine = new Medicine($request->all());
+
+    // Handle image upload
+    if ($request->hasFile('image')) {
+        $imagePath = $request->file('image')->store('images', 'public');
+        $medicine->image = $imagePath;
     }
 
+    $medicine->save();
+
+    return redirect()->route('dashboard')->with('success', 'Medicine added successfully.');
+}
     public function edit(Medicine $medicine)
     {
         $categories = Category::all();
@@ -52,9 +62,24 @@ class MedicineController extends Controller
             'supplier_id' => 'required|exists:suppliers,id',
             'quantity' => 'required|integer',
             'expiry_date' => 'required|date',
+       'price' => 'nullable|numeric|min:0',
+            'image' => 'nullable|image|mimes:jpeg,png,jpg,gif|max:2048',
         ]);
 
-        $medicine->update($request->all());
+        $data = $request->all();
+
+        if ($request->hasFile('image')) {
+            // Delete old image if exists
+            if ($medicine->image && Storage::exists('public/' . $medicine->image)) {
+                Storage::delete('public/' . $medicine->image);
+            }
+            
+            $imagePath = $request->file('image')->store('medicines', 'public');
+            $data['image'] = $imagePath;
+        }
+
+        $medicine->update($data);
+
         return redirect()->route('dashboard')->with('success', 'Medicine updated successfully.');
     }
 
@@ -68,7 +93,7 @@ class MedicineController extends Controller
        $medicines = $medicine::with(['category', 'supplier'])->get();
         return view('medicines.show', compact('medicine'));
     }
-    
+
       public function search(Request $request)
     {
         $query = $request->input('query');

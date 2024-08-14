@@ -1,5 +1,3 @@
-<!-- resources/views/medicines/index.blade.php -->
-
 <div class="max-w-screen-xl mx-auto px-4 py-16 md:px-8">
     <div class="items-start justify-between md:flex">
         <div class="max-w-lg">
@@ -11,17 +9,30 @@
             </p>
         </div>
         <div class="mt-3 md:mt-0">
-            <form action="{{ route('medicines.index') }}" method="GET">
-                <div class="relative">
+            <form action="{{ route('dashboard') }}" method="GET" class="flex space-x-4">
+                <!-- Search Input -->
+                <div class="flex">
                     <input type="text" name="query" placeholder="Search for medicine..."
                            class="px-4 py-2 rounded-lg border-gray-300 focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm">
-                    <button type="submit" class="absolute inset-y-0 right-0 flex items-center px-3">
+                    <button type="submit" class="flex items-center px-1">
                         <i class="fas fa-search text-gray-500"></i>
                     </button>
+                </div>
+                <!-- Category Dropdown with Auto-Submit -->
+                <div>
+                    <select name="category" class="px-4 py-2 rounded-lg border-gray-300 focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm" onchange="this.form.submit()">
+                        <option value="">Filter by Category</option>
+                        @foreach($categories as $category)
+                            <option value="{{ $category->id }}" {{ request('category') == $category->id ? 'selected' : '' }}>
+                                {{ $category->name }}
+                            </option>
+                        @endforeach
+                    </select>
                 </div>
             </form>
         </div>
     </div>
+
     <div class="mt-12 shadow-sm border rounded-lg overflow-x-auto">
         <table class="w-full table-auto text-sm text-left">
             <thead class="bg-gray-50 text-gray-600 font-medium border-b">
@@ -31,44 +42,26 @@
                     <th class="py-3 px-6">Supplier</th>
                     <th class="py-3 px-6">Quantity</th>
                     <th class="py-3 px-6">Expiry Date</th>
-                    {{-- <th class="py-3 px-6">Price</th>
-                    <th class="py-3 px-6">Image</th> --}}
+                    <th class="py-3 px-6">Price</th>
                     <th class="py-3 px-6"></th>
                 </tr>
             </thead>
             <tbody class="text-gray-600 divide-y">
                 @foreach ($medicines as $medicine)
                     <tr>
-                        <td class="px-6 py-4 whitespace-nowrap">{{ $medicine->name }}</td>
-                        <td class="px-6 py-4 whitespace-nowrap">{{ $medicine->category->name }}</td>
-                        <td class="px-6 py-4 whitespace-nowrap">{{ $medicine->supplier->name }}</td>
+                        <td class="px-6 py-4 whitespace-nowrap flex">
+                            <img src="{{ asset('storage/' . $medicine->image) }}" alt="{{ $medicine->name }}" class="w-8 h-8 rounded-full mr-3 object-cover">
+                            {{ $medicine->name }}
+                        </td>
+                        <td class="px-6 py-4 whitespace-nowrap">{{ $medicine->category->name ?? 'N/A' }}</td>
+                        <td class="px-6 py-4 whitespace-nowrap">{{ $medicine->supplier->name ?? 'N/A' }}</td>
                         <td class="px-6 py-4 whitespace-nowrap">{{ $medicine->quantity }}</td>
                         <td class="px-6 py-4 whitespace-nowrap">{{ $medicine->expiry_date }}</td>
-                        {{-- <td class="px-6 py-4 whitespace-nowrap">
-                            @if($medicine->price)
-                                ${{ number_format($medicine->price, 2) }}
-                            @else
-                                
-                                Not available
-                            @endif
-                        </td>
-                        <td class="px-6 py-2 whitespace-nowrap">
-                            @if($medicine->image)
-                                <img src="{{ asset('storage/' . $medicine->image) }}" alt="{{ $medicine->name }}" class="w-16 h-10 object-cover">
-                            @else
-                                <img src="{{ asset('images/default-image.png') }}" alt="Default Image" class="w-16 h-10 object-cover">
-                            @endif
-                        </td> --}}
+                        <td class="px-6 py-4 whitespace-nowrap">${{ number_format($medicine->price, 2) }}</td>
                         <td class="text-right px-6 whitespace-nowrap">
-                            <a
-                                href="{{ route('medicines.show', $medicine->id) }}"
-                                class="py-2 px-3 font-medium text-indigo-600 hover:text-indigo-500 duration-150 hover:bg-gray-50 rounded-lg"
-                            >View</a>
+                            <a href="{{ route('medicines.show', $medicine->id) }}" class="py-2 px-3 font-medium text-indigo-600 hover:text-indigo-500 duration-150 hover:bg-gray-50 rounded-lg">View</a>
                             @if(Auth::user()->role == 'admin')
-                                <a
-                                    href="{{ route('medicines.edit', $medicine->id) }}"
-                                    class="py-2 px-3 font-medium text-indigo-600 hover:text-indigo-500 duration-150 hover:bg-gray-50 rounded-lg"
-                                >Edit</a>
+                                <a href="{{ route('medicines.edit', $medicine->id) }}" class="py-2 px-3 font-medium text-indigo-600 hover:text-indigo-500 duration-150 hover:bg-gray-50 rounded-lg">Edit</a>
                                 <form action="{{ route('medicines.destroy', $medicine->id) }}" method="POST" style="display:inline;">
                                     @csrf
                                     @method('DELETE')
