@@ -36,17 +36,17 @@
             @if(Auth::user()->role == 'admin')
                 <!-- Medicines Dropdown -->
                 <li class="relative">
-                    <button class="flex items-center justify-between w-full py-3 px-6 text-lg text-gray-300 hover:text-white hover:bg-gray-700 rounded-lg transition duration-150 ease-in-out focus:outline-none focus:bg-gray-700"
+                    <button class="flex items-center justify-between w-full py-3 px-6 text-lg text-gray-300 hover:text-white  rounded-lg transition duration-150 ease-in-out focus:outline-none focus:bg-gray-900"
                             onclick="toggleDropdown()">
                         <span class="flex items-center">
                             <i class="fas fa-pills mr-3"></i> Medicines
                         </span>
                         <i id="dropdownArrow" class="fas fa-chevron-right transition-transform duration-300 ease-in-out"></i>
                     </button>
-                    <ul id="dropdownMenu" class="hidden mt-2 space-y-2  rounded-lg shadow-md origin-top transform transition-all duration-300 ease-in-out">
+                    <ul id="dropdownMenu" class="hidden mt-2 space-y-2  rounded-lg shadow-md origin-top transform ml-5 transition-all duration-300 ease-in-out">
                         <li>
                             <a href="{{ route('medicines.index') }}" 
-                               class="block py-3 px-6 text-lg text-gray-300 hover:text-white hover:bg-gray-700 rounded-lg transition duration-150 ease-in-out">
+                               class="block py-3 px-6 text-lg text-gray-300 hover:text-white focus:bg-gray-700 hover:bg-gray-700 rounded-lg transition duration-150 ease-in-out">
                                 Show Medicines
                             </a>
                         </li>
@@ -90,6 +90,18 @@
 </div>
 
 <script>
+    // Initialize dropdown state based on localStorage
+    document.addEventListener('DOMContentLoaded', function() {
+        const dropdownMenu = document.getElementById('dropdownMenu');
+        const dropdownArrow = document.getElementById('dropdownArrow');
+        const dropdownState = localStorage.getItem('dropdownState');
+
+        if (dropdownState === 'open') {
+            dropdownMenu.classList.remove('hidden');
+            dropdownArrow.classList.add('rotate-90');
+        }
+    });
+
     function toggleDropdown() {
         const dropdownMenu = document.getElementById('dropdownMenu');
         const dropdownArrow = document.getElementById('dropdownArrow');
@@ -99,5 +111,12 @@
 
         // Animate arrow rotation
         dropdownArrow.classList.toggle('rotate-90');
+
+        // Save the state in localStorage
+        if (dropdownMenu.classList.contains('hidden')) {
+            localStorage.setItem('dropdownState', 'closed');
+        } else {
+            localStorage.setItem('dropdownState', 'open');
+        }
     }
 </script>
