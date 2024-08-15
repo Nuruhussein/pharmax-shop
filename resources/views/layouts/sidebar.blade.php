@@ -34,16 +34,34 @@
                 </a>
             </li>
             @if(Auth::user()->role == 'admin')
+                <!-- Medicines Dropdown -->
+                <li class="relative">
+                    <button class="flex items-center justify-between w-full py-3 px-6 text-lg text-gray-300 hover:text-white hover:bg-gray-700 rounded-lg transition duration-150 ease-in-out focus:outline-none focus:bg-gray-700"
+                            onclick="toggleDropdown()">
+                        <span class="flex items-center">
+                            <i class="fas fa-pills mr-3"></i> Medicines
+                        </span>
+                        <i id="dropdownArrow" class="fas fa-chevron-right transition-transform duration-300 ease-in-out"></i>
+                    </button>
+                    <ul id="dropdownMenu" class="hidden mt-2 space-y-2  rounded-lg shadow-md origin-top transform transition-all duration-300 ease-in-out">
+                        <li>
+                            <a href="{{ route('medicines.index') }}" 
+                               class="block py-3 px-6 text-lg text-gray-300 hover:text-white hover:bg-gray-700 rounded-lg transition duration-150 ease-in-out">
+                                Show Medicines
+                            </a>
+                        </li>
+                        <li>
+                            <a href="{{ route('medicines.create') }}" 
+                               class="block py-3 px-6 text-lg text-gray-300 hover:text-white hover:bg-gray-700 rounded-lg transition duration-150 ease-in-out">
+                                Add Medicine
+                            </a>
+                        </li>
+                    </ul>
+                </li>
                 <li>
                     <a href="{{ route('staff.index') }}" 
                        class="flex items-center py-3 px-6 text-lg {{ Request::routeIs('staff.index') ? 'text-white bg-gray-700' : 'text-gray-300' }} hover:text-white hover:bg-gray-700 rounded-lg transition duration-150 ease-in-out">
                         <i class="fas fa-users mr-3"></i> Manage Staff
-                    </a>
-                </li>
-                <li>
-                    <a href="{{ route('medicines.create') }}" 
-                       class="flex items-center py-3 px-6 text-lg {{ Request::routeIs('medicines.create') ? 'text-white bg-gray-700' : 'text-gray-300' }} hover:text-white hover:bg-gray-700 rounded-lg transition duration-150 ease-in-out">
-                        <i class="fas fa-pills mr-3"></i> Add Medicine
                     </a>
                 </li>
             @endif
@@ -70,3 +88,16 @@
         </ul>
     </div>
 </div>
+
+<script>
+    function toggleDropdown() {
+        const dropdownMenu = document.getElementById('dropdownMenu');
+        const dropdownArrow = document.getElementById('dropdownArrow');
+
+        // Toggle dropdown visibility
+        dropdownMenu.classList.toggle('hidden');
+
+        // Animate arrow rotation
+        dropdownArrow.classList.toggle('rotate-90');
+    }
+</script>

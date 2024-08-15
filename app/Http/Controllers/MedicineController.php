@@ -10,16 +10,35 @@ use Illuminate\Http\Request;
 class MedicineController extends Controller
 {
    
-    public function index()
+    public function index(Request $request)
     {
-        $medicines = Medicine::with(['category', 'supplier'])->get();
-        return view('medicines.index', compact('medicines'));
+        // Fetch all categories to populate the dropdown
+        $categories = Category::all();
+
+        // Initialize query for medicines
+        $medicinesQuery = Medicine::with(['category', 'supplier']);
+
+        // Check if there's a search query
+        if ($request->input('query')) {
+            $query = $request->input('query');
+            $medicinesQuery->where('name', 'LIKE', "%{$query}%");
+        }
+
+        // Check if there's a category filter
+        if ($request->input('category')) {
+            $category = $request->input('category');
+            $medicinesQuery->where('category_id',$category);
+        }
+
+        // Get the filtered or unfiltered list of medicines
+        $medicines = $medicinesQuery->paginate(6);
+        return view('medicines.index', compact('medicines','categories'));
     }
   public function create()
     {
         $categories = Category::all();
         $suppliers = Supplier::all();
-        return view('medicines.create', compact('categories', 'suppliers'));
+        return view('medicines.create', compact('categories', 'suppliers',));
     }
      public function store(Request $request)
     {
@@ -99,7 +118,7 @@ class MedicineController extends Controller
         $query = $request->input('query');
 
         // Search for medicines that match the query in the name field
-        $medicines = Medicine::where('name', 'LIKE', "%{$query}%")->get();
+        $medicines = Medicine::where('name', 'LIKE', "%{$query}%") ->paginate(10);
 
         // Return the search results to the index view
         return view('medicines.index', compact('medicines'));

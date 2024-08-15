@@ -17,6 +17,8 @@ class DashboardController extends Controller
 
         // Get count of medicines expiring soon
         $expiringSoon = Medicine::where('expiry_date', '<', Carbon::now()->addDays(30))->count();
+       
+      
 
         // Fetch all categories to populate the dropdown
         $categories = Category::all();
@@ -37,9 +39,13 @@ class DashboardController extends Controller
         }
 
         // Get the filtered or unfiltered list of medicines
-        $medicines = $medicinesQuery->get();
+        $medicines = $medicinesQuery->paginate(3);
+  // Calculate total price based on quantity and price for each medicine
+    $totalprice = $medicines->reduce(function ($carry, $medicine) {
+        return $carry + ($medicine->price * $medicine->quantity);
+    }, 0);
 
         // Pass the data to the view
-        return view('dashboard', compact('totalMedicines', 'totalSuppliers', 'expiringSoon', 'medicines', 'categories'));
+        return view('dashboard', compact('totalMedicines', 'totalSuppliers', 'expiringSoon', 'medicines', 'categories','totalprice'));
     }
 }
