@@ -1,4 +1,4 @@
-<div class="flex flex-col w-64 h-screen bg-gray-900">
+<div class="flex flex-col w-64  min-h-screen sticky bg-gray-900">
     <!-- Logo -->
     <div class="flex items-center justify-center h-20 bg-gray-800">
         @if(Auth::user()->role == 'staff') 
@@ -34,16 +34,22 @@
                 </a>
             </li>
             @if(Auth::user()->role == 'admin')
+                <li>
+                    <a href="{{ route('staff.index') }}" 
+                       class="flex items-center py-3 px-6 text-lg {{ Request::routeIs('staff.index') ? 'text-white bg-gray-700' : 'text-gray-300' }} hover:text-white hover:bg-gray-700 rounded-lg transition duration-150 ease-in-out">
+                        <i class="fas fa-users mr-3"></i> Manage Staff
+                    </a>
+                </li>
                 <!-- Medicines Dropdown -->
                 <li class="relative">
-                    <button class="flex items-center justify-between w-full py-3 px-6 text-lg text-gray-300 hover:text-white  rounded-lg transition duration-150 ease-in-out focus:outline-none focus:bg-gray-900"
-                            onclick="toggleDropdown()">
+                    <button class="flex items-center justify-between w-full py-3 px-6 text-lg text-gray-300 hover:text-white rounded-lg transition duration-150 ease-in-out focus:outline-none focus:bg-gray-900"
+                            onclick="toggleDropdown('medicine')">
                         <span class="flex items-center">
                             <i class="fas fa-pills mr-3"></i> Medicines
                         </span>
-                        <i id="dropdownArrow" class="fas fa-chevron-right transition-transform duration-300 ease-in-out"></i>
+                        <i id="medicineDropdownArrow" class="fas fa-chevron-right transition-transform duration-300 ease-in-out"></i>
                     </button>
-                    <ul id="dropdownMenu" class="hidden mt-2 space-y-2  rounded-lg shadow-md origin-top transform ml-5 transition-all duration-300 ease-in-out">
+                    <ul id="medicineDropdownMenu" class="hidden mt-2 space-y-2 rounded-lg shadow-md origin-top transform ml-5 transition-all duration-300 ease-in-out">
                         <li>
                             <a href="{{ route('medicines.index') }}" 
                                class="block py-3 px-6 text-lg text-gray-300 hover:text-white focus:bg-gray-700 hover:bg-gray-700 rounded-lg transition duration-150 ease-in-out">
@@ -58,13 +64,61 @@
                         </li>
                     </ul>
                 </li>
-                <li>
-                    <a href="{{ route('staff.index') }}" 
-                       class="flex items-center py-3 px-6 text-lg {{ Request::routeIs('staff.index') ? 'text-white bg-gray-700' : 'text-gray-300' }} hover:text-white hover:bg-gray-700 rounded-lg transition duration-150 ease-in-out">
-                        <i class="fas fa-users mr-3"></i> Manage Staff
-                    </a>
+                <!-- Purchases Dropdown -->
+                <li class="relative">
+                    <button class="flex items-center justify-between w-full py-3 px-6 text-lg text-gray-300 hover:text-white rounded-lg transition duration-150 ease-in-out focus:outline-none focus:bg-gray-900"
+                            onclick="toggleDropdown('purchase')">
+                        <span class="flex items-center">
+                            <i class="fas fa-shopping-cart mr-3"></i> Purchases
+                        </span>
+                        <i id="purchaseDropdownArrow" class="fas fa-chevron-right transition-transform duration-300 ease-in-out"></i>
+                    </button>
+                    <ul id="purchaseDropdownMenu" class="hidden mt-2 space-y-2 rounded-lg shadow-md origin-top transform ml-5 transition-all duration-300 ease-in-out">
+                        <li>
+                            <a href="{{ route('purchases.index') }}" 
+                               class="block py-3 px-6 text-lg text-gray-300 hover:text-white focus:bg-gray-700 hover:bg-gray-700 rounded-lg transition duration-150 ease-in-out">
+                                Show Purchases
+                            </a>
+                        </li>
+                        <li>
+                            <a href="{{ route('purchases.create') }}" 
+                               class="block py-3 px-6 text-lg text-gray-300 hover:text-white hover:bg-gray-700 rounded-lg transition duration-150 ease-in-out">
+                                Add Purchase
+                            </a>
+                        </li>
+                    </ul>
                 </li>
             @endif
+            <!-- Sales Dropdown -->
+            <li class="relative">
+                <button class="flex items-center justify-between w-full py-3 px-6 text-lg text-gray-300 hover:text-white rounded-lg transition duration-150 ease-in-out focus:outline-none focus:bg-gray-900"
+                        onclick="toggleDropdown('sales')">
+                    <span class="flex items-center">
+                        <i class="fas fa-dollar-sign mr-3"></i> Sales
+                    </span>
+                    <i id="salesDropdownArrow" class="fas fa-chevron-right transition-transform duration-300 ease-in-out"></i>
+                </button>
+                <ul id="salesDropdownMenu" class="hidden mt-2 space-y-2 rounded-lg shadow-md origin-top transform ml-5 transition-all duration-300 ease-in-out">
+                    <li>
+                        <a href="{{ route('sales.index') }}" 
+                           class="block py-3 px-6 text-lg text-gray-300 hover:text-white focus:bg-gray-700 hover:bg-gray-700 rounded-lg transition duration-150 ease-in-out">
+                            Show Sales
+                        </a>
+                    </li>
+                    <li>
+                        <a href="{{ route('sales.create') }}" 
+                           class="block py-3 px-6 text-lg text-gray-300 hover:text-white hover:bg-gray-700 rounded-lg transition duration-150 ease-in-out">
+                            Add Sale
+                        </a>
+                    </li>
+                </ul>
+            </li>
+              <li>
+                <a href="{{ route('charts.index') }}" 
+                   class="flex items-center py-3 px-6 text-lg {{ Request::routeIs('charts.index') ? 'text-white bg-gray-700' : 'text-gray-300' }} hover:text-white hover:bg-gray-700 rounded-lg transition duration-150 ease-in-out">
+                      <i class="fas fa-chart-line mr-3"></i> </i> charts
+                </a>
+            </li>
         </ul>
     </nav>
 
@@ -90,33 +144,36 @@
 </div>
 
 <script>
-    // Initialize dropdown state based on localStorage
+    // Initialize dropdown states based on localStorage
     document.addEventListener('DOMContentLoaded', function() {
-        const dropdownMenu = document.getElementById('dropdownMenu');
-        const dropdownArrow = document.getElementById('dropdownArrow');
-        const dropdownState = localStorage.getItem('dropdownState');
+        const dropdowns = ['medicine', 'sales', 'purchase'];
+        dropdowns.forEach(type => {
+            const menu = document.getElementById(`${type}DropdownMenu`);
+            const arrow = document.getElementById(`${type}DropdownArrow`);
+            const state = localStorage.getItem(`${type}DropdownState`);
 
-        if (dropdownState === 'open') {
-            dropdownMenu.classList.remove('hidden');
-            dropdownArrow.classList.add('rotate-90');
-        }
+            if (state === 'open') {
+                menu.classList.remove('hidden');
+                arrow.classList.add('rotate-90');
+            }
+        });
     });
 
-    function toggleDropdown() {
-        const dropdownMenu = document.getElementById('dropdownMenu');
-        const dropdownArrow = document.getElementById('dropdownArrow');
+    function toggleDropdown(type) {
+        const menu = document.getElementById(`${type}DropdownMenu`);
+        const arrow = document.getElementById(`${type}DropdownArrow`);
 
         // Toggle dropdown visibility
-        dropdownMenu.classList.toggle('hidden');
+        menu.classList.toggle('hidden');
 
         // Animate arrow rotation
-        dropdownArrow.classList.toggle('rotate-90');
+        arrow.classList.toggle('rotate-90');
 
         // Save the state in localStorage
-        if (dropdownMenu.classList.contains('hidden')) {
-            localStorage.setItem('dropdownState', 'closed');
+        if (menu.classList.contains('hidden')) {
+            localStorage.setItem(`${type}DropdownState`, 'closed');
         } else {
-            localStorage.setItem('dropdownState', 'open');
+            localStorage.setItem(`${type}DropdownState`, 'open');
         }
     }
 </script>

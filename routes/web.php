@@ -7,6 +7,10 @@ use App\Http\Controllers\SupplierController;
 use App\Http\Controllers\CategoryController;
 use App\Http\Controllers\DashboardController;
 use App\Http\Controllers\StaffController;
+use App\Http\Controllers\SaleController;
+use App\Http\Controllers\PurchaseController;
+use App\Http\Controllers\AnalyticsController;
+use App\Http\Controllers\ChartController;
 /*
 |--------------------------------------------------------------------------
 | Web Routes
@@ -35,6 +39,12 @@ Route::middleware('admin')->group(function () {
         Route::get('/medicines/{medicine}/edit', [MedicineController::class, 'edit'])->name('medicines.edit');
         Route::put('/medicines/{medicine}', [MedicineController::class, 'update'])->name('medicines.update');
         Route::delete('/medicines/{medicine}', [MedicineController::class, 'destroy'])->name('medicines.destroy');
+      
+      //analytics
+          Route::get('/charts', [ChartController::class, 'index'])->name('charts.index');
+
+
+        //charts
 
 
      // Suppliers routes
@@ -72,8 +82,23 @@ Route::middleware('auth')->group(function () {
         Route::get('/suppliers', [SupplierController::class, 'index'])->name('suppliers.index');
         Route::get('/suppliers/{supplier}', [SupplierController::class, 'show'])->name('suppliers.show');
         // Route::get('/medicines', [MedicineController::class, 'search'])->name('medicines.search');
-        
-   
+       
+        // Sale Routes
+Route::get('sales', [SaleController::class, 'index'])->name('sales.index'); 
+Route::get('sales/create', [SaleController::class, 'create'])->name('sales.create');
+Route::post('sales', [SaleController::class, 'store'])->name('sales.store'); 
+Route::get('/sales/{sale}/edit', [SaleController::class, 'edit'])->name('sales.edit');
+Route::put('/sales/{sale}', [SaleController::class, 'update'])->name('sales.update');
+Route::delete('/sales/{sale}', [SaleController::class, 'destroy'])->name('sales.destroy');
+
+
+// Purchase Routes
+Route::get('purchases', [PurchaseController::class, 'index'])->name('purchases.index'); // Get all purchases
+Route::get('purchases/create', [PurchaseController::class, 'create'])->name('purchases.create'); // Show form to create a purchase
+Route::post('purchases', [PurchaseController::class, 'store'])->name('purchases.store'); // Store a new purchase
+   Route::get('/purchases/{purchase}/edit', [PurchaseController::class, 'edit'])->name('purchases.edit');
+   Route::put('/purchases/{purchase}', [PurchaseController::class, 'update'])->name('purchases.update');
+   Route::get('/purchases/{purchase}/delete', [PurchaseController::class, 'destroy'])->name('purchases.delete');
 });
 Route::get('/dashboard', [DashboardController::class, 'index'])
     ->middleware(['auth', 'verified'])

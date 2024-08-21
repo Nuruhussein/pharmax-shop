@@ -68,7 +68,7 @@
                                 <form action="{{ route('medicines.destroy', $medicine->id) }}" method="POST" style="display:inline;">
                                     @csrf
                                     @method('DELETE')
-                                    <button type="submit" class="py-2 px-3 font-medium text-red-600 hover:text-red-500 duration-150 hover:bg-gray-50 rounded-lg">
+                                    <button type="submit" class="py-2 px-3 font-medium text-red-600 hover:text-red-500 duration-150 hover:bg-gray-50 rounded-lg" onclick="return confirm('Are you sure you want to delete this medicine?');">
                                         Delete
                                     </button>
                                 </form>
@@ -179,7 +179,7 @@
     </div>
 
     @if (session('success'))
-        <div class="alert alert-success">
+        <div class="alert alert-success text-blue-500">
             {{ session('success') }}
         </div>
     @endif

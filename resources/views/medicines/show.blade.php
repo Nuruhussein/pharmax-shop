@@ -32,7 +32,7 @@
                     <form action="{{ route('medicines.destroy', $medicine->id) }}" method="POST" class="inline-flex">
                         @csrf
                         @method('DELETE')
-                        <button type="submit" class="inline-flex items-center px-4 py-2 bg-red-600 text-white font-medium rounded-md shadow-sm hover:bg-red-500 focus:outline-none focus:ring-2 focus:ring-red-500 focus:ring-opacity-50 transition duration-150">
+                        <button type="submit" class="inline-flex items-center px-4 py-2 bg-red-600 text-white font-medium rounded-md shadow-sm hover:bg-red-500 focus:outline-none focus:ring-2 focus:ring-red-500 focus:ring-opacity-50 transition duration-150" onclick="return confirm('Are you sure you want to delete this purchase?');">
                             Delete
                         </button>
                     </form>

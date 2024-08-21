@@ -12,19 +12,26 @@
             </div>
 
             <!-- Card 2: Total Suppliers -->
-            {{-- <div class="bg-white shadow-lg rounded-lg p-6">
+            <div class="bg-white shadow-lg rounded-lg p-6">
                 <h3 class="text-lg font-semibold text-gray-800">
                     <i class="fas fa-truck text-green-600"></i> Total Suppliers
                 </h3>
                 <p class="mt-2 text-3xl font-bold text-gray-600">{{ $totalSuppliers }}</p>
                 <p class="mt-2 text-gray-500">Number of active suppliers.</p>
-            </div> --}}
+            </div>
             <div class="bg-white shadow-lg rounded-lg p-6">
                 <h3 class="text-lg font-semibold text-gray-800">
                     <i class="fas fa-usd text-green-600"></i> Total price
                 </h3>
                 <p class="mt-2 text-3xl font-bold text-gray-600">{{ $totalprice }}<i class="fas fa-usd text-green-300"></i></p>
                 <p class="mt-2 text-gray-500">total number of price.</p>
+            </div>
+ <div class="bg-white shadow-lg rounded-lg p-6">
+                <h3 class="text-lg font-semibold text-gray-800">
+                    <i class="fas fa-usd text-green-600"></i> Total sales
+                </h3>
+                <p class="mt-2 text-3xl font-bold text-gray-600">{{ $totalsales }}<i class="fas fa-usd text-green-300"></i></p>
+                <p class="mt-2 text-gray-500">total sales.</p>
             </div>
 
             <!-- Card 3: Expiring Soon Medicines -->

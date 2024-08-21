@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Models\Medicine;
 use App\Models\Supplier;
+use App\Models\Sale;
 use App\Models\Category; // Import the Category model
 use Carbon\Carbon;
 use Illuminate\Http\Request;
@@ -39,13 +40,19 @@ class DashboardController extends Controller
         }
 
         // Get the filtered or unfiltered list of medicines
-        $medicines = $medicinesQuery->paginate(3);
+        $medicines = $medicinesQuery->paginate(4);
   // Calculate total price based on quantity and price for each medicine
     $totalprice = $medicines->reduce(function ($carry, $medicine) {
         return $carry + ($medicine->price * $medicine->quantity);
     }, 0);
 
+
+ $sales= Sale::all();
+
+     $totalsales = $sales->reduce(function ($carry, $sales) {
+        return $carry + ($sales->sale_price * $sales->quantity);
+    }, 0);
         // Pass the data to the view
-        return view('dashboard', compact('totalMedicines', 'totalSuppliers', 'expiringSoon', 'medicines', 'categories','totalprice'));
+        return view('dashboard', compact('totalMedicines', 'totalSuppliers', 'expiringSoon', 'medicines', 'categories','totalprice','totalsales'));
     }
 }
