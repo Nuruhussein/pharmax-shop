@@ -20,6 +20,7 @@
                         <th class="py-3 px-6 text-left border-b">Quantity Sold</th>
                         <th class="py-3 px-6 text-left border-b">Sale Price</th>
                         <th class="py-3 px-6 text-left border-b">Sale Date</th>
+                          <th class="py-3 px-6 text-left border-b">INVOICE</th>
                         <th class="py-3 px-6 text-left border-b">Actions</th>
                     </tr>
                 </thead>
@@ -31,6 +32,12 @@
                             <td class="border px-6 py-4 text-gray-800">{{ $sale->quantity }}</td>
                             <td class="border px-6 py-4 text-gray-800">${{ number_format($sale->sale_price, 2) }}</td>
                             <td class="border px-6 py-4 text-gray-800">{{ $sale->sale_date }}</td>
+                             <td class="border px-6 py-4 text-gray-800"> 
+                                @if($sale->invoice)
+                            <a href="{{ route('invoices.show', $sale->invoice) }}">View Invoice</a>
+                        @else
+                            No Invoice
+                        @endif</td>
                             <td class="border px-6 py-4 flex items-center space-x-2">
                                 <a href="{{ route('sales.edit', $sale->id) }}" class="text-blue-600 hover:text-blue-800 transition duration-150 ease-in-out">
                                     <i class="fas fa-edit"></i> Edit

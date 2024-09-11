@@ -9,8 +9,41 @@ use Illuminate\Http\Request;
 
 class MedicineController extends Controller
 {
-   
-    public function index(Request $request)
+public function expiringSoon(Request $request)
+{
+    // Initialize query for medicines expiring soon
+    $medicinesQuery = Medicine::where('expiry_date', '<=', now()->addDays(30))
+                              ->where('expiry_date', '>=', now());
+    
+
+    // Check if there's a search query
+    if ($request->input('query')) {
+        $query = $request->input('query');
+        $medicinesQuery->where('name', 'LIKE', "%{$query}%");
+    }
+
+    // Check if there's a category filter
+    if ($request->input('category')) {
+        $category = $request->input('category');
+        $medicinesQuery->where('category_id', $category);
+    }
+
+    // Paginate the filtered or unfiltered list of medicines
+    $medicines = $medicinesQuery->paginate(6);
+
+    // Fetch all categories to populate the dropdown
+    $categories = Category::all();
+
+    // Pass data to view
+    return view('medicines.expiringSoon', compact('medicines', 'categories'));
+}
+   public function expiredMedicines()
+    {
+        $expired_medicines = Medicine::where('expiry_date', '<', now())->get();
+        return view('medicines.expired', compact('expired_medicines'));
+    }
+
+public function index(Request $request)
     {
         // Fetch all categories to populate the dropdown
         $categories = Category::all();
@@ -123,4 +156,7 @@ class MedicineController extends Controller
         // Return the search results to the index view
         return view('medicines.index', compact('medicines'));
     }
+    
+
+
 }

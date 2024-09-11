@@ -88,6 +88,31 @@
                         </li>
                     </ul>
                 </li>
+                <!-- Expiration Dropdown -->
+<li class="relative">
+    <button class="flex items-center justify-between w-full py-3 px-6 text-lg text-gray-300 hover:text-white rounded-lg transition duration-150 ease-in-out focus:outline-none focus:bg-gray-900"
+            onclick="toggleDropdown('expiration')">
+        <span class="flex items-center">
+            <i class="fas fa-calendar-times mr-3"></i> Expiration
+        </span>
+        <i id="expirationDropdownArrow" class="fas fa-chevron-right transition-transform duration-300 ease-in-out"></i>
+    </button>
+    <ul id="expirationDropdownMenu" class="hidden mt-2 space-y-2 rounded-lg shadow-md origin-top transform ml-5 transition-all duration-300 ease-in-out">
+        <li>
+            <a href="{{ route('medicines.expiring_soon') }}" 
+               class="block py-3 px-6 text-lg text-gray-300 hover:text-white focus:bg-gray-700 hover:bg-gray-700 rounded-lg transition duration-150 ease-in-out">
+                Expiring Soon
+            </a>
+        </li>
+        <li>
+            <a href="{{ route('medicines.expired') }}" 
+               class="block py-3 px-6 text-lg text-gray-300 hover:text-white hover:bg-gray-700 rounded-lg transition duration-150 ease-in-out">
+                Expired
+            </a>
+        </li>
+    </ul>
+</li>
+
             @endif
             <!-- Sales Dropdown -->
             <li class="relative">
@@ -119,6 +144,7 @@
                       <i class="fas fa-chart-line mr-3"></i> </i> charts
                 </a>
             </li>
+         
         </ul>
     </nav>
 
@@ -146,7 +172,7 @@
 <script>
     // Initialize dropdown states based on localStorage
     document.addEventListener('DOMContentLoaded', function() {
-        const dropdowns = ['medicine', 'sales', 'purchase'];
+        const dropdowns = ['medicine', 'sales','expiration', 'purchase'];
         dropdowns.forEach(type => {
             const menu = document.getElementById(`${type}DropdownMenu`);
             const arrow = document.getElementById(`${type}DropdownArrow`);

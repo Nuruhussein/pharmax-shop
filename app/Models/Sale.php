@@ -14,4 +14,10 @@ class Sale extends Model
     {
         return $this->belongsTo(Medicine::class);
     }
+
+    public function invoice()
+    {
+        return $this->hasOne(Invoice::class);
+    }
+
 }

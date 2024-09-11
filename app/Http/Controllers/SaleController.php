@@ -1,10 +1,11 @@
 <?php
 
 namespace App\Http\Controllers;
-
 use App\Models\Medicine;
 use App\Models\Sale;
+use App\Models\Invoice;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\DB;
 
 class SaleController extends Controller
 {
@@ -20,29 +21,44 @@ class SaleController extends Controller
         return view('sales.create', compact('medicines'));
     }
 
-    public function store(Request $request)
-    {
-        $request->validate([
-            'medicine_id' => 'required|exists:medicines,id',
-            'quantity' => 'required|integer',
-            'sale_price' => 'required|numeric',
-            'sale_date' => 'required|date',
-        ]);
+   
+public function store(Request $request)
+{
+    $request->validate([
+        'medicine_id' => 'required|exists:medicines,id',
+        'quantity' => 'required|integer',
+        'sale_price' => 'required|numeric',
+        'sale_date' => 'required|date',
+    ]);
 
-        $medicine = Medicine::find($request->medicine_id);
-        
-        if ($medicine->quantity < $request->quantity) {
-            return redirect()->back()->with('error', 'Not enough stock available.');
-        }
+    $medicine = Medicine::find($request->medicine_id);
+    
+    if ($medicine->quantity < $request->quantity) {
+        return redirect()->back()->with('error', 'Not enough stock available.');
+    }
 
-        Sale::create($request->all());
+    DB::transaction(function() use ($request, $medicine) {
+        $sale = Sale::create($request->all());
 
         // Update stock quantity in medicines table
         $medicine->quantity -= $request->quantity;
         $medicine->save();
 
-        return redirect()->route('sales.index')->with('success', 'Sale recorded successfully.');
-    }
+        // Create invoice for the sale
+        Invoice::create([
+            'sale_id' => $sale->id,
+            'total_amount' => $request->quantity * $request->sale_price,
+            'invoice_date' => now(),
+        ]);
+    });
+
+    return redirect()->route('sales.index')->with('success', 'Sale recorded successfully.');
+}
+
+public function showInvoice(Invoice $invoice)
+{
+    return view('invoices.show', compact('invoice'));
+}
 
     public function edit(Sale $sale)
     {
