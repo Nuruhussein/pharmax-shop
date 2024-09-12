@@ -1,4 +1,5 @@
 <?php
+// In app/Http/Controllers/Auth/AuthenticatedSessionController.php
 
 namespace App\Http\Controllers\Auth;
 
@@ -26,10 +27,15 @@ class AuthenticatedSessionController extends Controller
     public function store(LoginRequest $request): RedirectResponse
     {
         $request->authenticate();
-
         $request->session()->regenerate();
 
-        return redirect()->intended(RouteServiceProvider::HOME);
+        // Determine the appropriate redirect based on the user's role
+        $user = Auth::user();
+        if ($user->hasRole('doctor')) {
+            return redirect()->route('orders.show'); // Redirect to orders page if the user is a doctor
+        }
+
+        return redirect()->intended(RouteServiceProvider::HOME); // Default redirect for other roles
     }
 
     /**
@@ -40,7 +46,6 @@ class AuthenticatedSessionController extends Controller
         Auth::guard('web')->logout();
 
         $request->session()->invalidate();
-
         $request->session()->regenerateToken();
 
         return redirect('/');

@@ -19,8 +19,9 @@
 <body class="font-sans antialiased">
     <div class="flex min-h-screen ">
         <!-- Sidebar -->
+      @notRole('doctor')
           @include('layouts.sidebar')
-
+   @endnotRole
         <!-- Main Content -->
         <div class="flex-1 flex flex-col">
             <!-- Top Navigation -->
@@ -36,7 +37,7 @@
             @endif
 
             <!-- Page Content -->
-            <main class="flex-1 p-6">
+            <main class="flex-1 p-6 bg-gray-50">
                 {{ $slot }}
             </main>
         </div>

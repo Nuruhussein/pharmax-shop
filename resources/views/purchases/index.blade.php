@@ -36,9 +36,14 @@
                             <a href="{{ route('purchases.edit', $purchase->id) }}" class="bg-yellow-500 text-white px-3 py-2 rounded-lg shadow-md hover:bg-yellow-600 transition duration-300 ease-in-out">
                                 <i class="fas fa-edit"></i> Edit
                             </a>
-                            <a href="{{ route('purchases.delete', $purchase->id) }}" class="bg-red-500 text-white px-3 py-2 rounded-lg shadow-md hover:bg-red-600 transition duration-300 ease-in-out ml-2" onclick="return confirm('Are you sure you want to delete this purchase?');">
-                                <i class="fas fa-trash"></i> Delete
-                            </a>
+                  <form action="{{ route('purchases.destroy', $purchase->id) }}" method="POST" style="display:inline-block;" onsubmit="return confirm('Are you sure you want to delete this purchase?');">
+    @csrf
+    @method('DELETE')
+    <button type="submit" class="bg-red-500 ml-4 text-white px-3 py-2 rounded-lg shadow-md hover:bg-red-600 transition duration-300 ease-in-out">
+        <i class="fas fa-trash"></i> Delete
+    </button>
+</form>
+
                         </td>
                     </tr>
                 @endforeach

@@ -13,7 +13,7 @@
         @endif
         <div class="mt-8 shadow-sm border rounded-lg overflow-x-auto">
             <table class="w-full table-auto text-sm text-left">
-                <thead class="bg-gray-50 text-gray-600 font-medium border-b">
+                <thead class="bg-gray-100 text-gray-600 font-medium border-b">
                     <tr>
                         <th class="py-3 px-6">Name</th>
                         <th class="py-3 px-6">Number of Products</th>

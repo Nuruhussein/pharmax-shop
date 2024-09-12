@@ -33,6 +33,22 @@
                     <i class="fas fa-tags mr-3"></i> Categories
                 </a>
             </li>
+              @if(Auth::user()->role == 'admin')      
+            <li>
+                    <a href="{{ route('doctors.index') }}" 
+                   class="flex items-center py-3 px-6 text-lg {{ Request::routeIs('categories.index') ? 'text-white bg-gray-700' : 'text-gray-300' }} hover:text-white hover:bg-gray-700 rounded-lg transition duration-150 ease-in-out">
+                    <i class="fas fa-user-md mr-2"></i>  manage Doctors
+                </a>
+            </li>
+           @endif
+             {{-- @if(Auth::user()->role == 'staff')   --}}
+                <li>
+                    <a href="{{ route('staff.orders.index') }}" 
+                   class="flex items-center py-3 px-6 text-lg {{ Request::routeIs('categories.index') ? 'text-white bg-gray-700' : 'text-gray-300' }} hover:text-white hover:bg-gray-700 rounded-lg transition duration-150 ease-in-out">
+                    <i class="fas fa-shopping-cart mr-2"></i>  manage orders
+                </a>
+            </li>
+            {{-- @endif --}}
             @if(Auth::user()->role == 'admin')
                 <li>
                     <a href="{{ route('staff.index') }}" 
@@ -40,6 +56,7 @@
                         <i class="fas fa-users mr-3"></i> Manage Staff
                     </a>
                 </li>
+                @endif
                 <!-- Medicines Dropdown -->
                 <li class="relative">
                     <button class="flex items-center justify-between w-full py-3 px-6 text-lg text-gray-300 hover:text-white rounded-lg transition duration-150 ease-in-out focus:outline-none focus:bg-gray-900"
@@ -56,12 +73,14 @@
                                 Show Medicines
                             </a>
                         </li>
-                        <li>
+                         @if(Auth::user()->role == 'admin')
+                          <li>
                             <a href="{{ route('medicines.create') }}" 
                                class="block py-3 px-6 text-lg text-gray-300 hover:text-white hover:bg-gray-700 rounded-lg transition duration-150 ease-in-out">
                                 Add Medicine
                             </a>
                         </li>
+                        @endif
                     </ul>
                 </li>
                 <!-- Purchases Dropdown -->
@@ -113,7 +132,7 @@
     </ul>
 </li>
 
-            @endif
+            {{-- @endif --}}
             <!-- Sales Dropdown -->
             <li class="relative">
                 <button class="flex items-center justify-between w-full py-3 px-6 text-lg text-gray-300 hover:text-white rounded-lg transition duration-150 ease-in-out focus:outline-none focus:bg-gray-900"

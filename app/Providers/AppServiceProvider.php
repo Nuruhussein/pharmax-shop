@@ -27,5 +27,8 @@ class AppServiceProvider extends ServiceProvider
             return auth()->check() && auth()->user()->hasRole($role);
         });
         //
+          Blade::if('notRole', function ($role) {
+        return auth()->check() && !auth()->user()->hasRole($role);
+    });
     }
 }

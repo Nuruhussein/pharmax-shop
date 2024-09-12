@@ -12,7 +12,8 @@ use App\Http\Controllers\PurchaseController;
 use App\Http\Controllers\AnalyticsController;
 use App\Http\Controllers\ChartController;
 use App\Http\Controllers\OrderController; // Add this if you have an OrderController
-
+use App\Http\Controllers\StaffOrderController;
+use App\Http\Controllers\DoctorController;
 /*
 |--------------------------------------------------------------------------
 | Web Routes
@@ -31,14 +32,13 @@ Route::get('/', function () {
 
 // Authentication and Verification Routes
 Route::get('/dashboard', [DashboardController::class, 'index'])
-    ->middleware(['auth', 'verified'])
+    ->middleware(['auth', 'verified','role:staff,admin'])
     ->name('dashboard');
 
 // Admin Routes
 Route::middleware(['auth', 'role:admin'])->group(function () {
     // Medicine Routes
-    Route::get('/medicines/expiring-soon', [MedicineController::class, 'expiringSoon'])->name('medicines.expiring_soon');
-    Route::get('/medicines/expired', [MedicineController::class, 'expiredMedicines'])->name('medicines.expired');
+  
     Route::get('/medicines/create', [MedicineController::class, 'create'])->name('medicines.create');
     Route::post('/medicines', [MedicineController::class, 'store'])->name('medicines.store');
     Route::get('/medicines/{medicine}/edit', [MedicineController::class, 'edit'])->name('medicines.edit');
@@ -64,17 +64,38 @@ Route::middleware(['auth', 'role:admin'])->group(function () {
     Route::get('/staff/create', [StaffController::class, 'create'])->name('staff.create');
     Route::post('/staff', [StaffController::class, 'store'])->name('staff.store');
     Route::delete('/staff/{staff}', [StaffController::class, 'destroy'])->name('staff.destroy');
+   
+    //doctors route
+ 
+
+    Route::resource('doctors', DoctorController::class);
+
 
     // Analytics and Charts
     Route::get('/charts', [ChartController::class, 'index'])->name('charts.index');
 });
-
+Route::middleware(['role:doctor'])->group(function () {
+       //orders doctor
+    Route::get('/orders', [OrderController::class, 'index'])->name('orders.index');
+    Route::get('/orders/create', [OrderController::class, 'create'])->name('orders.create');
+    Route::post('/orders', [OrderController::class, 'store'])->name('orders.store');
+});
 // Authenticated Routes
-Route::middleware(['auth'])->group(function () {
+Route::middleware(['role:staff,admin'])->group(function () {
     Route::get('/profile', [ProfileController::class, 'edit'])->name('profile.edit');
     Route::patch('/profile', [ProfileController::class, 'update'])->name('profile.update');
     Route::delete('/profile', [ProfileController::class, 'destroy'])->name('profile.destroy');
+    
+    
+      Route::get('/medicines/expiring-soon', [MedicineController::class, 'expiringSoon'])->name('medicines.expiring_soon');
+    Route::get('/medicines/expired', [MedicineController::class, 'expiredMedicines'])->name('medicines.expired');
 
+
+////staf orders
+     Route::get('/staff/orders', [StaffOrderController::class, 'index'])->name('staff.orders.index');
+    Route::put('/staff/orders/{order_code}', [StaffOrderController::class, 'update'])->name('staff.orders.update');
+    Route::get('/staff/orders/{order_code}', [StaffOrderController::class, 'show'])->name('staff.orders.show');
+    
     // Medicine Routes
     Route::get('/medicines', [MedicineController::class, 'index'])->name('medicines.index');
     Route::get('/medicines/{medicine}', [MedicineController::class, 'show'])->name('medicines.show');
