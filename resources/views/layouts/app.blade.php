@@ -15,6 +15,7 @@
     <!-- Scripts -->
     @vite(['resources/css/app.css', 'resources/js/app.js'])
       {{-- @vite('resources/css/app.css') --}}
+      
 </head>
 <body class="font-sans antialiased">
     <div class="flex min-h-screen ">

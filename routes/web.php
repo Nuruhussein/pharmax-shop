@@ -77,8 +77,10 @@ Route::middleware(['auth', 'role:admin'])->group(function () {
 Route::middleware(['role:doctor'])->group(function () {
        //orders doctor
     Route::get('/orders', [OrderController::class, 'index'])->name('orders.index');
+    //   Route::get('/orders/{order}', [OrderController::class, 'show'])->name('orders.show');
     Route::get('/orders/create', [OrderController::class, 'create'])->name('orders.create');
     Route::post('/orders', [OrderController::class, 'store'])->name('orders.store');
+
 });
 // Authenticated Routes
 Route::middleware(['role:staff,admin'])->group(function () {
@@ -95,7 +97,7 @@ Route::middleware(['role:staff,admin'])->group(function () {
      Route::get('/staff/orders', [StaffOrderController::class, 'index'])->name('staff.orders.index');
     Route::put('/staff/orders/{order_code}', [StaffOrderController::class, 'update'])->name('staff.orders.update');
     Route::get('/staff/orders/{order_code}', [StaffOrderController::class, 'show'])->name('staff.orders.show');
-    
+     Route::delete('/staff/orders/{order_code}', [StaffOrderController::class, 'destroy'])->name('staff.orders.destroy');
     // Medicine Routes
     Route::get('/medicines', [MedicineController::class, 'index'])->name('medicines.index');
     Route::get('/medicines/{medicine}', [MedicineController::class, 'show'])->name('medicines.show');
@@ -110,11 +112,15 @@ Route::middleware(['role:staff,admin'])->group(function () {
 
     // Sale Routes
     Route::get('sales', [SaleController::class, 'index'])->name('sales.index');
+    
     Route::get('sales/create', [SaleController::class, 'create'])->name('sales.create');
+     Route::get('sales/{sale}', [SaleController::class, 'show'])->name('sales.show');
     Route::post('sales', [SaleController::class, 'store'])->name('sales.store');
     Route::get('/sales/{sale}/edit', [SaleController::class, 'edit'])->name('sales.edit');
     Route::put('/sales/{sale}', [SaleController::class, 'update'])->name('sales.update');
-    Route::delete('/sales/{sale}', [SaleController::class, 'destroy'])->name('sales.destroy');
+   Route::delete('/sales/{sale}', [SaleController::class, 'destroy'])->name('sales.destroy');
+
+    Route::patch('/sales/{sale}/approve', [SaleController::class, 'approve'])->name('sales.approve');
     Route::get('invoices/{invoice}', [SaleController::class, 'showInvoice'])->name('invoices.show');
 
     // Purchase Routes

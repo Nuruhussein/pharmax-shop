@@ -13,12 +13,12 @@ class ChartController extends Controller
     {
 
             // Total Sales and Purchases
-        $totalSales = Sale::sum('sale_price');
+        $totalSales = Sale::sum('total_amount');
         $totalPurchases = Purchase::sum('purchase_price');
         // Medicine Distribution by Category
         $salesData = Sale::select(
             DB::raw('MONTH(sale_date) as month'),
-            DB::raw('SUM(quantity * sale_price) as total_sales')
+            DB::raw('SUM(total_amount) as total_sales')
         )
         ->groupBy('month')
         ->get();

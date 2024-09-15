@@ -1,17 +1,18 @@
 <?php
 
+
 namespace App\Http\Controllers;
-use App\Models\Medicine;
+
 use App\Models\Sale;
-use App\Models\Invoice;
+use App\Models\SaleItem;
+use App\Models\Medicine;
 use Illuminate\Http\Request;
-use Illuminate\Support\Facades\DB;
 
 class SaleController extends Controller
 {
     public function index()
     {
-        $sales = Sale::with('medicine')->get();
+        $sales = Sale::with('items.medicine')->paginate(10);
         return view('sales.index', compact('sales'));
     }
 
@@ -21,90 +22,172 @@ class SaleController extends Controller
         return view('sales.create', compact('medicines'));
     }
 
-   
-public function store(Request $request)
+  public function store(Request $request)
 {
+    // Validate the incoming request
     $request->validate([
-        'medicine_id' => 'required|exists:medicines,id',
-        'quantity' => 'required|integer',
-        'sale_price' => 'required|numeric',
+        'items.*.medicine_id' => 'required|exists:medicines,id',
+        'items.*.quantity' => 'required|integer|min:1',
+        'items.*.sale_price' => 'required|numeric|min:0',
         'sale_date' => 'required|date',
+        'order_id' => 'nullable|exists:orders,id',
+        'status' => 'in:pending,approved',
+        'user_id' => 'nullable|exists:users,id'
     ]);
 
-    $medicine = Medicine::find($request->medicine_id);
-    
-    if ($medicine->quantity < $request->quantity) {
-        return redirect()->back()->with('error', 'Not enough stock available.');
+    if (!$request->has('items') || !is_array($request->input('items'))) {
+        return redirect()->back()->with('error', 'No sales items provided.');
     }
 
-    DB::transaction(function() use ($request, $medicine) {
-        $sale = Sale::create($request->all());
+    $totalAmount = 0;
+    $items = $request->input('items');
 
-        // Update stock quantity in medicines table
-        $medicine->quantity -= $request->quantity;
-        $medicine->save();
+    // First, check if there is enough stock for all items
+    foreach ($items as $itemData) {
+        $medicine = Medicine::find($itemData['medicine_id']);
+        if ($medicine->quantity < $itemData['quantity']) {
+            return redirect()->back()->with('error', "Not enough stock for medicine: {$medicine->name}");
+        }
+    }
 
-        // Create invoice for the sale
-        Invoice::create([
+    // Create the sale
+    $sale = Sale::create([
+        'order_id' => $request->input('order_id'),
+        'user_id' => $request->input('user_id', null),
+        'total_amount' => 0,
+        'sale_date' => $request->input('sale_date'),
+        'status' => $request->input('status', 'pending'),
+    ]);
+
+    // Handle the sale items and adjust stock if approved
+    foreach ($items as $itemData) {
+        $medicine = Medicine::find($itemData['medicine_id']);
+
+        SaleItem::create([
             'sale_id' => $sale->id,
-            'total_amount' => $request->quantity * $request->sale_price,
-            'invoice_date' => now(),
+            'medicine_id' => $itemData['medicine_id'],
+            'quantity' => $itemData['quantity'],
+            'sale_price' => $itemData['sale_price'],
         ]);
-    });
 
-    return redirect()->route('sales.index')->with('success', 'Sale recorded successfully.');
+        $totalAmount += $itemData['quantity'] * $itemData['sale_price'];
+        
+        // Adjust stock if sale is approved
+        if ($sale->status === 'approved') {
+            $medicine->decrement('quantity', $itemData['quantity']);
+        }
+    }
+
+    // Update total amount of sale
+    $sale->update(['total_amount' => $totalAmount]);
+
+    return redirect()->route('sales.index')->with('success', 'Sale created successfully.');
 }
 
-public function showInvoice(Invoice $invoice)
-{
-    return view('invoices.show', compact('invoice'));
-}
 
-    public function edit(Sale $sale)
+    public function approve(Sale $sale)
     {
+        if ($sale->status !== 'approved') {
+            $sale->status = 'approved';
+            $sale->save();
+
+            // Adjust stock for approved sale
+            foreach ($sale->items as $item) {
+                $medicine = $item->medicine;
+                if ($medicine->quantity >= $item->quantity) {
+                    $medicine->decrement('quantity', $item->quantity);
+                } else {
+                    return redirect()->back()->with('error', "Not enough stock for medicine: {$medicine->name}");
+                }
+            }
+
+            return redirect()->route('sales.index')->with('success', 'Sale approved and stock updated.');
+        }
+
+        return redirect()->route('sales.index')->with('error', 'Sale is already approved.');
+    }
+
+    public function show(Sale $sale)
+    {
+        return view('sales.show', compact('sale'));
+    }
+
+public function destroy(Request $request, Sale $sale)
+{
+    $restoreStock = $request->query('restore_stock', 'false') === 'true';
+
+    if ($restoreStock) {
+        // Restore medicine quantity
+        foreach ($sale->items as $item) {
+            $medicine = $item->medicine;
+            $medicine->increment('quantity', $item->quantity);
+        }
+    }
+
+    // Delete the sale
+    $sale->delete();
+
+    return redirect()->route('sales.index')->with('success', 'Sale deleted successfully.' . ($restoreStock ? ' Stock has been restored.' : ''));
+}
+
+
+
+    public function edit($id)
+    {
+        $sale = Sale::with('items.medicine')->findOrFail($id);
         $medicines = Medicine::all();
+
         return view('sales.edit', compact('sale', 'medicines'));
     }
 
-    public function update(Request $request, Sale $sale)
+    public function update(Request $request, $id)
     {
         $request->validate([
-            'medicine_id' => 'required|exists:medicines,id',
-            'quantity' => 'required|integer',
-            'sale_price' => 'required|numeric',
             'sale_date' => 'required|date',
+            'order_id' => 'nullable|string',
+            'items' => 'required|array',
+            'items.*.medicine_id' => 'required|exists:medicines,id',
+            'items.*.quantity' => 'required|integer|min:1',
+            'items.*.sale_price' => 'required|numeric|min:0',
         ]);
 
-        // Find the original medicine and adjust its stock
-        $originalMedicine = Medicine::find($sale->medicine_id);
-        $originalMedicine->quantity += $sale->quantity; // Return original quantity
+        $sale = Sale::findOrFail($id);
 
-        $medicine = Medicine::find($request->medicine_id);
-        
-        if ($medicine->quantity < $request->quantity) {
-            return redirect()->back()->with('error', 'Not enough stock available.');
+        // Restore stock for previously recorded items
+        foreach ($sale->items as $item) {
+            $medicine = $item->medicine;
+            $medicine->increment('quantity', $item->quantity); // Restore stock
         }
 
-        // Update the sale
-        $sale->update($request->all());
+        $sale->sale_date = $request->sale_date;
+        $sale->order_id = $request->order_id;
 
-        // Update stock quantity in medicines table
-        $medicine->quantity -= $request->quantity;
-        $medicine->save();
-        $originalMedicine->save(); // Save the original medicine
+        $totalAmount = 0;
 
-        return redirect()->route('sales.index')->with('success', 'Sale updated successfully.');
-    }
+        // Update or create sale items and adjust stock if sale is approved
+        foreach ($request->items as $itemData) {
+            $medicine = Medicine::find($itemData['medicine_id']);
 
-    public function destroy(Sale $sale)
-    {
-        // Find the medicine and adjust its stock
-        $medicine = Medicine::find($sale->medicine_id);
-        $medicine->quantity += $sale->quantity;
-        $medicine->save();
+            $saleItem = $sale->items()->updateOrCreate(
+                ['medicine_id' => $itemData['medicine_id']],
+                ['quantity' => $itemData['quantity'], 'sale_price' => $itemData['sale_price']]
+            );
 
-        $sale->delete();
+            $totalAmount += $itemData['quantity'] * $itemData['sale_price'];
 
-        return redirect()->route('sales.index')->with('success', 'Sale deleted successfully.');
+            // If sale is approved, update stock
+            if ($sale->status === 'approved') {
+                if ($medicine->quantity >= $itemData['quantity']) {
+                    $medicine->decrement('quantity', $itemData['quantity']);
+                } else {
+                    return redirect()->back()->with('error', "Not enough stock for medicine: {$medicine->name}");
+                }
+            }
+        }
+
+        $sale->total_amount = $totalAmount;
+        $sale->save();
+
+        return redirect()->route('sales.index')->with('success', 'Sale updated successfully!');
     }
 }

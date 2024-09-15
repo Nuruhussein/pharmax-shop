@@ -50,7 +50,7 @@ class DashboardController extends Controller
  $sales= Sale::all();
 
      $totalsales = $sales->reduce(function ($carry, $sales) {
-        return $carry + ($sales->sale_price * $sales->quantity);
+        return $carry + ($sales->total_amount);
     }, 0);
         // Pass the data to the view
         return view('dashboard', compact('totalMedicines', 'totalSuppliers', 'expiringSoon', 'medicines', 'categories','totalprice','totalsales'));

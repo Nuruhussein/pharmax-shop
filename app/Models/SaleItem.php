@@ -1,21 +1,23 @@
 <?php
-
+// app/Models/SaleItem.php
 namespace App\Models;
 
 use Illuminate\Database\Eloquent\Factories\HasFactory;
-
 use Illuminate\Database\Eloquent\Model;
 
-class Invoice extends Model
+class SaleItem extends Model
 {
-    protected $fillable = ['sale_id', 'total_amount', 'invoice_date'];
     use HasFactory;
+
+    protected $fillable = ['sale_id', 'medicine_id', 'quantity', 'sale_price'];
+
     public function sale()
     {
         return $this->belongsTo(Sale::class);
     }
-    public function user()
-{
-    return $this->belongsTo(User::class)->withDefault();
-}
+
+    public function medicine()
+    {
+        return $this->belongsTo(Medicine::class);
+    }
 }

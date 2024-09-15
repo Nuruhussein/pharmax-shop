@@ -32,7 +32,7 @@ class AuthenticatedSessionController extends Controller
         // Determine the appropriate redirect based on the user's role
         $user = Auth::user();
         if ($user->hasRole('doctor')) {
-            return redirect()->route('orders.show'); // Redirect to orders page if the user is a doctor
+            return redirect()->route('orders.index'); // Redirect to orders page if the user is a doctor
         }
 
         return redirect()->intended(RouteServiceProvider::HOME); // Default redirect for other roles
