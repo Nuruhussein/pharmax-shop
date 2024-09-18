@@ -16,7 +16,7 @@ return new class extends Migration
      // Migration for Orders Table
 Schema::create('orders', function (Blueprint $table) {
     $table->id();
-    $table->foreignId('doctor_id')->constrained('users'); // Assuming 'users' table for doctors
+    $table->foreignId('user_id')->constrained('users'); // Assuming 'users' table for both customers and doctors
     $table->string('order_code')->unique();
     $table->string('status')->default('pending');
     $table->decimal('total_amount', 10, 2)->default(0); // Add total amount column

@@ -37,7 +37,11 @@
                                 <td class="border px-6 py-4 text-gray-800">${{ number_format($sale->total_amount, 2) }}</td>
                                 <td class="border px-6 py-4 text-gray-800">{{ $sale->order_id ?? 'N/A' }}</td>
                               
-                                <td class="border px-6 py-4 text-gray-800">{{ $sale->user->name ?? 'N/A' }}</td>
+                                <td class="border px-6 py-4 
+    {{ $sale->order->user->role === 'customer' ? 'text-blue-500' : ($sale->order->user->role === 'doctor' ? 'text-green-500' : 'text-gray-900') }}">
+    {{ $sale->order->user->name ?? 'N/A' }}
+</td>
+
                                   <td class="border px-6 py-4 text-gray-800">
                                     <span class="{{ $sale->status === 'approved' ? 'text-green-500' : 'text-yellow-500' }}">
                                         {{ ucfirst($sale->status) }}

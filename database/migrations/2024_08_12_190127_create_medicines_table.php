@@ -20,6 +20,7 @@ return new class extends Migration
         $table->foreignId('supplier_id')->constrained()->onDelete('cascade');
         $table->integer('quantity');
         $table->date('expiry_date');
+        $table->text('description')->nullable(); 
         $table->timestamps();
         });
     }

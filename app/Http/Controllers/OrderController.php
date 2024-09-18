@@ -27,7 +27,7 @@ class OrderController extends Controller
 
         // Create the order
         $order = Order::create([
-            'doctor_id' => Auth::id(),
+            'user_id' => Auth::id(),
             'order_code' => $orderCode,
             'status' => 'pending',
             'total_amount' => 0, // Initialize the total amount
@@ -57,7 +57,7 @@ class OrderController extends Controller
 
     public function index()
     {
-        $orders = Order::where('doctor_id', Auth::id())
+        $orders = Order::where('user_id', Auth::id())
                 ->where('status', 'pending')
                 ->get();
         return view('orders.index', compact('orders'));

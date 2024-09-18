@@ -14,6 +14,9 @@ use App\Http\Controllers\ChartController;
 use App\Http\Controllers\OrderController; // Add this if you have an OrderController
 use App\Http\Controllers\StaffOrderController;
 use App\Http\Controllers\DoctorController;
+use App\Http\Controllers\EcommerceController;
+use App\Http\Controllers\CartController;
+
 /*
 |--------------------------------------------------------------------------
 | Web Routes
@@ -35,8 +38,22 @@ Route::get('/dashboard', [DashboardController::class, 'index'])
     ->middleware(['auth', 'verified','role:staff,admin'])
     ->name('dashboard');
 
+
+
+
+
+
 // Admin Routes
 Route::middleware(['auth', 'role:admin'])->group(function () {
+
+        ///ecommerce 
+ Route::get('/ecommerce', [EcommerceController::class, 'index'])->name('ecommerce.index');
+ Route::get('cart', [CartController::class, 'cart'])->name('cart');
+ Route::get('add-to-cart/{id}', [CartController::class, 'addToCart'])->name('add_to_cart');
+ Route::patch('/update-cart', [CartController::class, 'update'])->name('update_cart');
+ Route::delete('/remove-from-cart', [CartController::class, 'remove'])->name('remove_from_cart');
+ Route::post('/checkout', [CartController::class, 'checkout'])->name('checkout');
+ 
     // Medicine Routes
   
     Route::get('/medicines/create', [MedicineController::class, 'create'])->name('medicines.create');
@@ -53,12 +70,14 @@ Route::middleware(['auth', 'role:admin'])->group(function () {
     Route::delete('/suppliers/{supplier}', [SupplierController::class, 'destroy'])->name('suppliers.destroy');
 
     // Category Routes
+    
     Route::get('/categories/create', [CategoryController::class, 'create'])->name('categories.create');
     Route::post('/categories', [CategoryController::class, 'store'])->name('categories.store');
+    
     Route::get('/categories/{category}/edit', [CategoryController::class, 'edit'])->name('categories.edit');
     Route::put('/categories/{category}', [CategoryController::class, 'update'])->name('categories.update');
     Route::delete('/categories/{category}', [CategoryController::class, 'destroy'])->name('categories.destroy');
-
+    
     // Staff Routes
     Route::get('/staff', [StaffController::class, 'index'])->name('staff.index');
     Route::get('/staff/create', [StaffController::class, 'create'])->name('staff.create');
@@ -105,7 +124,8 @@ Route::middleware(['role:staff,admin'])->group(function () {
     // Category Routes
     Route::get('/categories', [CategoryController::class, 'index'])->name('categories.index');
     Route::get('/categories/{category}', [CategoryController::class, 'show'])->name('categories.show');
-
+    Route::get('/categories/detail/{category}', [CategoryController::class, 'detail'])->name('categories.detail');
+  
     // Supplier Routes
     Route::get('/suppliers', [SupplierController::class, 'index'])->name('suppliers.index');
     Route::get('/suppliers/{supplier}', [SupplierController::class, 'show'])->name('suppliers.show');

@@ -9,11 +9,11 @@ class Order extends Model
 {
     use HasFactory;
 
-    protected $fillable = ['doctor_id', 'order_code', 'status', 'total_amount'];
+    protected $fillable = ['user_id', 'order_code', 'status', 'total_amount'];
 
-    public function doctor()
+    public function user()
     {
-        return $this->belongsTo(User::class, 'doctor_id');
+        return $this->belongsTo(User::class, 'user_id');
     }
 
     public function items()

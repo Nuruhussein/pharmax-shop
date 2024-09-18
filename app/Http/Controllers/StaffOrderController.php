@@ -29,7 +29,7 @@ class StaffOrderController extends Controller
             return redirect()->back()->with('error', 'Order not found.');
         }
 
-        $orders = Order::with('doctor')->paginate(10);
+        $orders = Order::with('user')->paginate(10);
         return view('orders.staff.index', compact('orders'));
     }
 
@@ -76,6 +76,7 @@ public function update(Request $request, $orderCode)
                 'total_amount' => $order->items->sum(function ($item) {
                     return $item->quantity * $item->price;
                 }),
+                 'order->user->name' => $order->user->name,
                 'status' => 'pending', // You can set the initial status of the sale here
             ]
         );
@@ -114,7 +115,7 @@ public function update(Request $request, $orderCode)
             
         } 
 
-    return redirect()->route('staff.orders.show', $order->order_code)->with('success', 'Order status updated successfully.');
+    return redirect()->route('staff.orders.index', $order->order_code)->with('success', 'Order status updated successfully.');
 }
 
 
