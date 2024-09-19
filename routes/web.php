@@ -16,7 +16,7 @@ use App\Http\Controllers\StaffOrderController;
 use App\Http\Controllers\DoctorController;
 use App\Http\Controllers\EcommerceController;
 use App\Http\Controllers\CartController;
-
+use App\Http\Controllers\PaymentController;
 /*
 |--------------------------------------------------------------------------
 | Web Routes
@@ -52,9 +52,25 @@ Route::middleware(['auth', 'role:admin'])->group(function () {
  Route::get('add-to-cart/{id}', [CartController::class, 'addToCart'])->name('add_to_cart');
  Route::patch('/update-cart', [CartController::class, 'update'])->name('update_cart');
  Route::delete('/remove-from-cart', [CartController::class, 'remove'])->name('remove_from_cart');
- Route::post('/checkout', [CartController::class, 'checkout'])->name('checkout');
- 
-    // Medicine Routes
+//  Route::post('/checkout', [CartController::class, 'checkout'])->name('checkout');
+ // PaymentController for handling the callback after payment
+// Route to handle the checkout process
+Route::post('/checkout', [CartController::class, 'checkout'])->name('checkout');
+
+// Route for Chapa payment callback
+Route::get('/payment/callback/{reference}', [CartController::class, 'callback'])->name('cart.callback');
+Route::post('/payment/callback/{reference}', [CartController::class, 'callback'])->name('cart.callback');
+// Route::get('/payment/success', [CartController::class, 'paymentSuccess'])->name('payment.success');
+Route::get('/payment/success/{reference}', [CartController::class, 'paymentSuccess'])->name('cart.payment.success');
+Route::get('/receipt/{orderCode}', [PaymentController::class, 'downloadReceipt'])->name('cart.payment.receipt');
+
+// Route::get('/payment/callback/{reference}', [PaymentController::class, 'callback'])->name('payment.callback');
+// Route::post('/payment/callback/{reference}', [PaymentController::class, 'callback'])->name('payment.callback.post');
+
+   
+
+
+// Medicine Routes
   
     Route::get('/medicines/create', [MedicineController::class, 'create'])->name('medicines.create');
     Route::post('/medicines', [MedicineController::class, 'store'])->name('medicines.store');

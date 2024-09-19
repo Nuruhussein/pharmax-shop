@@ -17,21 +17,26 @@
                 @php $total = 0 @endphp
                 @if(session('cart'))
                     @foreach(session('cart') as $id => $details)
-                        @php $total += $details['price'] * $details['quantity'] @endphp
+                        @php 
+                            $price = $details['price'] ?? 0;
+                            $quantity = $details['quantity'] ?? 1;
+                            $subtotal = $price * $quantity;
+                            $total += $subtotal;
+                        @endphp
                         <tr data-id="{{ $id }}" class="hover:bg-gray-50">
                             <td data-th="medicine" class="px-6 py-4 whitespace-nowrap">
                                 <div class="flex items-center space-x-4">
-                                    <img src="{{ asset('storage/' . $details['image']) }}" class="w-24 h-24 object-cover rounded-md" alt="{{ $details['name'] }}" />
+                                    <img src="{{ asset('storage/' . ($details['image'] ?? '')) }}" class="w-24 h-24 object-cover rounded-md" alt="{{ $details['name'] ?? 'Medicine' }}" />
                                     <div>
-                                        <h4 class="text-base font-semibold text-gray-900">{{ $details['name'] }}</h4>
+                                        <h4 class="text-base font-semibold text-gray-900">{{ $details['name'] ?? 'Unknown Medicine' }}</h4>
                                     </div>
                                 </div>
                             </td>
-                            <td data-th="Price" class="px-6 py-4 whitespace-nowrap text-sm text-gray-600">${{ $details['price'] }}</td>
+                            <td data-th="Price" class="px-6 py-4 whitespace-nowrap text-sm text-gray-600">${{ number_format($price, 2) }}</td>
                             <td data-th="Quantity" class="px-6 py-4 whitespace-nowrap">
-                                <input type="number" value="{{ $details['quantity'] }}" class="form-input mt-1 block w-full sm:text-sm sm:leading-5 border-gray-300 rounded-md shadow-sm focus:ring-indigo-500 focus:border-indigo-500 cart_update" min="1" />
+                                <input type="number" value="{{ $quantity }}" class="form-input mt-1 block w-full sm:text-sm sm:leading-5 border-gray-300 rounded-md shadow-sm focus:ring-indigo-500 focus:border-indigo-500 cart_update" min="1" />
                             </td>
-                            <td data-th="Subtotal" class="px-6 py-4 whitespace-nowrap text-sm text-gray-600 text-center">${{ $details['price'] * $details['quantity'] }}</td>
+                            <td data-th="Subtotal" class="px-6 py-4 whitespace-nowrap text-sm text-gray-600 text-center">${{ number_format($subtotal, 2) }}</td>
                             <td class="px-6 py-4 whitespace-nowrap text-right text-sm font-medium">
                                 <button class="text-red-600 hover:text-red-800 focus:outline-none cart_remove"><i class="fa fa-trash-o"></i> Delete</button>
                             </td>
@@ -41,8 +46,8 @@
             </tbody>
             <tfoot>
                 <tr>
-                    <td colspan="5"  class="px-6 py-4 text-right text-lg font-semibold text-gray-900">
-                        <strong>Total: <span id="total" class="pl-6 ml-2">${{ $total }}</span></strong>
+                    <td colspan="5" class="px-6 py-4 text-right text-lg font-semibold text-gray-900">
+                        <strong>Total: <span id="total" class="pl-6 ml-2">${{ number_format($total, 2) }}</span></strong>
                     </td>
                 </tr>
                 <tr>
@@ -50,12 +55,12 @@
                         <a href="{{ url('/ecommerce') }}" class="inline-flex items-center px-4 py-2 border border-transparent rounded-md shadow-sm text-white bg-red-600 hover:bg-red-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-red-500">
                             <i class="fa fa-arrow-left"></i> Continue Shopping
                         </a>
-                        <button id="checkout" class="inline-flex items-center px-4 py-2 border border-transparent rounded-md shadow-sm text-white bg-green-600 hover:bg-green-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-green-500">
-                            <i class="fa fa-money"></i> Checkout
-                        </button>
-                        <div id="checkout-loader" style="display:none;" class="mt-2 text-sm text-gray-500">
-                            <i class="fa fa-spinner fa-spin"></i> Processing your order...
-                        </div>
+                        <form action="{{ route('checkout') }}" method="POST" class="inline">
+                            @csrf
+                            <button type="submit" class="inline-flex items-center px-4 py-2 border border-transparent rounded-md shadow-sm text-white bg-green-600 hover:bg-green-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-green-500">
+                                <i class="fa fa-money"></i> Checkout
+                            </button>
+                        </form>
                     </td>
                 </tr>
             </tfoot>
@@ -73,7 +78,7 @@
 
         var ele = $(this);
         var quantity = ele.val();
-        var price = ele.closest("tr").find("td[data-th='Price']").text().replace('$', '');
+        var price = parseFloat(ele.closest("tr").find("td[data-th='Price']").text().replace('$', ''));
         var subtotal = price * quantity;
 
         // Update the subtotal
@@ -116,29 +121,6 @@
                 }
             });
         }
-    });
-
-    // Checkout Process
-    $("#checkout").click(function (e) {
-        e.preventDefault();
-        $("#checkout-loader").show(); // Show loader
-
-        $.ajax({
-            url: '{{ route('checkout') }}',
-            method: "POST",
-            data: {
-                _token: '{{ csrf_token() }}'
-            },
-            success: function (response) {
-                $("#checkout-loader").hide(); // Hide loader on success
-                alert('Order placed successfully!');
-                window.location.href = '{{ url("/ecommerce") }}'; // Redirect to confirmation or product list
-            },
-            error: function () {
-                $("#checkout-loader").hide(); // Hide loader on error
-                alert('There was an error placing your order. Please try again.');
-            }
-        });
     });
 
     // Update the total price dynamically

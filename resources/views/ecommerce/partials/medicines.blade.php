@@ -2,7 +2,7 @@
 <div class="grid grid-cols-1 gap-8 mt-8 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4">
     @foreach ($medicines as $medicine)
         <div class="flex flex-col items-center justify-center w-full max-w-lg mx-auto">
-            <img class="object-cover w-full rounded-md h-72 xl:h-80" src="{{ asset('storage/'.$medicine->photo) }}" alt="{{ $medicine->name }}">
+            <img class="object-cover w-full rounded-md h-72 xl:h-80" src="{{ asset('storage/'.$medicine->image) }}" alt="{{ $medicine->name }}">
             <h4 class="mt-2 text-lg font-medium text-gray-700 dark:text-gray-200">{{ $medicine->name }}</h4>
             <p class="text-blue-500">${{ $medicine->price }}</p>
 
