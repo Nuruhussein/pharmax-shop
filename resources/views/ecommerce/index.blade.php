@@ -3,60 +3,15 @@
 @section('content')
 
    <div class="bg-gradient-to-b ">
-    <header class="">
-        <div class="px-4 mx-auto sm:px-6 lg:px-8">
-            <div class="flex items-center justify-between h-16 lg:h-20">
-                <div class="flex-shrink-0">
-                    <a href="#" title="" class="flex">
-                        <img class="w-auto h-8" src="https://cdn.rareblocks.xyz/collection/celebration/images/hero/2/logo.svg" alt="" />
-                    </a>
-                </div>
-
-                <button type="button" class="inline-flex p-1 text-black transition-all duration-200 border border-black lg:hidden focus:bg-gray-100 hover:bg-gray-100">
-                    <!-- Menu open: "hidden", Menu closed: "block" -->
-                    <svg class="block w-6 h-6" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h16" />
-                    </svg>
-
-                    <!-- Menu open: "block", Menu closed: "hidden" -->
-                    <svg class="hidden w-6 h-6" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"></path>
-                    </svg>
-                </button>
-
-                <div class="hidden ml-auto lg:flex lg:items-center lg:justify-center lg:space-x-10">
-                    <a href="#" title="" class="text-base font-semibold text-black transition-all duration-200 hover:text-opacity-80"> Features </a>
-
-                    <a href="#" title="" class="text-base font-semibold text-black transition-all duration-200 hover:text-opacity-80"> Solutions </a>
-
-                    <a href="#" title="" class="text-base font-semibold text-black transition-all duration-200 hover:text-opacity-80"> Resources </a>
-
-                    <a href="#" title="" class="text-base font-semibold text-black transition-all duration-200 hover:text-opacity-80"> Pricing </a>
-
-                    <div class="w-px h-5 bg-black/20"></div>
-        <a href="{{route('cart')}}" id="cart-count" class="text-red-500 m-0 p-0 ">
-    {{ count((array) session('cart')) }}
-    <svg class="w-6 h-6 text-blue-400 dark:text-white" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="none" viewBox="0 0 24 24">
-        <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 10V6a3 3 0 0 1 3-3v0a3 3 0 0 1 3 3v4m3-2 .917 11.923A1 1 0 0 1 17.92 21H6.08a1 1 0 0 1-.997-1.077L6 8h12Z"/>
-    </svg>
-</a>
-  
-
-                    <a href="{{route('login')}}" title="" class="text-base font-semibold text-black transition-all duration-200 hover:text-opacity-80"> Log in </a>
-
-                    <a href="#" title="" class="inline-flex items-center justify-center px-5 py-2.5 text-base font-semibold text-black border-2 border-black hover:bg-black hover:text-white transition-all duration-200 focus:bg-black focus:text-white" role="button"> Try for free </a>
-                </div>
-            </div>
-        </div>
-    </header>
-@if(session('success'))
+ 
+{{-- @if(session('success'))
     <div class="bg-green-100 border border-green-400 text-green-700 px-4 py-3 rounded relative" role="alert">
         {{ session('success') }}
     </div>
-@endif
+@endif --}}
 
     <section class="py-10 sm:py-16 lg:py-24">
-        <div class="px-4 mx-auto max-w-7xl sm:px-6 lg:px-8">
+        <div class="px-4 mt-16 mx-auto max-w-7xl sm:px-6 lg:px-8">
             <div class="grid items-center grid-cols-1 gap-12 lg:grid-cols-2">
                 <div>
                     <h1 class="text-4xl font-bold text-black sm:text-6xl lg:text-7xl">
@@ -83,7 +38,7 @@
   class="font-sans flex justify-center gap-2 items-center mx-auto shadow-xl text-lg bg-gray-50 backdrop-blur-md lg:font-semibold isolation-auto border-gray-50 before:absolute before:w-full before:transition-all before:duration-700 before:hover:w-full before:-left-full before:hover:left-0 before:rounded-full before:bg-emerald-500 hover:text-gray-50 before:-z-10 before:aspect-square before:hover:scale-150 before:hover:duration-700 relative z-10 px-4 py-2 overflow-hidden border-2 rounded-full group"
   type="submit"
 >
-  Explore
+  Shope Now
   <svg
     xmlns="http://www.w3.org/2000/svg"
     viewBox="0 0 16 19"
@@ -109,7 +64,7 @@
                 <div>
                     
                     <div class="relative">
-    <img class="w-64 rounded-full z-10 absolute top-0 left-0" src="https://th.bing.com/th/id/OIP.6t39rqGtAzPnc35mZ59rpgHaEP?rs=1&pid=ImgDetMain" alt="" />
+    <img class="w-64 animate-pulse rounded-full z-10 absolute top-0 left-0" src="https://th.bing.com/th/id/OIP.6t39rqGtAzPnc35mZ59rpgHaEP?rs=1&pid=ImgDetMain" alt="" />
     <img class="w-full z-0" src="https://th.bing.com/th/id/R.99400b6481d40b2997bcfc96b1f83f84?rik=dmYSeVUOU4AcdA&pid=ImgRaw&r=0" alt="" />
 </div>
 
@@ -164,7 +119,7 @@
                             <h1 class="title-font text-lg font-medium text-gray-400 mb-3">{{ $category->name }}</h1>
                             <p class="leading-relaxed mb-3">{{ $category->description ?? 'No description available.' }}</p>
                             <div class="flex items-center flex-wrap ">
-                                <a href="#" class="text-indigo-500 inline-flex items-center md:mb-2 lg:mb-0">Learn More
+                                <a href="{{ route('ecommerce.category.show', $category->id) }}" class="text-indigo-500 inline-flex items-center md:mb-2 lg:mb-0">Learn More
                                     <svg class="w-4 h-4 ml-2" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2" fill="none" stroke-linecap="round" stroke-linejoin="round">
                                         <path d="M5 12h14"></path>
                                         <path d="M12 5l7 7-7 7"></path>
@@ -191,18 +146,18 @@
 </section>
 
 
-{{-- chmari --}}
+{{-- chmari1 --}}
 <section class="py-10 bg-gray-50 sm:py-16 lg:py-24">
     <div class="px-4 mx-auto max-w-7xl sm:px-6 lg:px-8">
         <div class="grid items-stretch gap-y-10 md:grid-cols-2 md:gap-x-20">
             <div class="relative grid grid-cols-2 gap-6 mt-10 md:mt-0">
                 <div class="overflow-hidden aspect-w-3 aspect-h-4">
-                    <img class="object-cover object-top origin-top scale-150" src="https://cdn.rareblocks.xyz/collection/celebration/images/features/2/team-work.jpg" alt="" />
+                    <img class="object-cover object-top origin-top scale-150" src="https://th.bing.com/th/id/OIP.WO7niT25dFv9kLZri1rq_gHaHa?w=856&h=856&rs=1&pid=ImgDetMain" alt="" />
                 </div>
 
                 <div class="relative">
                     <div class="h-full overflow-hidden aspect-w-3 aspect-h-4">
-                        <img class="object-cover scale-150 lg:origin-bottom-right" src="https://cdn.rareblocks.xyz/collection/celebration/images/features/2/woman-working-on-laptop.jpg" alt="" />
+                        <img class="object-fill  scale-150 lg:origin-bottom-right" src="https://th.bing.com/th/id/OIP.ROWyAE9vzQFkmcuHcmQd3QHaJQ?rs=1&pid=ImgDetMain" alt="" />
                     </div>
 
                     <div class="absolute inset-0 grid w-full h-full place-items-center">
@@ -236,97 +191,64 @@
 
 
 
-<!-- component -->
-<!-- resources/views/ecommerce/index.blade.php -->
+<!-- source: https://github.com/mfg888/Responsive-Tailwind-CSS-Grid/blob/main/index.html -->
 
-{{-- @extends('layouts.app')
-
-@section('content') --}}
-<!-- Main Section -->
-<section class="bg-white my-10 dark:bg-gray-900">
-    <div class="container px-6 py-8 mx-auto">
-        <div class="lg:flex lg:-mx-2">
-            <!-- Categories Sidebar -->
-            <div class="space-y-3 lg:w-1/5 lg:px-2 lg:space-y-4">
-                @foreach ($allCategories as $category)
-                    <a href="#" data-category-id="{{ $category->id }}" 
-                       class="category-link block font-medium text-gray-500 dark:text-gray-300 hover:underline {{ request()->query('category') == $category->id ? 'text-blue-600 dark:text-blue-500' : '' }}">
-                        {{ $category->name }}
-                    </a>
-                @endforeach
-            </div>
-         
-            <!-- medicines Grid -->
-            <div class="mt-6 lg:mt-0 lg:px-2 lg:w-4/5">
-                
-<div class="flex items-center justify-between text-sm tracking-widest uppercase">
-    <p class="text-gray-500 dark:text-gray-300">{{ count($medicines) }} Items</p>
-    <div class="flex items-center">
-        <p class="text-gray-500 dark:text-gray-300">Sort</p>
-    {{-- <form action="{{ route('ecommerce.index') }}" method="GET" id="sortForm"> --}}
-            <select name="sort"  id="sortmedicines" onchange="document.getElementById('sortForm').submit();" class="font-medium text-gray-700 bg-transparent dark:text-gray-500 focus:outline-none">
-                <option value="">Select</option>
-                <option value="ascPrice" {{ request('sort') == 'ascPrice' ? 'selected' : '' }}>Price: Low to High</option>
-                <option value="descPrice" {{ request('sort') == 'descPrice' ? 'selected' : '' }}>Price: High to Low</option>
-            </select>
-        {{-- </form> --}}
-    </div>
+<div class="text-center p-10 bg-gradient-to-r from-gray-50 to-white text-gray-700 rounded-lg">
+    <h1 class="font-bold text-4xl mb-4">Featured Products</h1>
+    <h1 class="text-3xl">Shop Now</h1>
 </div>
-             <div  id="medicinesContainer">
-                @include('ecommerce.partials.medicines', ['medicines' => $medicines])
-             </div>
+
+<section id="Medicines" class="w-fit mx-auto grid grid-cols-1 lg:grid-cols-3 md:grid-cols-2 justify-items-center justify-center gap-y-20 gap-x-14 mt-10 mb-14">
+    @foreach ($medicines as $medicine)
+    <!-- Medicine card -->
+    <div class="w-72 bg-white shadow-md rounded-xl duration-500 hover:scale-105 hover:shadow-xl">
+        <a href="#">
+            <img src="{{ asset('storage/'.$medicine->image) }}" alt="Medicine Image" class="h-80 w-72 object-cover rounded-t-xl" />
+            <div class="px-4 py-3 w-72">
+                <span class="text-gray-400 mr-3 uppercase text-xs">Medicine</span>
+                <p class="text-lg font-bold text-black truncate block capitalize">{{ $medicine->name }}</p>
+                <div class="flex items-center justify-between">
+                    <p class="text-lg font-semibold text-black cursor-auto my-3">${{ $medicine->price }}</p>
+                    <!-- Add to Cart Button -->
+                    <a href="#" data-id="{{ $medicine->id }}" class="add-to-cart relative mx-auto py-3 px-4 transition-all duration-200 ease-in-out border-none bg-transparent cursor-pointer group">
+                        <span class="relative z-10 font-ubuntu text-lg font-bold tracking-wide text-[#234567]">Add to Cart</span>
+                        <i class="fas fa-arrow-right ml-2 text-[#234567]"></i>
+                        <span class="absolute top-0 left-0 block rounded-full bg-gradient-to-r from-fuchsia-100 to-blue-600 w-11 h-11 transition-all duration-300 ease-in-out group-hover:w-full"></span>
+                    </a>
+                </div>
             </div>
-         
-        </div>
+        </a>
     </div>
+    @endforeach
 </section>
-   <script>
-    document.getElementById('sortmedicines').addEventListener('change', function() {
-        var sortValue = this.value;
 
-        // AJAX request
-        fetch(`?sort=${sortValue}`, {
-            headers: {
-                'X-Requested-With': 'XMLHttpRequest'
-            }
-        })
-        .then(response => response.text())
-        .then(data => {
-            document.getElementById('medicinesContainer').innerHTML = data;
-        })
-        .catch(error => console.error('Error:', error));
-    });
+<div class="mt-4 mb-4 flex justify-center">
+    {{ $medicines->links('vendor.pagination.tailwind') }}
+</div>
 
 
 
 
+<!-- 🛑 Grid Section - Ends Here -->
 
-    $(document).ready(function() {
-        $('.category-link').on('click', function(e) {
-            e.preventDefault(); // Prevent the default link behavior
 
-            var categoryId = $(this).data('category-id');
+{{-- <!-- credit -->
+<div class="text-center py-10 px-10">
+    <h2 class="font-bold text-2xl md:text-4xl mb-4">Thanks to <a href="https://unsplash.com/@nixcreative"
+            class="underline font-black">Tyler Nix</a> for those AMAZING product images!</h2>
+</div>
 
-            $.ajax({
-                url: "{{ route('ecommerce.index') }}",
-                method: 'GET',
-                data: {
-                    category: categoryId
-                },
-                success: function(response) {
-                    $('#medicinesContainer').html(response);
 
-                    // Update active category link style
-                    $('.category-link').removeClass('text-blue-600 dark:text-blue-500');
-                    $('[data-category-id="' + categoryId + '"]').addClass('text-blue-600 dark:text-blue-500');
-                },
-                error: function(xhr) {
-                    console.log('Error:', xhr);
-                }
-            });
+<!-- Support Me 🙏🥰 -->
+<script src="https://storage.ko-fi.com/cdn/scripts/overlay-widget.js"></script>
+<script>
+    kofiWidgetOverlay.draw('mohamedghulam', {
+            'type': 'floating-chat',
+            'floating-chat.donateButton.text': 'Support me',
+            'floating-chat.donateButton.background-color': '#323842',
+            'floating-chat.donateButton.text-color': '#fff'
         });
-    });
-</script>
+</script> --}}
 
 
 
@@ -339,7 +261,7 @@
 
                 <div class="relative max-w-xs ml-auto">
                     <div class="overflow-hidden aspect-w-3 aspect-h-4">
-                        <img class="object-cover w-full h-full scale-150" src="https://cdn.rareblocks.xyz/collection/celebration/images/features/3/man-woman-discussing.jpg" alt="" />
+                        <img class="object-cover w-full h-full scale-150" src="https://plus.unsplash.com/premium_photo-1661770294094-06167872e079?w=500&auto=format&fit=crop&q=60&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxzZWFyY2h8MTN8fHBoYXJtYWN5fGVufDB8fDB8fHww" alt="" />
                     </div>
 
                     <div class="absolute bottom-0 -left-16">
@@ -399,7 +321,7 @@
           <a href="#">
            {{-- <img class="object-cover w-full rounded-md h-72 xl:h-80" src="{{ asset('storage/'.$medicine->photo) }}" alt="{{ $medicine->name }}"> --}}
 
-            <img class="mx-auto h-full dark:hidden" src="{{ asset('storage/'.$medicine->photo) }}" alt="{{ $medicine->name }}" />
+            <img class="mx-auto h-full dark:hidden" src="{{ asset('storage/'.$medicine->image) }}" alt="{{ $medicine->name }}" />
             {{-- <img class="mx-auto hidden h-full dark:block" src="https://flowbite.s3.amazonaws.com/blocks/e-commerce/xbox-dark.svg" alt="" /> --}}
           </a>
         </div>
@@ -488,14 +410,18 @@
           <div class="mt-4 flex items-center justify-between gap-4">
             <p class="text-2xl font-extrabold leading-tight text-gray-900 dark:text-white">${{ $medicine->price }}</p>
 
-            <a href="{{ route('add_to_cart', $medicine->id) }}" class="inline-flex items-center rounded-lg bg-primary-700 px-5 py-2.5 text-sm font-medium text-white hover:bg-primary-800 focus:outline-none focus:ring-4  focus:ring-primary-300 dark:bg-primary-600 dark:hover:bg-primary-700 bg-gradient-to-r from-fuchsia-600 to-blue-600 dark:focus:ring-primary-800" role="button">
-              <svg class="-ms-2 me-2 h-5 w-5" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="none" viewBox="0 0 24 24">
-                <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 4h1.5L8 16m0 0h8m-8 0a2 2 0 1 0 0 4 2 2 0 0 0 0-4Zm8 0a2 2 0 1 0 0 4 2 2 0 0 0 0-4Zm.75-3H7.5M11 7H6.312M17 4v6m-3-3h6" />
-              </svg>
-              Add to cart
-            </a>
+         <a href="#" data-id="{{ $medicine->id }}" class="add-to-cart inline-flex items-center rounded-lg bg-primary-700 px-5 py-2.5 text-sm font-medium text-white hover:bg-primary-800 focus:outline-none focus:ring-4 focus:ring-primary-300 dark:bg-primary-600 dark:hover:bg-primary-700 bg-gradient-to-r from-fuchsia-600 to-blue-600 dark:focus:ring-primary-800" role="button">
+    <svg class="-ms-2 me-2 h-5 w-5" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="none" viewBox="0 0 24 24">
+        <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 4h1.5L8 16m0 0h8m-8 0a2 2 0 1 0 0 4 2 2 0 0 0 0-4Zm8 0a2 2 0 1 0 0 4 2 2 0 0 0 0-4Zm.75-3H7.5M11 7H6.312M17 4v6m-3-3h6" />
+    </svg>
+    Add to cart
+</a>
+
           </div>
         </div>
+
+
+
     </div>
   @endforeach
        
@@ -506,128 +432,33 @@
   </div>
       @endforeach
   <!-- Filter modal -->
+  <script>
+    $(document).ready(function() {
+        $('.add-to-cart').click(function(e) {
+            e.preventDefault();
+            var id = $(this).data('id');
+            
+            $.ajax({
+                url: '/add-to-cart/' + id,
+                method: 'POST',
+                data: {
+                    _token: $('meta[name="csrf-token"]').attr('content')
+                },
+                success: function(response) {
+                    $('#cart-count').text(response.cart_count);
+                    // alert(response.message);
+                },
+                error: function(response) {
+                    // alert('Failed to add item to cart.');
+                }
+            });
+        });
+    });
+</script>
 
-
-
+@include('ecommerce.components.feauters')
 
   {{-- footer --}}
-
-  <section class="py-10 bg-gray-50 sm:pt-16 lg:pt-24">
-    <div class="px-4 mx-auto sm:px-6 lg:px-8 max-w-7xl">
-        <div class="grid grid-cols-2 md:col-span-3 lg:grid-cols-6 gap-y-16 gap-x-12">
-            <div class="col-span-2 md:col-span-3 lg:col-span-2 lg:pr-8">
-                <img class="w-auto h-9" src="https://cdn.rareblocks.xyz/collection/celebration/images/logo.svg" alt="" />
-
-                <p class="text-base leading-relaxed text-gray-600 mt-7">Amet minim mollit non deserunt ullamco est sit aliqua dolor do amet sint. Velit officia consequat duis enim velit mollit.</p>
-
-                <ul class="flex items-center space-x-3 mt-9">
-                    <li>
-                        <a href="#" title="" class="flex items-center justify-center text-white transition-all duration-200 bg-gray-800 rounded-full w-7 h-7 hover:bg-blue-600 focus:bg-blue-600">
-                            <svg class="w-4 h-4" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor">
-                                <path
-                                    d="M19.633 7.997c.013.175.013.349.013.523 0 5.325-4.053 11.461-11.46 11.461-2.282 0-4.402-.661-6.186-1.809.324.037.636.05.973.05a8.07 8.07 0 0 0 5.001-1.721 4.036 4.036 0 0 1-3.767-2.793c.249.037.499.062.761.062.361 0 .724-.05 1.061-.137a4.027 4.027 0 0 1-3.23-3.953v-.05c.537.299 1.16.486 1.82.511a4.022 4.022 0 0 1-1.796-3.354c0-.748.199-1.434.548-2.032a11.457 11.457 0 0 0 8.306 4.215c-.062-.3-.1-.611-.1-.923a4.026 4.026 0 0 1 4.028-4.028c1.16 0 2.207.486 2.943 1.272a7.957 7.957 0 0 0 2.556-.973 4.02 4.02 0 0 1-1.771 2.22 8.073 8.073 0 0 0 2.319-.624 8.645 8.645 0 0 1-2.019 2.083z"
-                                ></path>
-                            </svg>
-                        </a>
-                    </li>
-
-                    <li>
-                        <a href="#" title="" class="flex items-center justify-center text-white transition-all duration-200 bg-gray-800 rounded-full w-7 h-7 hover:bg-blue-600 focus:bg-blue-600">
-                            <svg class="w-4 h-4" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor">
-                                <path d="M13.397 20.997v-8.196h2.765l.411-3.209h-3.176V7.548c0-.926.258-1.56 1.587-1.56h1.684V3.127A22.336 22.336 0 0 0 14.201 3c-2.444 0-4.122 1.492-4.122 4.231v2.355H7.332v3.209h2.753v8.202h3.312z"></path>
-                            </svg>
-                        </a>
-                    </li>
-
-                    <li>
-                        <a href="#" title="" class="flex items-center justify-center text-white transition-all duration-200 bg-gray-800 rounded-full w-7 h-7 hover:bg-blue-600 focus:bg-blue-600">
-                            <svg class="w-4 h-4" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor">
-                                <path d="M11.999 7.377a4.623 4.623 0 1 0 0 9.248 4.623 4.623 0 0 0 0-9.248zm0 7.627a3.004 3.004 0 1 1 0-6.008 3.004 3.004 0 0 1 0 6.008z"></path>
-                                <circle cx="16.806" cy="7.207" r="1.078"></circle>
-                                <path
-                                    d="M20.533 6.111A4.605 4.605 0 0 0 17.9 3.479a6.606 6.606 0 0 0-2.186-.42c-.963-.042-1.268-.054-3.71-.054s-2.755 0-3.71.054a6.554 6.554 0 0 0-2.184.42 4.6 4.6 0 0 0-2.633 2.632 6.585 6.585 0 0 0-.419 2.186c-.043.962-.056 1.267-.056 3.71 0 2.442 0 2.753.056 3.71.015.748.156 1.486.419 2.187a4.61 4.61 0 0 0 2.634 2.632 6.584 6.584 0 0 0 2.185.45c.963.042 1.268.055 3.71.055s2.755 0 3.71-.055a6.615 6.615 0 0 0 2.186-.419 4.613 4.613 0 0 0 2.633-2.633c.263-.7.404-1.438.419-2.186.043-.962.056-1.267.056-3.71s0-2.753-.056-3.71a6.581 6.581 0 0 0-.421-2.217zm-1.218 9.532a5.043 5.043 0 0 1-.311 1.688 2.987 2.987 0 0 1-1.712 1.711 4.985 4.985 0 0 1-1.67.311c-.95.044-1.218.055-3.654.055-2.438 0-2.687 0-3.655-.055a4.96 4.96 0 0 1-1.669-.311 2.985 2.985 0 0 1-1.719-1.711 5.08 5.08 0 0 1-.311-1.669c-.043-.95-.053-1.218-.053-3.654 0-2.437 0-2.686.053-3.655a5.038 5.038 0 0 1 .311-1.687c.305-.789.93-1.41 1.719-1.712a5.01 5.01 0 0 1 1.669-.311c.951-.043 1.218-.055 3.655-.055s2.687 0 3.654.055a4.96 4.96 0 0 1 1.67.311 2.991 2.991 0 0 1 1.712 1.712 5.08 5.08 0 0 1 .311 1.669c.043.951.054 1.218.054 3.655 0 2.436 0 2.698-.043 3.654h-.011z"
-                                ></path>
-                            </svg>
-                        </a>
-                    </li>
-
-                    <li>
-                        <a href="#" title="" class="flex items-center justify-center text-white transition-all duration-200 bg-gray-800 rounded-full w-7 h-7 hover:bg-blue-600 focus:bg-blue-600">
-                            <svg class="w-4 h-4" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor">
-                                <path
-                                    fill-rule="evenodd"
-                                    clip-rule="evenodd"
-                                    d="M12.026 2c-5.509 0-9.974 4.465-9.974 9.974 0 4.406 2.857 8.145 6.821 9.465.499.09.679-.217.679-.481 0-.237-.008-.865-.011-1.696-2.775.602-3.361-1.338-3.361-1.338-.452-1.152-1.107-1.459-1.107-1.459-.905-.619.069-.605.069-.605 1.002.07 1.527 1.028 1.527 1.028.89 1.524 2.336 1.084 2.902.829.091-.645.351-1.085.635-1.334-2.214-.251-4.542-1.107-4.542-4.93 0-1.087.389-1.979 1.024-2.675-.101-.253-.446-1.268.099-2.64 0 0 .837-.269 2.742 1.021a9.582 9.582 0 0 1 2.496-.336 9.554 9.554 0 0 1 2.496.336c1.906-1.291 2.742-1.021 2.742-1.021.545 1.372.203 2.387.099 2.64.64.696 1.024 1.587 1.024 2.675 0 3.833-2.33 4.675-4.552 4.922.355.308.675.916.675 1.846 0 1.334-.012 2.41-.012 2.737 0 .267.178.577.687.479C19.146 20.115 22 16.379 22 11.974 22 6.465 17.535 2 12.026 2z"
-                                ></path>
-                            </svg>
-                        </a>
-                    </li>
-                </ul>
-            </div>
-
-            <div>
-                <p class="text-sm font-semibold tracking-widest text-gray-400 uppercase">Company</p>
-
-                <ul class="mt-6 space-y-4">
-                    <li>
-                        <a href="#" title="" class="flex text-base text-black transition-all duration-200 hover:text-blue-600 focus:text-blue-600"> About </a>
-                    </li>
-
-                    <li>
-                        <a href="#" title="" class="flex text-base text-black transition-all duration-200 hover:text-blue-600 focus:text-blue-600"> Features </a>
-                    </li>
-
-                    <li>
-                        <a href="#" title="" class="flex text-base text-black transition-all duration-200 hover:text-blue-600 focus:text-blue-600"> Works </a>
-                    </li>
-
-                    <li>
-                        <a href="#" title="" class="flex text-base text-black transition-all duration-200 hover:text-blue-600 focus:text-blue-600"> Career </a>
-                    </li>
-                </ul>
-            </div>
-
-            <div>
-                <p class="text-sm font-semibold tracking-widest text-gray-400 uppercase">Help</p>
-
-                <ul class="mt-6 space-y-4">
-                    <li>
-                        <a href="#" title="" class="flex text-base text-black transition-all duration-200 hover:text-blue-600 focus:text-blue-600"> Customer Support </a>
-                    </li>
-
-                    <li>
-                        <a href="#" title="" class="flex text-base text-black transition-all duration-200 hover:text-blue-600 focus:text-blue-600"> Delivery Details </a>
-                    </li>
-
-                    <li>
-                        <a href="#" title="" class="flex text-base text-black transition-all duration-200 hover:text-blue-600 focus:text-blue-600"> Terms & Conditions </a>
-                    </li>
-
-                    <li>
-                        <a href="#" title="" class="flex text-base text-black transition-all duration-200 hover:text-blue-600 focus:text-blue-600"> Privacy Policy </a>
-                    </li>
-                </ul>
-            </div>
-
-            <div class="col-span-2 md:col-span-1 lg:col-span-2 lg:pl-8">
-                <p class="text-sm font-semibold tracking-widest text-gray-400 uppercase">Subscribe to newsletter</p>
-
-                <form action="#" method="POST" class="mt-6">
-                    <div>
-                        <label for="email" class="sr-only">Email</label>
-                        <input type="email" name="email" id="email" placeholder="Enter your email" class="block w-full p-4 text-black placeholder-gray-500 transition-all duration-200 bg-white border border-gray-200 rounded-md focus:outline-none focus:border-blue-600 caret-blue-600" />
-                    </div>
-
-                    <button type="submit" class="inline-flex items-center justify-center px-6 py-4 mt-3 font-semibold text-white transition-all duration-200 bg-gradient-to-r from-fuchsia-600 to-blue-600 rounded-md hover:bg-blue-700 focus:bg-blue-700">Subscribe</button>
-                </form>
-            </div>
-        </div>
-
-        <hr class="mt-16 mb-10 border-gray-200" />
-
-        <p class="text-sm text-center text-gray-600">© Copyright 2021, All Rights Reserved by Postcraft</p>
-    </div>
-</section>
 
 </section>
 @endsection

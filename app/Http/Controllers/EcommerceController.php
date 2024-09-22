@@ -15,6 +15,40 @@ class EcommerceController extends Controller
         // Fetch the latest 3 categories
         // $categories = Category::latest()->take(3)->get();
          $categories = Category::latest()->paginate(3);
+        // $allCategories =Category::all();
+          $query = Medicine::query();
+
+    // if ($request->query('category')) {
+    //     $categoryId = $request->query('category');
+    //     $query->where('category_id', $categoryId);
+    // }
+
+    // if ($request->query('sort')) {
+    //     if ($request->query('sort') == 'ascPrice') {
+    //         $query->orderBy('price', 'asc');
+    //     } elseif ($request->query('sort') == 'descPrice') {
+    //         $query->orderBy('price', 'desc');
+    //     }
+    // }
+
+    $medicines = $query->paginate(6); // Paginate results
+
+        //   if ($request->ajax()) {
+        //     return view('ecommerce.partials.medicines', compact('medicines'))->render();
+        // }
+        // Return the data to the view
+        return view('ecommerce.index', compact('medicines', 'categories'));
+    }
+
+ public function show(Category $category)
+    {
+        return view('ecommerce.category.show', compact('category'));
+    }
+    
+
+ public function shop(Request $request)
+    {
+        //   $categories = Category::latest()->paginate(3);
         $allCategories =Category::all();
           $query = Medicine::query();
 
@@ -31,15 +65,13 @@ class EcommerceController extends Controller
         }
     }
 
-    $medicines = $query->paginate(12); // Paginate results
+    $medicines = $query->get(); // Paginate results
 
           if ($request->ajax()) {
             return view('ecommerce.partials.medicines', compact('medicines'))->render();
         }
-        // Return the data to the view
-        return view('ecommerce.index', compact('medicines', 'categories','allCategories'));
+        return view('ecommerce.shop.index',compact('medicines', 'allCategories'));
     }
-
 
     //   public function filterByCategory($categoryId)
     // {

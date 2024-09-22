@@ -30,26 +30,28 @@ class CartController extends Controller
     {
         return view('ecommerce.cart.index');
     }
-    public function addToCart($id)
-    {
-        $medicine = Medicine::findOrFail($id);
- 
-        $cart = session()->get('cart', []);
- 
-        if(isset($cart[$id])) {
-            $cart[$id]['quantity']++;
-        }  else {
-            $cart[$id] = [
-                "name" => $medicine->name,
-                "image" => $medicine->image,
-                "price" => $medicine->price,
-                "quantity" => 1
-            ];
-        }
- 
-        session()->put('cart', $cart);
-        return redirect()->back()->with('success', 'medicene added to cart successfully!');
+public function addToCart(Request $request, $id)
+{
+    $medicine = Medicine::find($id);
+
+    $cart = session()->get('cart', []);
+
+    if(isset($cart[$id])) {
+        $cart[$id]['quantity']++;
+    } else {
+        $cart[$id] = [
+            "name" => $medicine->name,
+            "image" => $medicine->image,
+            "price" => $medicine->price,
+            "quantity" => 1
+        ];
     }
+
+    session()->put('cart', $cart);
+
+    return response()->json(['cart_count' => count($cart), 'message' => 'Medicine added to cart successfully!']);
+}
+
  
     public function update(Request $request)
     {

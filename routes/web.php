@@ -48,8 +48,10 @@ Route::middleware(['auth', 'role:admin'])->group(function () {
 
         ///ecommerce 
  Route::get('/ecommerce', [EcommerceController::class, 'index'])->name('ecommerce.index');
+  Route::get('/ecommerce/shop', [EcommerceController::class, 'shop'])->name('ecommerce.shop');
+ Route::get('/ecommerce/category/{category}', [EcommerceController::class, 'show'])->name('ecommerce.category.show');
  Route::get('cart', [CartController::class, 'cart'])->name('cart');
- Route::get('add-to-cart/{id}', [CartController::class, 'addToCart'])->name('add_to_cart');
+ Route::post('add-to-cart/{id}', [CartController::class, 'addToCart'])->name('add_to_cart');
  Route::patch('/update-cart', [CartController::class, 'update'])->name('update_cart');
  Route::delete('/remove-from-cart', [CartController::class, 'remove'])->name('remove_from_cart');
 //  Route::post('/checkout', [CartController::class, 'checkout'])->name('checkout');

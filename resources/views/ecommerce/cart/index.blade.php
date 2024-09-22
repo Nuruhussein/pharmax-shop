@@ -1,16 +1,16 @@
 @extends('layouts.commerce')
 
 @section('content')
-<div class="p-6 bg-white rounded-lg shadow-lg">
-    <div class="overflow-x-auto">
-        <table id="cart" class="min-w-full divide-y divide-gray-200">
+<div class="p-4 bg-white rounded-lg shadow-lg">
+    <div class="mt-20 overflow-x-auto">
+        <table id="cart" class="min-w-full divide-y divide-gray-200 max-w-5xl mx-auto">
             <thead class="bg-gray-50">
                 <tr>
-                    <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider" style="width:50%">Medicine</th>
-                    <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider" style="width:10%">Price</th>
-                    <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider" style="width:8%">Quantity</th>
-                    <th class="px-6 py-3 text-xs font-medium text-gray-500 uppercase tracking-wider text-center" style="width:22%">Subtotal</th>
-                    <th class="px-6 py-3" style="width:10%"></th>
+                    <th class="px-4 py-2 text-left text-xs font-medium text-gray-500 uppercase tracking-wider" style="width:40%">Medicine</th>
+                    <th class="px-4 py-2 text-left text-xs font-medium text-gray-500 uppercase tracking-wider" style="width:15%">Price</th>
+                    <th class="px-4 py-2 text-left text-xs font-medium text-gray-500 uppercase tracking-wider" style="width:10%">Quantity</th>
+                    <th class="px-4 py-2 text-xs font-medium text-gray-500 uppercase tracking-wider text-center" style="width:25%">Subtotal</th>
+                    <th class="px-4 py-2" style="width:10%"></th>
                 </tr>
             </thead>
             <tbody class="bg-white divide-y divide-gray-200">
@@ -24,21 +24,23 @@
                             $total += $subtotal;
                         @endphp
                         <tr data-id="{{ $id }}" class="hover:bg-gray-50">
-                            <td data-th="medicine" class="px-6 py-4 whitespace-nowrap">
-                                <div class="flex items-center space-x-4">
-                                    <img src="{{ asset('storage/' . ($details['image'] ?? '')) }}" class="w-24 h-24 object-cover rounded-md" alt="{{ $details['name'] ?? 'Medicine' }}" />
+                            <td data-th="medicine" class="px-4 py-2 whitespace-nowrap">
+                                <div class="flex items-center space-x-3">
+                                    <img src="{{ asset('storage/' . ($details['image'] ?? '')) }}" class="w-16 h-16 object-cover rounded-md" alt="{{ $details['name'] ?? 'Medicine' }}" />
                                     <div>
-                                        <h4 class="text-base font-semibold text-gray-900">{{ $details['name'] ?? 'Unknown Medicine' }}</h4>
+                                        <h4 class="text-sm font-semibold text-gray-900">{{ $details['name'] ?? 'Unknown Medicine' }}</h4>
                                     </div>
                                 </div>
                             </td>
-                            <td data-th="Price" class="px-6 py-4 whitespace-nowrap text-sm text-gray-600">${{ number_format($price, 2) }}</td>
-                            <td data-th="Quantity" class="px-6 py-4 whitespace-nowrap">
-                                <input type="number" value="{{ $quantity }}" class="form-input mt-1 block w-full sm:text-sm sm:leading-5 border-gray-300 rounded-md shadow-sm focus:ring-indigo-500 focus:border-indigo-500 cart_update" min="1" />
+                            <td data-th="Price" class="px-4 py-2 whitespace-nowrap text-sm text-gray-600">${{ number_format($price, 2) }}</td>
+                            <td data-th="Quantity" class="px-4 py-2 whitespace-nowrap">
+                                <input type="number" value="{{ $quantity }}" class="form-input mt-1 block w-16 sm:text-sm border-gray-300 rounded-md shadow-sm focus:ring-indigo-500 focus:border-indigo-500 cart_update" min="1" />
                             </td>
-                            <td data-th="Subtotal" class="px-6 py-4 whitespace-nowrap text-sm text-gray-600 text-center">${{ number_format($subtotal, 2) }}</td>
-                            <td class="px-6 py-4 whitespace-nowrap text-right text-sm font-medium">
-                                <button class="text-red-600 hover:text-red-800 focus:outline-none cart_remove"><i class="fa fa-trash-o"></i> Delete</button>
+                            <td data-th="Subtotal" class="px-4 py-2 whitespace-nowrap text-sm text-gray-600 text-center">${{ number_format($subtotal, 2) }}</td>
+                            <td class="px-4 py-2 whitespace-nowrap text-right text-sm font-medium">
+                                <button class="text-red-600 hover:text-red-800 focus:outline-none cart_remove">
+                                    <i class="fa fa-trash"></i>
+                                </button>
                             </td>
                         </tr>
                     @endforeach
@@ -46,18 +48,18 @@
             </tbody>
             <tfoot>
                 <tr>
-                    <td colspan="5" class="px-6 py-4 text-right text-lg font-semibold text-gray-900">
-                        <strong>Total: <span id="total" class="pl-6 ml-2">${{ number_format($total, 2) }}</span></strong>
+                    <td colspan="5" class="px-4 py-4 text-right text-lg font-semibold text-gray-900">
+                        <strong>Total: <span id="total" class="pl-4">${{ number_format($total, 2) }}</span></strong>
                     </td>
                 </tr>
                 <tr>
-                    <td colspan="5" class="px-6 py-4 text-right">
-                        <a href="{{ url('/ecommerce') }}" class="inline-flex items-center px-4 py-2 border border-transparent rounded-md shadow-sm text-white bg-red-600 hover:bg-red-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-red-500">
+                    <td colspan="5" class="px-4 py-4 text-right">
+                        <a href="{{ url('/ecommerce') }}" class="inline-flex items-center px-3 py-2 border border-transparent rounded-md bg-gradient-to-r from-white to-gray-100 shadow-md focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-red-500">
                             <i class="fa fa-arrow-left"></i> Continue Shopping
                         </a>
                         <form action="{{ route('checkout') }}" method="POST" class="inline">
                             @csrf
-                            <button type="submit" class="inline-flex items-center px-4 py-2 border border-transparent rounded-md shadow-sm text-white bg-green-600 hover:bg-green-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-green-500">
+                            <button type="submit" class="inline-flex items-center mx-4 px-3 py-2 border border-transparent rounded-md shadow-sm bg-gradient-to-r from-white to-blue-600 hover:bg-green-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-green-500">
                                 <i class="fa fa-money"></i> Checkout
                             </button>
                         </form>
