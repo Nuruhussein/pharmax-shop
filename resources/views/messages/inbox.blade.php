@@ -1,3 +1,4 @@
+
 <x-app-layout>
     <div class="container mt-4">
         <div class="chat-wrapper">
@@ -5,13 +6,15 @@
             <div class="chat-sidebar">
                 <h2 class="mb-4">Users</h2>
                 <div class="user-list">
-                    @foreach ($users as $user)
-                        <a href="{{ route('messages.inbox', ['receiver_id' => $user->id]) }}" class="user-item {{ $selectedUserId == $user->id ? 'active' : '' }}">
-                            <div class="user-name">{{ $user->name }}</div>
-                            <div class="user-role">{{ ucfirst($user->role) }}</div>
-                        </a>
-                    @endforeach
-                </div>
+    @foreach ($users as $user)
+        @if (auth()->user()->role !== 'customer' || $user->role !== 'doctor')
+            <a href="{{ route('messages.inbox', ['receiver_id' => $user->id]) }}" class="user-item {{ $selectedUserId == $user->id ? 'active' : '' }}">
+                <div class="user-name">{{ $user->name }}</div>
+                <div class="user-role">{{ ucfirst($user->role) }}</div>
+            </a>
+        @endif
+    @endforeach
+</div>
             </div>
 
             
@@ -56,7 +59,9 @@
             </div>
         </div>
     </div>
-    <style>
+
+
+<style>
         .chat-wrapper {
             display: flex;
             height: 80vh;

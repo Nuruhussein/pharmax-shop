@@ -1,3 +1,4 @@
+@notRole('customer')
 <div class="flex flex-col w-64  min-h-screen sticky bg-gray-900">
     <!-- Logo -->
     <div class="flex items-center justify-center h-20 bg-gray-800">
@@ -161,6 +162,7 @@
                     </li>
                 </ul>
             </li>
+              @if(Auth::user()->role == 'admin')
             <!-- Reports Dropdown -->
 <li class="relative">
     <button class="flex items-center justify-between w-full py-3 px-6 text-lg text-gray-300 hover:text-white rounded-lg transition duration-150 ease-in-out focus:outline-none focus:bg-gray-900"
@@ -204,7 +206,7 @@
                       <i class="fas fa-chart-line mr-3"></i> </i> charts
                 </a>
             </li>
-
+@endif
             
          
             
@@ -267,3 +269,4 @@
         }
     }
 </script>
+@endnotRole

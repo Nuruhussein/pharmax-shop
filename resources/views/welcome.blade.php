@@ -21,5 +21,6 @@
         </style>
     </head>
     <body class="antialiased">
-          @include('auth.login')
+          @include('ecommerce.index')
+          
 </html>
