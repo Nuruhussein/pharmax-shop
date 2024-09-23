@@ -58,6 +58,9 @@ Route::middleware(['auth'])->group(function () {
 
     Route::post('/messages/send', [MessageController::class, 'send'])->name('messages.send');
     Route::get('/messages/inbox', [MessageController::class, 'inbox'])->name('messages.inbox');
+   Route::delete('/messages/delete/{id}', [MessageController::class, 'delete'])->name('messages.delete');
+   Route::get('/messages/edit/{id}', [MessageController::class, 'edit'])->name('messages.edit');
+Route::put('/messages/update/{id}', [MessageController::class, 'update'])->name('messages.update');
 
 // Route to handle the checkout process
 Route::post('/checkout', [CartController::class, 'checkout'])->name('checkout');

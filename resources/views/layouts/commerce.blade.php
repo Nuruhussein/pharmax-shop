@@ -65,7 +65,7 @@
   @if (Auth::check())
 <a href="{{ route('messages.inbox') }}" class="fixed bottom-10 right-14 text-gray-300 m-0 p-0">
    {{-- <i class="fa-solid fa-messages w-6 h-6 text-5xl z-0 text-blue-400 dark:text-white"></i> --}}
-  <i class="fas fa-comments absolute bottom-5  right-3 w-6 h-6 text-blue-200 text-3xl z-0 shadow-2xl  dark:text-white"></i>
+  <i class="fas fa-comments absolute bottom-5  right-3 w-6 h-6 text-blue-400 text-3xl z-0 shadow-2xl  dark:text-white"></i>
 </a>
 @endif
 

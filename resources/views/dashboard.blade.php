@@ -58,6 +58,8 @@
                 <a href="{{ route('medicines.expired') }}" class="mt-2 inline-block text-red-600 hover:underline">View Details</a>
             </div>
         </div>
+          @notRole('staff')
         @include('medicines.index')
+        @endnotRole
     </div>
 </x-app-layout>
