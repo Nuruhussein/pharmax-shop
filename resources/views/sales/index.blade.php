@@ -37,10 +37,19 @@
                                 <td class="border px-6 py-4 text-gray-800">${{ number_format($sale->total_amount, 2) }}</td>
                                 <td class="border px-6 py-4 text-gray-800">{{ $sale->order_id ?? 'N/A' }}</td>
                               
-                                <td class="border px-6 py-4 
-    {{ $sale->order->user->role === 'customer' ? 'text-blue-500' : ($sale->order->user->role === 'doctor' ? 'text-green-500' : 'text-gray-900') }}">
-    {{ $sale->order->user->name ?? 'N/A' }}
+   <td class="border px-6 py-4">
+    @php
+        // Get user from the order, or directly from the sale if there's no order
+        $user = optional(optional($sale->order)->user) ?? optional($sale->user);
+        $role = optional($user)->role;
+    @endphp
+    
+    <span class="{{ $role === 'customer' ? 'text-blue-500' : ($role === 'doctor' ? 'text-green-500' : 'text-gray-900') }}">
+        {{ $user->name ?? 'N/A' }}
+    </span>
 </td>
+
+
 
                                   <td class="border px-6 py-4 text-gray-800">
                                     <span class="{{ $sale->status === 'approved' ? 'text-green-500' : 'text-yellow-500' }}">

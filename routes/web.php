@@ -17,6 +17,8 @@ use App\Http\Controllers\DoctorController;
 use App\Http\Controllers\EcommerceController;
 use App\Http\Controllers\CartController;
 use App\Http\Controllers\PaymentController;
+use App\Http\Controllers\ReportController;
+use App\Http\Controllers\MessageController;
 /*
 |--------------------------------------------------------------------------
 | Web Routes
@@ -39,7 +41,10 @@ Route::get('/dashboard', [DashboardController::class, 'index'])
     ->name('dashboard');
 
 
-
+Route::middleware(['auth'])->group(function () {
+    Route::post('/messages/send', [MessageController::class, 'send'])->name('messages.send');
+    Route::get('/messages/inbox', [MessageController::class, 'inbox'])->name('messages.inbox');
+});
 
 
 
@@ -111,6 +116,8 @@ Route::get('/receipt/{orderCode}', [PaymentController::class, 'downloadReceipt']
     // Analytics and Charts
     Route::get('/charts', [ChartController::class, 'index'])->name('charts.index');
 });
+
+
 Route::middleware(['role:doctor'])->group(function () {
        //orders doctor
     Route::get('/orders', [OrderController::class, 'index'])->name('orders.index');
@@ -125,9 +132,19 @@ Route::middleware(['role:staff,admin'])->group(function () {
     Route::patch('/profile', [ProfileController::class, 'update'])->name('profile.update');
     Route::delete('/profile', [ProfileController::class, 'destroy'])->name('profile.destroy');
     
-    
+
+    // // messages
+    //  Route::post('/messages/send', [MessageController::class, 'send'])->name('messages.send');
+    // Route::get('/messages/inbox', [MessageController::class, 'inbox'])->name('messages.inbox');
+
+
       Route::get('/medicines/expiring-soon', [MedicineController::class, 'expiringSoon'])->name('medicines.expiring_soon');
     Route::get('/medicines/expired', [MedicineController::class, 'expiredMedicines'])->name('medicines.expired');
+
+///
+// reports
+
+Route::get('/reports/{type}', [ReportController::class, 'report'])->name('reports.type');
 
 
 ////staf orders

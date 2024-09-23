@@ -46,13 +46,12 @@ class DashboardController extends Controller
         return $carry + ($medicine->price * $medicine->quantity);
     }, 0);
 
-
+   $expiredMedicinesCount = Medicine::where('expiry_date', '<', Carbon::today())->count();
  $sales= Sale::all();
-
-     $totalsales = $sales->reduce(function ($carry, $sales) {
-        return $carry + ($sales->total_amount);
-    }, 0);
+ 
+  
+    $totalsales = Sale::sum('total_amount');
         // Pass the data to the view
-        return view('dashboard', compact('totalMedicines', 'totalSuppliers', 'expiringSoon', 'medicines', 'categories','totalprice','totalsales'));
+        return view('dashboard', compact('totalMedicines', 'totalSuppliers', 'expiringSoon','expiredMedicinesCount', 'medicines', 'categories','totalprice','totalsales'));
     }
 }

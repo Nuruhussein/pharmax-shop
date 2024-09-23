@@ -229,27 +229,6 @@
 
 
 
-<!-- 🛑 Grid Section - Ends Here -->
-
-
-{{-- <!-- credit -->
-<div class="text-center py-10 px-10">
-    <h2 class="font-bold text-2xl md:text-4xl mb-4">Thanks to <a href="https://unsplash.com/@nixcreative"
-            class="underline font-black">Tyler Nix</a> for those AMAZING product images!</h2>
-</div>
-
-
-<!-- Support Me 🙏🥰 -->
-<script src="https://storage.ko-fi.com/cdn/scripts/overlay-widget.js"></script>
-<script>
-    kofiWidgetOverlay.draw('mohamedghulam', {
-            'type': 'floating-chat',
-            'floating-chat.donateButton.text': 'Support me',
-            'floating-chat.donateButton.background-color': '#323842',
-            'floating-chat.donateButton.text-color': '#fff'
-        });
-</script> --}}
-
 
 
 {{-- chmari2 --}}
@@ -293,7 +272,7 @@
 /////medicines --}}
 
   
-<section class="bg-gray-50 py-8 antialiased dark:bg-gray-900 md:py-12">
+<section class=" py-8 antialiased dark:bg-gray-900 md:py-12">
   @foreach ($categories as $category)
    <div class="mx-auto max-w-screen-xl px-4 2xl:px-0">
     <!-- Heading & Filters -->

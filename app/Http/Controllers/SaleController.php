@@ -18,7 +18,8 @@ class SaleController extends Controller
 
     public function create()
     {
-        $medicines = Medicine::all();
+        
+      $medicines = Medicine::where('expiry_date', '>', now())->get();
         return view('sales.create', compact('medicines'));
     }
 
