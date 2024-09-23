@@ -1,19 +1,20 @@
 <?php
 
-use App\Http\Controllers\ProfileController;
 use Illuminate\Support\Facades\Route;
-use App\Http\Controllers\MedicineController;
-use App\Http\Controllers\SupplierController;
-use App\Http\Controllers\CategoryController;
-use App\Http\Controllers\DashboardController;
-use App\Http\Controllers\StaffController;
 use App\Http\Controllers\SaleController;
-use App\Http\Controllers\PurchaseController;
-use App\Http\Controllers\AnalyticsController;
 use App\Http\Controllers\ChartController;
-use App\Http\Controllers\OrderController; // Add this if you have an OrderController
-use App\Http\Controllers\StaffOrderController;
+use App\Http\Controllers\StaffController;
 use App\Http\Controllers\DoctorController;
+use App\Http\Controllers\MessageController;
+use App\Http\Controllers\ProfileController;
+use App\Http\Controllers\CategoryController;
+use App\Http\Controllers\MedicineController;
+use App\Http\Controllers\PurchaseController;
+use App\Http\Controllers\SupplierController;
+use App\Http\Controllers\AnalyticsController;
+use App\Http\Controllers\DashboardController;
+use App\Http\Controllers\StaffOrderController;
+use App\Http\Controllers\OrderController; // Add this if you have an OrderController
 /*
 |--------------------------------------------------------------------------
 | Web Routes
@@ -30,6 +31,10 @@ Route::get('/', function () {
     return view('welcome');
 });
 
+Route::middleware(['auth'])->group(function () {
+    Route::post('/messages/send', [MessageController::class, 'send'])->name('messages.send');
+    Route::get('/messages/inbox', [MessageController::class, 'inbox'])->name('messages.inbox');
+});
 // Authentication and Verification Routes
 Route::get('/dashboard', [DashboardController::class, 'index'])
     ->middleware(['auth', 'verified','role:staff,admin'])
@@ -44,6 +49,7 @@ Route::middleware(['auth', 'role:admin'])->group(function () {
     Route::get('/medicines/{medicine}/edit', [MedicineController::class, 'edit'])->name('medicines.edit');
     Route::put('/medicines/{medicine}', [MedicineController::class, 'update'])->name('medicines.update');
     Route::delete('/medicines/{medicine}', [MedicineController::class, 'destroy'])->name('medicines.destroy');
+    Route::get('/medicines/{medicine}/compare', [MedicineController::class, 'comparePrices'])->name('medicines.compare');
 
     // Supplier Routes
     Route::get('/suppliers/create', [SupplierController::class, 'create'])->name('suppliers.create');
@@ -141,5 +147,8 @@ Route::middleware(['role:staff,admin'])->group(function () {
 //     Route::put('/orders/{order}', [OrderController::class, 'update'])->name('orders.update');
 //     Route::delete('/orders/{order}', [OrderController::class, 'destroy'])->name('orders.destroy');
 // });
+
+
+
 
 require __DIR__.'/auth.php';

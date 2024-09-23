@@ -106,6 +106,20 @@
             </div>
         @endif
     </div>
+
+    {{-- @foreach($medicines as $medicine)
+    <tr>
+        <td>{{ $medicine->name }}</td>
+        <td>{{ $medicine->category->name }}</td>
+        <td>{{ $medicine->quantity }}</td>
+        <td>{{ $medicine->expiry_date->format('Y-m-d') }}</td>
+        <td>${{ number_format($medicine->price, 2) }}</td>
+        <td>
+            <a href="{{ route('medicines.compare', $medicine->id) }}" class="btn btn-info">Compare Prices</a>
+        </td>
+    </tr>
+    @endforeach --}}
+
 </x-app-layout>
 
 

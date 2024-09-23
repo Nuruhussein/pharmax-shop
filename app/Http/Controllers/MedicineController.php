@@ -157,6 +157,21 @@ public function index(Request $request)
         return view('medicines.index', compact('medicines'));
     }
     
+    public function comparePrices($medicineId)
+    {
+        // Fetch the medicine with supplier and category relationships
+        $medicine = Medicine::with(['supplier', 'category'])
+                    ->where('id', $medicineId)
+                    ->firstOrFail();
+
+        // Find other suppliers offering the same medicine
+        $similarMedicines = Medicine::where('name', $medicine->name)
+                                    ->where('id', '!=', $medicineId) // Exclude the current medicine
+                                    ->with('supplier')
+                                    ->get();
+
+        return view('medicines.compare', compact('medicine', 'similarMedicines'));
+    }
 
 
 }

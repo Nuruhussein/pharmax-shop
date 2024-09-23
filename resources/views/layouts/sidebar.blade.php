@@ -83,7 +83,7 @@
                         @endif
                     </ul>
                 </li>
-                <!-- Purchases Dropdown -->
+                
                 <li class="relative">
                     <button class="flex items-center justify-between w-full py-3 px-6 text-lg text-gray-300 hover:text-white rounded-lg transition duration-150 ease-in-out focus:outline-none focus:bg-gray-900"
                             onclick="toggleDropdown('purchase')">
@@ -107,8 +107,8 @@
                         </li>
                     </ul>
                 </li>
-                <!-- Expiration Dropdown -->
-<li class="relative">
+
+                <li class="relative">
     <button class="flex items-center justify-between w-full py-3 px-6 text-lg text-gray-300 hover:text-white rounded-lg transition duration-150 ease-in-out focus:outline-none focus:bg-gray-900"
             onclick="toggleDropdown('expiration')">
         <span class="flex items-center">
@@ -162,7 +162,16 @@
                    class="flex items-center py-3 px-6 text-lg {{ Request::routeIs('charts.index') ? 'text-white bg-gray-700' : 'text-gray-300' }} hover:text-white hover:bg-gray-700 rounded-lg transition duration-150 ease-in-out">
                       <i class="fas fa-chart-line mr-3"></i> </i> charts
                 </a>
+
             </li>
+
+            <li>
+                <a href="{{ route('messages.inbox') }}" class="flex items-center py-3 px-6 text-lg> {{ Request::routeIs('charts.index') ? 'text-white bg-gray-700' : 'text-gray-300' }} hover:text-white hover:bg-gray-700 rounded-lg transition duration-150 ease-in-out">
+                    <i class="fas fa-comments mr-3"></i> Messages</a>
+            </li>
+
+            
+
          
         </ul>
     </nav>

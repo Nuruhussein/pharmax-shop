@@ -20,4 +20,7 @@ class Medicine extends Model
     {
         return $this->belongsTo(Supplier::class);
     }
+    // protected $casts = [
+    //     'expiry_date' => 'date',  // Cast expiry_date as a date
+    // ];
 }

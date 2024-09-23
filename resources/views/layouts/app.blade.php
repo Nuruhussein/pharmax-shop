@@ -23,6 +23,10 @@
       @notRole('doctor')
           @include('layouts.sidebar')
    @endnotRole
+{{-- 
+   @role('staff')
+   <Div>staf</Div>
+   @endrole --}}
         <!-- Main Content -->
         <div class="flex-1 flex flex-col">
             <!-- Top Navigation -->
