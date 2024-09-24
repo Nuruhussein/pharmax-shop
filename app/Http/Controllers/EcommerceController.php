@@ -14,11 +14,13 @@ class EcommerceController extends Controller
           // $products = Product::all();
         // Fetch the latest 3 categories
         // $categories = Category::latest()->take(3)->get();
-         $categories = Category::latest()->paginate(3);
+        //  $categories = Category::latest()->paginate(3);
         // $allCategories =Category::all();
            $medicines = Medicine::where('expiry_date', '>', now())->paginate(6);
-
-
+     
+ $categories = Category::with(['medicines' => function($query) {
+        $query->where('expiry_date', '>', now())->take(4); // Limit to 4 medicines per category
+    }])->latest()->paginate(3);
     // if ($request->query('category')) {
     //     $categoryId = $request->query('category');
     //     $query->where('category_id', $categoryId);
