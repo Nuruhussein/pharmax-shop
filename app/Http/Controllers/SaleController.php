@@ -47,7 +47,7 @@ class SaleController extends Controller
     foreach ($items as $itemData) {
         $medicine = Medicine::find($itemData['medicine_id']);
         if ($medicine->quantity < $itemData['quantity']) {
-            return redirect()->back()->with('error', "Not enough stock for medicine: {$medicine->name}");
+            return redirect()->back()->with('error', "Not enough stocks for medicine: {$medicine->name}");
         }
     }
 
