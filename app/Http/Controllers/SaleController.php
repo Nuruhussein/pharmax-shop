@@ -82,7 +82,7 @@ class SaleController extends Controller
     // Update total amount of sale
     $sale->update(['total_amount' => $totalAmount]);
 
-    return redirect()->route('sales.index')->with('success', 'Sale created successfully.');
+    return redirect()->route('sales.index')->with('toast', 'Medicine successfully added.');
 }
 
 
