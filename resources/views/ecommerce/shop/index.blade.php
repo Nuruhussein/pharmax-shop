@@ -85,7 +85,7 @@
             var categoryId = $(this).data('category-id');
 
             $.ajax({
-                url: "{{ route('ecommerce.index') }}",
+                url: "{{ route('ecommerce.shop') }}",
                 method: 'GET',
                 data: {
                     category: categoryId
@@ -103,5 +103,28 @@
             });
         });
     });
+    
+    $(document).ready(function() {
+        $('.add-to-cart').click(function(e) {
+            e.preventDefault();
+            var id = $(this).data('id');
+            
+            $.ajax({
+                url: '/add-to-cart/' + id,
+                method: 'POST',
+                data: {
+                    _token: $('meta[name="csrf-token"]').attr('content')
+                },
+                success: function(response) {
+                    $('#cart-count').text(response.cart_count);
+                    // alert(response.message);
+                },
+                error: function(response) {
+                    // alert('Failed to add item to cart.');
+                }
+            });
+        });
+    });
+
 </script>
 @endsection

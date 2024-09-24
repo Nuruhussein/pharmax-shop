@@ -39,6 +39,8 @@ Route::get('/', function () {
             ///ecommerce 
  Route::get('/ecommerce', [EcommerceController::class, 'index'])->name('ecommerce.index');
   Route::get('/ecommerce/shop', [EcommerceController::class, 'shop'])->name('ecommerce.shop');
+  Route::get('/ecommerce/aboutus', [EcommerceController::class, 'about'])->name('ecommerce.about');
+  
  Route::get('/ecommerce/category/{category}', [EcommerceController::class, 'show'])->name('ecommerce.category.show');
  Route::get('cart', [CartController::class, 'cart'])->name('cart');
  Route::post('add-to-cart/{id}', [CartController::class, 'addToCart'])->name('add_to_cart');
