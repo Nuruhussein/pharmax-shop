@@ -165,7 +165,8 @@
     <button class="flex items-center justify-between w-full py-3 px-6 text-lg text-gray-300 hover:text-white rounded-lg transition duration-150 ease-in-out focus:outline-none focus:bg-gray-900"
             onclick="toggleDropdown('reports')">
         <span class="flex items-center">
-            <i class="fas fa-chart-line mr-3"></i> Reports
+         <i class="fas fa-file-alt mr-3"></i> Reports
+
         </span>
         <i id="reportsDropdownArrow" class="fas fa-chevron-right transition-transform duration-300 ease-in-out"></i>
     </button>
