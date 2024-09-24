@@ -77,7 +77,6 @@
 
                 container.append(newMedicineItem);
 
-                // Re-initialize Select2 for new medicine dropdown
                 $('.medicine-dropdown').last().select2({
                     placeholder: 'Search for medicine',
                     allowClear: true
