@@ -22,7 +22,7 @@
 
 </head>
 <body>
-    
+    @if (!request()->is('payment/success/*'))
        <header class=" shadow-md top-0 z-50 fixed w-full mb-16 bg-white" id='nav'>
         <div class="px-4 mx-auto sm:px-6 lg:px-8">
             <div class="flex items-center justify-between h-16 lg:h-20">
@@ -69,12 +69,12 @@
 </a>
 @endif
 
- <a href="{{ route('cart') }}" class=" text-red-500 m-0 p-0">
+ {{-- <a href="{{ route('cart') }}" class=" text-red-500 m-0 p-0 ">
     <span id="cart-count" class="  text-white text-xs rounded-full bg-red-500 w-5 h-5 flex items-center justify-center">
         {{ count((array) session('cart')) }}
     </span>
     <i class="fas fa-shopping-cart w-6 h-6 text-lg text-blue-400 dark:text-white"></i>
-</a>
+</a> --}}
 
 
   
@@ -134,7 +134,7 @@
             </div>
         </div>
     </header>
-
+@endif
     @yield('content')
 
     @yield('scripts')

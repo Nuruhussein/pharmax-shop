@@ -2,6 +2,7 @@
 
 @section('content')
 <div class="p-4 bg-white rounded-lg shadow-lg">
+      
     <div class="mt-20 overflow-x-auto">
         <table id="cart" class="min-w-full divide-y divide-gray-200 max-w-5xl mx-auto">
             <thead class="bg-gray-50">
@@ -68,6 +69,11 @@
             </tfoot>
         </table>
     </div>
+       @if(session('error'))
+            <div class="bg-red-300 text-white px-4 rounded mb-6">
+                {{ session('error') }}
+            </div>
+        @endif
 </div>
 
 @endsection
