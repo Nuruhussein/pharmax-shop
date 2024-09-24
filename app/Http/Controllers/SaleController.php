@@ -37,7 +37,7 @@ class SaleController extends Controller
     ]);
 
     if (!$request->has('items') || !is_array($request->input('items'))) {
-        return redirect()->back()->with('error', 'No sales items provided.');
+        return redirect()->back()->with('error', 'No sales itemss provided.');
     }
 
     $totalAmount = 0;
