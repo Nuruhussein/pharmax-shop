@@ -37,7 +37,7 @@ class SaleController extends Controller
     ]);
 
     if (!$request->has('items') || !is_array($request->input('items'))) {
-        return redirect()->back()->with('error', 'No sales items provided.');
+        return redirect()->back()->with('error', 'No sales itemss provided.');
     }
 
     $totalAmount = 0;
@@ -47,7 +47,7 @@ class SaleController extends Controller
     foreach ($items as $itemData) {
         $medicine = Medicine::find($itemData['medicine_id']);
         if ($medicine->quantity < $itemData['quantity']) {
-            return redirect()->back()->with('error', "Not enough stock for medicine: {$medicine->name}");
+            return redirect()->back()->with('error', "Not enough stocks for medicine: {$medicine->name}");
         }
     }
 
@@ -82,7 +82,7 @@ class SaleController extends Controller
     // Update total amount of sale
     $sale->update(['total_amount' => $totalAmount]);
 
-    return redirect()->route('sales.index')->with('success', 'Sale created successfully.');
+    return redirect()->route('sales.index')->with('toast', 'Medicine successfully added.');
 }
 
 

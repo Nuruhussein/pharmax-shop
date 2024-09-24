@@ -1,5 +1,4 @@
 <x-app-layout>
-    
     <div class="container mx-auto px-4 py-8">
         <h1 class="text-4xl font-bold mb-6 text-blue-500">Create Sale</h1>
 
@@ -75,26 +74,52 @@
         </form>
     </div>
 
-    <!-- Include jQuery (required for Select2 and Toastr) -->
-    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <!-- Notification Bar -->
+    <div id="notification-bar" class="hidden fixed top-0 left-0 right-0 bg-indigo-500 text-white text-center p-4 shadow-lg transition-transform transform -translate-y-full z-50">
+        <span id="notification-message"></span>
+    </div>
 
-    <!-- Include Select2 CSS and JS -->
+    <style>
+        /* Keyframes for sliding down and sliding up animations */
+        @keyframes slideDown {
+            0% {
+                transform: translateY(-100%);
+            }
+            100% {
+                transform: translateY(0);
+            }
+        }
+
+        @keyframes slideUp {
+            0% {
+                transform: translateY(0);
+            }
+            100% {
+                transform: translateY(-100%);
+            }
+        }
+
+        .slide-down {
+            animation: slideDown 0.5s forwards;
+        }
+
+        .slide-up {
+            animation: slideUp 0.5s forwards;
+        }
+    </style>
+
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
     <link href="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/css/select2.min.css" rel="stylesheet" />
     <script src="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/js/select2.min.js"></script>
 
-    <!-- Include Toastr CSS and JS -->
-    <link href="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/toastr.min.css" rel="stylesheet" />
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/toastr.min.js"></script>
-
     <script>
         $(document).ready(function () {
-            // Initialize Select2 on the first dropdown
             $('.select2').select2({
                 placeholder: 'Search for a medicine',
                 allowClear: true
             });
 
-            let itemIndex = 1; // Start after the first item
+            let itemIndex = 1;
 
             function createItemHtml(index) {
                 return `
@@ -116,27 +141,33 @@
                 `;
             }
 
-            // Add more items dynamically
+            // Show notification bar with animation
+            function showNotification(message) {
+                $('#notification-message').text(message);
+                $('#notification-bar').removeClass('hidden slide-up').addClass('slide-down');
+
+                setTimeout(function () {
+                    $('#notification-bar').removeClass('slide-down').addClass('slide-up');
+                }, 3000); // Hide after 3 seconds
+            }
+
             $('#add-item').click(function () {
                 const container = $('#items-container');
                 container.append(createItemHtml(itemIndex));
 
-                // Initialize Select2 for the newly added dropdown
                 $(`select[name="items[${itemIndex}][medicine_id]"]`).select2({
                     placeholder: 'Search for a medicine',
                     allowClear: true
                 });
 
-                // Show toast message
-                toastr.success('Item added successfully!');
-
+                showNotification('Item added successfully!');
                 itemIndex++;
             });
 
             // Remove an item
             $('#items-container').on('click', '.remove-item', function () {
                 $(this).closest('.flex').remove();
-                toastr.info('Item removed.');
+                showNotification('Item removed.');
             });
 
             // Form validation
@@ -151,12 +182,8 @@
                     }
                 });
 
-                // if (!valid) {
-                //     event.preventDefault(); // Prevent form submission
-                //     alert('Please provide both quantity and sale price for each item.');
-                // }
+      
             });
         });
     </script>
-
 </x-app-layout>
