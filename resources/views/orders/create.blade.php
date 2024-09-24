@@ -9,7 +9,7 @@
                     <label for="medicines" class="block text-lg font-semibold text-gray-700 mb-2">Medicines</label>
                     <div id="medicines-container" class="space-y-4">
                         <div class="medicine-item flex items-center space-x-4 border border-gray-300 rounded-md p-4 shadow-sm bg-gray-50">
-                            <select name="medicines[0][id]" class="form-select block w-full border-gray-300 rounded-md shadow-sm focus:border-indigo-500 focus:ring focus:ring-indigo-500 focus:ring-opacity-50">
+                            <select name="medicines[0][id]" class="form-select block w-full border-gray-300 rounded-md shadow-sm focus:border-indigo-500 focus:ring focus:ring-indigo-500 focus:ring-opacity-50 medicine-dropdown">
                                 <option value="">Select Medicine</option>
                                 @foreach ($medicines as $medicine)
                                     <option value="{{ $medicine->id }}">{{ $medicine->name }} - ${{ $medicine->price }}</option>
@@ -44,38 +44,56 @@
         </form>
     </div>
 
+    <!-- Include jQuery -->
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+
+    <!-- Include Select2 CSS and JS -->
+    <link href="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/css/select2.min.css" rel="stylesheet" />
+    <script src="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/js/select2.min.js"></script>
+
     <script>
-        document.addEventListener('DOMContentLoaded', function() {
+        $(document).ready(function() {
             let medicineIndex = 1;
 
-            document.getElementById('add-medicine').addEventListener('click', function() {
-                const container = document.getElementById('medicines-container');
-                const newMedicineItem = document.createElement('div');
-                newMedicineItem.className = 'medicine-item flex items-center space-x-4 border border-gray-300 rounded-md p-4 shadow-sm bg-gray-50';
+            // Initialize Select2 for existing medicine dropdown
+            $('.medicine-dropdown').select2({
+                placeholder: 'Search for medicine',
+                allowClear: true
+            });
 
-                newMedicineItem.innerHTML = `
-                    <select name="medicines[${medicineIndex}][id]" class="form-select block w-full border-gray-300 rounded-md shadow-sm focus:border-indigo-500 focus:ring focus:ring-indigo-500 focus:ring-opacity-50">
-                        <option value="">Select Medicine</option>
-                        @foreach ($medicines as $medicine)
-                            <option value="{{ $medicine->id }}">{{ $medicine->name }} - ${{ $medicine->price }}</option>
-                        @endforeach
-                    </select>
-                    <input type="number" name="medicines[${medicineIndex}][quantity]" class="form-input block w-24 border-gray-300 rounded-md shadow-sm focus:border-indigo-500 focus:ring focus:ring-indigo-500 focus:ring-opacity-50" placeholder="Quantity">
-                    <button type="button" class="remove-medicine text-red-500 hover:text-red-700 focus:outline-none">
-                        <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-                            <path d="M6 18L18 6M6 6l12 12" />
-                        </svg>
-                    </button>
-                `;
+            // Function to add a new medicine row
+            $('#add-medicine').on('click', function() {
+                const container = $('#medicines-container');
+                const newMedicineItem = $(`
+                    <div class="medicine-item flex items-center space-x-4 border border-gray-300 rounded-md p-4 shadow-sm bg-gray-50">
+                        <select name="medicines[${medicineIndex}][id]" class="form-select block w-full border-gray-300 rounded-md shadow-sm focus:border-indigo-500 focus:ring focus:ring-indigo-500 focus:ring-opacity-50 medicine-dropdown">
+                            <option value="">Select Medicine</option>
+                            @foreach ($medicines as $medicine)
+                                <option value="{{ $medicine->id }}">{{ $medicine->name }} - ${{ $medicine->price }}</option>
+                            @endforeach
+                        </select>
+                        <input type="number" name="medicines[${medicineIndex}][quantity]" class="form-input block w-24 border-gray-300 rounded-md shadow-sm focus:border-indigo-500 focus:ring focus:ring-indigo-500 focus:ring-opacity-50" placeholder="Quantity">
+                        <button type="button" class="remove-medicine text-red-500 hover:text-red-700 focus:outline-none">
+                            <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                                <path d="M6 18L18 6M6 6l12 12" />
+                            </svg>
+                        </button>
+                    </div>
+                `);
 
-                container.appendChild(newMedicineItem);
+                container.append(newMedicineItem);
+
+                $('.medicine-dropdown').last().select2({
+                    placeholder: 'Search for medicine',
+                    allowClear: true
+                });
+
                 medicineIndex++;
             });
 
-            document.getElementById('medicines-container').addEventListener('click', function(event) {
-                if (event.target.closest('.remove-medicine')) {
-                    event.target.closest('.medicine-item').remove();
-                }
+            // Remove medicine item
+            $('#medicines-container').on('click', '.remove-medicine', function() {
+                $(this).closest('.medicine-item').remove();
             });
         });
     </script>

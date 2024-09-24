@@ -1,4 +1,5 @@
 <x-app-layout>
+    
     <div class="container mx-auto px-4 py-8">
         <h1 class="text-4xl font-bold mb-6 text-blue-500">Create Sale</h1>
 
@@ -8,15 +9,15 @@
                 {{ session('error') }}
             </div>
         @endif
- @if($errors->any())
-    <div class="bg-red-500 text-white p-4 rounded mb-6">
-        <ul>
-            @foreach($errors->all() as $error)
-                <li>{{ $error }}</li>
-            @endforeach
-        </ul>
-    </div>
-@endif
+        @if($errors->any())
+            <div class="bg-red-500 text-white p-4 rounded mb-6">
+                <ul>
+                    @foreach($errors->all() as $error)
+                        <li>{{ $error }}</li>
+                    @endforeach
+                </ul>
+            </div>
+        @endif
 
         <!-- Sale Creation Form -->
         <form id="saleForm" action="{{ route('sales.store') }}" method="POST" class="bg-white p-8 rounded-lg shadow-lg">
@@ -49,7 +50,7 @@
 
                     <div class="mb-4">
                         <div class="flex items-center space-x-4 border border-gray-300 rounded-md p-4 shadow-sm bg-gray-50">
-                            <select name="items[0][medicine_id]" class="form-select block w-1/3 border-gray-300 rounded-md shadow-sm focus:border-indigo-500 focus:ring focus:ring-indigo-500 focus:ring-opacity-50">
+                            <select name="items[0][medicine_id]" class="form-select select2 block w-1/3 border-gray-300 rounded-md shadow-sm focus:border-indigo-500 focus:ring focus:ring-indigo-500 focus:ring-opacity-50">
                                 <option value="">Select Medicine</option>
                                 @foreach ($medicines as $medicine)
                                     <option value="{{ $medicine->id }}">{{ $medicine->name }} - ${{ $medicine->price }}</option>
@@ -74,20 +75,35 @@
         </form>
     </div>
 
-    <!-- JavaScript for dynamic item adding and validation -->
+    <!-- Include jQuery (required for Select2 and Toastr) -->
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+
+    <!-- Include Select2 CSS and JS -->
+    <link href="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/css/select2.min.css" rel="stylesheet" />
+    <script src="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/js/select2.min.js"></script>
+
+    <!-- Include Toastr CSS and JS -->
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/toastr.min.css" rel="stylesheet" />
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/toastr.min.js"></script>
+
     <script>
-        document.addEventListener('DOMContentLoaded', function () {
-            let medicineOptions = @json($medicines);
+        $(document).ready(function () {
+            // Initialize Select2 on the first dropdown
+            $('.select2').select2({
+                placeholder: 'Search for a medicine',
+                allowClear: true
+            });
+
             let itemIndex = 1; // Start after the first item
 
             function createItemHtml(index) {
                 return `
                     <div class="flex items-center space-x-4 border border-gray-300 rounded-md p-4 shadow-sm bg-gray-50">
-                        <select name="items[${index}][medicine_id]" class="form-select block w-1/3 border-gray-300 rounded-md shadow-sm focus:border-indigo-500 focus:ring focus:ring-indigo-500 focus:ring-opacity-50">
+                        <select name="items[${index}][medicine_id]" class="form-select select2 block w-1/3 border-gray-300 rounded-md shadow-sm focus:border-indigo-500 focus:ring focus:ring-indigo-500 focus:ring-opacity-50">
                             <option value="">Select Medicine</option>
-                            ${medicineOptions.map(medicine => `
-                                <option value="${medicine.id}">${medicine.name} - $${medicine.price}</option>
-                            `).join('')}
+                            @foreach ($medicines as $medicine)
+                                <option value="{{ $medicine->id }}">{{ $medicine->name }} - ${{ $medicine->price }}</option>
+                            @endforeach
                         </select>
                         <input type="number" name="items[${index}][quantity]" class="form-input block w-24 border-gray-300 rounded-md shadow-sm focus:border-indigo-500 focus:ring focus:ring-indigo-500 focus:ring-opacity-50" placeholder="Quantity" min="1" required>
                         <input type="number" name="items[${index}][sale_price]" class="form-input block w-24 border-gray-300 rounded-md shadow-sm focus:border-indigo-500 focus:ring focus:ring-indigo-500 focus:ring-opacity-50" placeholder="Sale Price" step="0.01" required>
@@ -100,26 +116,35 @@
                 `;
             }
 
-            document.getElementById('add-item').addEventListener('click', function () {
-                const container = document.getElementById('items-container');
-                container.insertAdjacentHTML('beforeend', createItemHtml(itemIndex));
+            // Add more items dynamically
+            $('#add-item').click(function () {
+                const container = $('#items-container');
+                container.append(createItemHtml(itemIndex));
+
+                // Initialize Select2 for the newly added dropdown
+                $(`select[name="items[${itemIndex}][medicine_id]"]`).select2({
+                    placeholder: 'Search for a medicine',
+                    allowClear: true
+                });
+
+                // Show toast message
+                toastr.success('Item added successfully!');
+
                 itemIndex++;
             });
 
-            document.getElementById('items-container').addEventListener('click', function (event) {
-                if (event.target.closest('.remove-item')) {
-                    event.target.closest('.flex').remove();
-                }
+            // Remove an item
+            $('#items-container').on('click', '.remove-item', function () {
+                $(this).closest('.flex').remove();
+                toastr.info('Item removed.');
             });
 
             // Form validation
-            document.getElementById('saleForm').addEventListener('submit', function (event) {
-                const items = document.querySelectorAll('#items-container .flex');
+            $('#saleForm').submit(function (event) {
                 let valid = true;
-
-                items.forEach(function (item) {
-                    const quantity = item.querySelector('input[name*="[quantity]"]').value;
-                    const salePrice = item.querySelector('input[name*="[sale_price]"]').value;
+                $('#items-container .flex').each(function () {
+                    const quantity = $(this).find('input[name*="[quantity]"]').val();
+                    const salePrice = $(this).find('input[name*="[sale_price]"]').val();
 
                     if (!quantity || !salePrice) {
                         valid = false;
@@ -132,6 +157,6 @@
                 }
             });
         });
-        
     </script>
+
 </x-app-layout>
