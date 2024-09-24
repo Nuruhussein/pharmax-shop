@@ -14,9 +14,9 @@
                 <form action="{{ route('medicines.index') }}" method="GET" class="flex space-x-4">
                     <!-- Search Input -->
                     <div class="flex">
-                        <input type="text" name="query" placeholder="Search for medicine..."
-                               class="px-3 py-1 rounded-lg border-gray-300 focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm"> <!-- Adjusted paddings -->
-                        <button type="submit" class="flex items-center px-2"> <!-- Adjusted padding -->
+                        <input type="text" name="query" value="{{ request('query') }}" placeholder="Search for medicine..."
+                               class="px-4 py-2 rounded-lg border-gray-300 focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm">
+                        <button type="submit" class="flex items-center px-1">
                             <i class="fas fa-search text-gray-500"></i>
                         </button>
                     </div>
