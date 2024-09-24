@@ -2,6 +2,24 @@
 
 @section('content')
 <section class="py-10 bg-white sm:py-16 lg:py-24">
+      <nav class="flex mb-4 text-center justify-start ml-24 pl-9 mt-6 items-center h-24 text-gray-600 ju  py-3 px-4 rounded-lg shadow-xs dark:bg-gray-800" aria-label="Breadcrumb">
+        <ol class="inline-flex items-center space-x-1 md:space-x-3">
+            <li class="inline-flex items-center">
+                <a href="/" class="text-xl text-gray-700 hover:text-gray-900 dark:hover:text-white">
+                    <svg class="h-6 w-6 mr-2" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 12l7-7 7 7M5 10v10a2 2 0 002 2h10a2 2 0 002-2V10"/>
+                    </svg>
+                    Home
+                </a>
+            </li>
+            <li class="inline-flex items-center">
+                <svg class="h-6 w-6 text-gray-400" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7"/>
+                </svg>
+                <span class="ml-2 text-xl">About us</span>
+            </li>
+        </ol>
+    </nav>
     <div class="px-4 mx-auto sm:px-6 lg:px-8 max-w-7xl">
         <div class="grid items-center grid-cols-1 gap-y-12 lg:grid-cols-2 lg:gap-x-24">
             <!-- Image Section -->

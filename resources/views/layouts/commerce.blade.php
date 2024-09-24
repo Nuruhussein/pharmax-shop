@@ -47,9 +47,9 @@
                 <div class="hidden ml-auto lg:flex lg:items-center lg:justify-center lg:space-x-10">
                     <a href="#feauters" title="" class="text-base font-semibold text-black transition-all duration-200 hover:text-opacity-80"> Features </a>
 
-                    <a href="#" title="" class="text-base font-semibold text-black transition-all duration-200 hover:text-opacity-80"> About us </a>
+                    <a href="{{ route('ecommerce.about') }}" title="" class="text-base font-semibold text-black transition-all duration-200 hover:text-opacity-80"> About us </a>
 
-                    <a href="#" title="" class="text-base font-semibold text-black transition-all duration-200 hover:text-opacity-80"> shoping </a>
+                    <a href="{{ route('ecommerce.shop') }}" title="" class="text-base font-semibold text-black transition-all duration-200 hover:text-opacity-80"> shoping </a>
 
                     <a href="#" title="" class="text-base font-semibold text-black transition-all duration-200 hover:text-opacity-80"> Pricing </a>
 
