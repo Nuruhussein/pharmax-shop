@@ -21,6 +21,7 @@
             </div>
 
             <!-- Card 3: Total Price -->
+            @notRole('staff')
             <div class="bg-gray-50  shadow-lg hover:shadow-xl rounded-lg p-6 border-t-4 border-teal-500">
                 <h3 class="text-lg font-semibold text-gray-700">
                     <i class="fas fa-usd text-teal-500"></i> Total Price
@@ -28,7 +29,7 @@
                 <p class="mt-2 text-3xl font-bold text-gray-800">{{ $totalprice }} <i class="fas fa-usd text-teal-300"></i></p>
                 <p class="mt-2 text-gray-500">Total value of inventory.</p>
             </div>
-
+  @endnotRole
             <!-- Card 4: Total Sales -->
             <div class="bg-gray-50 shadow-lg hover:shadow-xl rounded-lg p-6 border-t-4 border-purple-500">
                 <h3 class="text-lg font-semibold text-gray-700">
@@ -57,6 +58,8 @@
                 <a href="{{ route('medicines.expired') }}" class="mt-2 inline-block text-red-600 hover:underline">View Details</a>
             </div>
         </div>
+          @notRole('staff')
         @include('medicines.index')
+        @endnotRole
     </div>
 </x-app-layout>

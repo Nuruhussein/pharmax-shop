@@ -32,8 +32,20 @@ use App\Http\Controllers\MessageController;
 
 // Public Routes
 Route::get('/', function () {
-    return view('welcome');
+ return redirect()->route('ecommerce.index');
 });
+
+     
+            ///ecommerce 
+ Route::get('/ecommerce', [EcommerceController::class, 'index'])->name('ecommerce.index');
+  Route::get('/ecommerce/shop', [EcommerceController::class, 'shop'])->name('ecommerce.shop');
+  Route::get('/ecommerce/aboutus', [EcommerceController::class, 'about'])->name('ecommerce.about');
+  
+ Route::get('/ecommerce/category/{category}', [EcommerceController::class, 'show'])->name('ecommerce.category.show');
+ Route::get('cart', [CartController::class, 'cart'])->name('cart');
+ Route::post('add-to-cart/{id}', [CartController::class, 'addToCart'])->name('add_to_cart');
+ Route::patch('/update-cart', [CartController::class, 'update'])->name('update_cart');
+ Route::delete('/remove-from-cart', [CartController::class, 'remove'])->name('remove_from_cart');
 
 // Authentication and Verification Routes
 Route::get('/dashboard', [DashboardController::class, 'index'])
@@ -42,39 +54,52 @@ Route::get('/dashboard', [DashboardController::class, 'index'])
 
 
 Route::middleware(['auth'])->group(function () {
+ Route::get('/profile', [ProfileController::class, 'edit'])->name('profile.edit');
+    Route::patch('/profile', [ProfileController::class, 'update'])->name('profile.update');
+    Route::delete('/profile', [ProfileController::class, 'destroy'])->name('profile.destroy');
+
     Route::post('/messages/send', [MessageController::class, 'send'])->name('messages.send');
     Route::get('/messages/inbox', [MessageController::class, 'inbox'])->name('messages.inbox');
-});
+   Route::delete('/messages/delete/{id}', [MessageController::class, 'delete'])->name('messages.delete');
+   Route::get('/messages/edit/{id}', [MessageController::class, 'edit'])->name('messages.edit');
+Route::put('/messages/update/{id}', [MessageController::class, 'update'])->name('messages.update');
 
-
-
-// Admin Routes
-Route::middleware(['auth', 'role:admin'])->group(function () {
-
-        ///ecommerce 
- Route::get('/ecommerce', [EcommerceController::class, 'index'])->name('ecommerce.index');
-  Route::get('/ecommerce/shop', [EcommerceController::class, 'shop'])->name('ecommerce.shop');
- Route::get('/ecommerce/category/{category}', [EcommerceController::class, 'show'])->name('ecommerce.category.show');
- Route::get('cart', [CartController::class, 'cart'])->name('cart');
- Route::post('add-to-cart/{id}', [CartController::class, 'addToCart'])->name('add_to_cart');
- Route::patch('/update-cart', [CartController::class, 'update'])->name('update_cart');
- Route::delete('/remove-from-cart', [CartController::class, 'remove'])->name('remove_from_cart');
-//  Route::post('/checkout', [CartController::class, 'checkout'])->name('checkout');
- // PaymentController for handling the callback after payment
 // Route to handle the checkout process
 Route::post('/checkout', [CartController::class, 'checkout'])->name('checkout');
 
 // Route for Chapa payment callback
 Route::get('/payment/callback/{reference}', [CartController::class, 'callback'])->name('cart.callback');
 Route::post('/payment/callback/{reference}', [CartController::class, 'callback'])->name('cart.callback');
-// Route::get('/payment/success', [CartController::class, 'paymentSuccess'])->name('payment.success');
+
 Route::get('/payment/success/{reference}', [CartController::class, 'paymentSuccess'])->name('cart.payment.success');
 Route::get('/receipt/{orderCode}', [PaymentController::class, 'downloadReceipt'])->name('cart.payment.receipt');
+});
 
-// Route::get('/payment/callback/{reference}', [PaymentController::class, 'callback'])->name('payment.callback');
-// Route::post('/payment/callback/{reference}', [PaymentController::class, 'callback'])->name('payment.callback.post');
 
-   
+
+// Admin Routes
+Route::middleware(['auth', 'role:admin,'])->group(function () {
+
+//         ///ecommerce 
+//  Route::get('/ecommerce', [EcommerceController::class, 'index'])->name('ecommerce.index');
+//   Route::get('/ecommerce/shop', [EcommerceController::class, 'shop'])->name('ecommerce.shop');
+//  Route::get('/ecommerce/category/{category}', [EcommerceController::class, 'show'])->name('ecommerce.category.show');
+//  Route::get('cart', [CartController::class, 'cart'])->name('cart');
+//  Route::post('add-to-cart/{id}', [CartController::class, 'addToCart'])->name('add_to_cart');
+//  Route::patch('/update-cart', [CartController::class, 'update'])->name('update_cart');
+//  Route::delete('/remove-from-cart', [CartController::class, 'remove'])->name('remove_from_cart');
+
+// // Route to handle the checkout process
+// Route::post('/checkout', [CartController::class, 'checkout'])->name('checkout');
+
+// // Route for Chapa payment callback
+// Route::get('/payment/callback/{reference}', [CartController::class, 'callback'])->name('cart.callback');
+// Route::post('/payment/callback/{reference}', [CartController::class, 'callback'])->name('cart.callback');
+
+// Route::get('/payment/success/{reference}', [CartController::class, 'paymentSuccess'])->name('cart.payment.success');
+// Route::get('/receipt/{orderCode}', [PaymentController::class, 'downloadReceipt'])->name('cart.payment.receipt');
+
+
 
 
 // Medicine Routes
@@ -128,14 +153,13 @@ Route::middleware(['role:doctor'])->group(function () {
 });
 // Authenticated Routes
 Route::middleware(['role:staff,admin'])->group(function () {
-    Route::get('/profile', [ProfileController::class, 'edit'])->name('profile.edit');
-    Route::patch('/profile', [ProfileController::class, 'update'])->name('profile.update');
-    Route::delete('/profile', [ProfileController::class, 'destroy'])->name('profile.destroy');
+    // Route::get('/profile', [ProfileController::class, 'edit'])->name('profile.edit');
+    // Route::patch('/profile', [ProfileController::class, 'update'])->name('profile.update');
+    // Route::delete('/profile', [ProfileController::class, 'destroy'])->name('profile.destroy');
     
 
     // // messages
-    //  Route::post('/messages/send', [MessageController::class, 'send'])->name('messages.send');
-    // Route::get('/messages/inbox', [MessageController::class, 'inbox'])->name('messages.inbox');
+
 
 
       Route::get('/medicines/expiring-soon', [MedicineController::class, 'expiringSoon'])->name('medicines.expiring_soon');

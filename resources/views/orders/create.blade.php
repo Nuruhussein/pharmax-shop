@@ -30,10 +30,16 @@
                         Add More Medicines
                     </button>
                 </div>
-                
-                <button type="submit" class="w-full py-3 px-6 bg-indigo-600 text-white font-semibold rounded-lg shadow-md hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:ring-opacity-50">
-                    Place Order
-                </button>
+
+                <!-- Buttons -->
+                <div class="flex justify-end mr-8 items-center space-x-4">
+                    <button type="submit"  class="w-48 py-3 px-6 bg-indigo-600 text-white font-semibold rounded-lg shadow-md hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:ring-opacity-50">
+                        Place Order
+                    </button>
+                    <a href="{{ url()->previous() }}"  class="w-48 py-3 px-6 bg-gray-800 text-center text-white font-semibold rounded-lg shadow-md hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:ring-opacity-50">
+                        Cancel
+                    </a>
+                </div>
             </div>
         </form>
     </div>

@@ -182,10 +182,7 @@
                     }
                 });
 
-                // if (!valid) {
-                //     event.preventDefault(); // Prevent form submission
-                //     showNotification('Please provide both quantity and sale price for each item.');
-                // }
+      
             });
         });
     </script>

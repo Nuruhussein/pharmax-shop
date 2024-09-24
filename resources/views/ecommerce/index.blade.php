@@ -27,17 +27,18 @@
                     <div class="mt-10 sm:flex sm:items-center sm:space-x-8">
                         {{-- <a href="#" title="" class="inline-flex items-center justify-center px-10 py-4 text-base font-semibold text-white  duration-200  hover:bg-orange-600 focus:bg-orange-600  bg-orange-600" role="button"> Start exploring </a> --}}
                         {{-- <button  class=" items-center justify-center px-16 mr-8 py-3 text-base font-semibold text-white transition-all duration-200 hover:bg-orange-600 focus:bg-orange-600" style="background-color: #F97316;" > Start exploring </button> --}}
-                         <a href="#" title="" class="inline-flex items-center justify-center px-5 py-4 mt-8 text-base font-semibold text-white transition-all duration-200 rounded-md hover:opacity-90 focus:opacity-90 lg:mt-auto bg-gradient-to-r from-fuchsia-600 to-blue-600" role="button">
+                         <a href="#getstart" title="" class="inline-flex items-center justify-center px-5 py-4 mt-8 text-base font-semibold text-white transition-all duration-200 rounded-md hover:opacity-90 focus:opacity-90 lg:mt-auto bg-gradient-to-r from-fuchsia-600 to-blue-600" role="button">
                     Get started now
                     <svg class="w-5 h-5 ml-8 -mr-1" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20" fill="currentColor">
                         <path fill-rule="evenodd" d="M10.293 3.293a1 1 0 011.414 0l6 6a1 1 0 010 1.414l-6 6a1 1 0 01-1.414-1.414L14.586 11H3a1 1 0 110-2h11.586l-4.293-4.293a1 1 0 010-1.414z" clip-rule="evenodd" />
                     </svg>
                 </a>
                 {{-- /* From Uiverse.io by nathAd17 */  --}}
-<button
+<a href="{{ route('ecommerce.shop') }}"
   class="font-sans flex justify-center gap-2 items-center mx-auto shadow-xl text-lg bg-gray-50 backdrop-blur-md lg:font-semibold isolation-auto border-gray-50 before:absolute before:w-full before:transition-all before:duration-700 before:hover:w-full before:-left-full before:hover:left-0 before:rounded-full before:bg-emerald-500 hover:text-gray-50 before:-z-10 before:aspect-square before:hover:scale-150 before:hover:duration-700 relative z-10 px-4 py-2 overflow-hidden border-2 rounded-full group"
   type="submit"
 >
+
   Shope Now
   <svg
     xmlns="http://www.w3.org/2000/svg"
@@ -49,7 +50,7 @@
       d="M7 18C7 18.5523 7.44772 19 8 19C8.55228 19 9 18.5523 9 18H7ZM8.70711 0.292893C8.31658 -0.0976311 7.68342 -0.0976311 7.29289 0.292893L0.928932 6.65685C0.538408 7.04738 0.538408 7.68054 0.928932 8.07107C1.31946 8.46159 1.95262 8.46159 2.34315 8.07107L8 2.41421L13.6569 8.07107C14.0474 8.46159 14.6805 8.46159 15.0711 8.07107C15.4616 7.68054 15.4616 7.04738 15.0711 6.65685L8.70711 0.292893ZM9 18L9 1H7L7 18H9Z"
     ></path>
   </svg>
-</button>
+</a>
 
                         {{-- <a href="#" title="" class="inline-flex items-center mt-6 text-base font-semibold transition-all duration-200 sm:mt-0 hover:opacity-80">
                             <svg class="w-10 h-10 mr-3" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor">
@@ -272,7 +273,7 @@
 /////medicines --}}
 
   
-<section class=" py-8 antialiased dark:bg-gray-900 md:py-12">
+<section id='getstart' class=" py-8 antialiased dark:bg-gray-900 md:py-12">
   @foreach ($categories as $category)
    <div class="mx-auto max-w-screen-xl px-4 2xl:px-0">
     <!-- Heading & Filters -->

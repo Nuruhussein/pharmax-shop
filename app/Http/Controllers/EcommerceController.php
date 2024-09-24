@@ -14,10 +14,13 @@ class EcommerceController extends Controller
           // $products = Product::all();
         // Fetch the latest 3 categories
         // $categories = Category::latest()->take(3)->get();
-         $categories = Category::latest()->paginate(3);
+        //  $categories = Category::latest()->paginate(3);
         // $allCategories =Category::all();
-          $query = Medicine::query();
-
+           $medicines = Medicine::where('expiry_date', '>', now())->paginate(6);
+     
+ $categories = Category::with(['medicines' => function($query) {
+        $query->where('expiry_date', '>', now())->take(4); // Limit to 4 medicines per category
+    }])->latest()->paginate(3);
     // if ($request->query('category')) {
     //     $categoryId = $request->query('category');
     //     $query->where('category_id', $categoryId);
@@ -31,7 +34,7 @@ class EcommerceController extends Controller
     //     }
     // }
 
-    $medicines = $query->paginate(6); // Paginate results
+    // $medicines = $query->paginate(6); // Paginate results
 
         //   if ($request->ajax()) {
         //     return view('ecommerce.partials.medicines', compact('medicines'))->render();
@@ -73,10 +76,10 @@ class EcommerceController extends Controller
         return view('ecommerce.shop.index',compact('medicines', 'allCategories'));
     }
 
-    //   public function filterByCategory($categoryId)
-    // {
-    //     $categories = Category::all();
-    //     $products = Product::where('category_id', $categoryId)->get();
-    //     return view('products.index', compact('categories', 'products'));
-    // }
+ 
+ public function about(Category $category)
+    {
+        return view('ecommerce.components.aboutus');
+    }
+    
 }

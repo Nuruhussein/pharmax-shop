@@ -104,6 +104,16 @@ public function addToCart(Request $request, $id)
 
         // Create order items
         foreach ($cart as $id => $details) {
+            $medicine = Medicine::find($id);
+
+            if (!$medicine) {
+                return redirect()->back()->with('error', 'One of the items in your cart does not exist.');
+            }
+
+            if ($medicine->quantity < $details['quantity']) {
+                return redirect()->back()->with('error', 'Insufficient stock for ' . $medicine->name . '. Only ' . $medicine->quantity . ' left.');
+            }
+        
             OrderItem::create([
                 'order_id' => $order->id,
                 'medicine_id' => $id,

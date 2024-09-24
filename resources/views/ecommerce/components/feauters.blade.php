@@ -40,7 +40,7 @@
 
 {{-- contact us --}}
 
-<main class="py-14" x-data="contactComponent()">
+<main id="contact" class="py-14" x-data="contactComponent()">
     <div class="max-w-screen-xl mx-auto px-4 text-gray-600 md:px-8">
         <div class="max-w-xl space-y-3">
             <h3 class="text-indigo-600 font-semibold">Contact</h3>

@@ -1,3 +1,4 @@
+@notRole('customer')
 <div class="flex flex-col w-64  min-h-screen sticky bg-gray-900">
     <!-- Logo -->
     <div class="flex items-center justify-center h-20 bg-gray-800">
@@ -21,10 +22,7 @@
                     <i class="fas fa-tachometer-alt mr-3"></i> Dashboard
                 </a>
             </li>
-               <li>
-                <a href="{{ route('messages.inbox') }}" class="flex items-center py-3 px-6 text-lg> {{ Request::routeIs('charts.index') ? 'text-white bg-gray-700' : 'text-gray-300' }} hover:text-white hover:bg-gray-700 rounded-lg transition duration-150 ease-in-out">
-                    <i class="fas fa-comments mr-3"></i> Messages</a>
-            </li>
+          
             <li>
                 <a href="{{ route('suppliers.index') }}" 
                    class="flex items-center py-3 px-6 text-lg {{ Request::routeIs('suppliers.index') ? 'text-white bg-gray-700' : 'text-gray-300' }} hover:text-white hover:bg-gray-700 rounded-lg transition duration-150 ease-in-out">
@@ -161,6 +159,7 @@
                     </li>
                 </ul>
             </li>
+              @if(Auth::user()->role == 'admin')
             <!-- Reports Dropdown -->
 <li class="relative">
     <button class="flex items-center justify-between w-full py-3 px-6 text-lg text-gray-300 hover:text-white rounded-lg transition duration-150 ease-in-out focus:outline-none focus:bg-gray-900"
@@ -204,7 +203,7 @@
                       <i class="fas fa-chart-line mr-3"></i> </i> charts
                 </a>
             </li>
-
+@endif
             
          
             
@@ -267,3 +266,4 @@
         }
     }
 </script>
+@endnotRole

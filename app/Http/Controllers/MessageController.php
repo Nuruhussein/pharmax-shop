@@ -6,6 +6,8 @@ use App\Models\User;
 use App\Models\Message;
 use Illuminate\Http\Request;
 
+use Illuminate\Support\Facades\Auth;
+
 class MessageController extends Controller
 {
     public function send(Request $request)
@@ -31,7 +33,7 @@ class MessageController extends Controller
         $selectedUserId = $request->get('receiver_id', null);
 
         $users = User::where('id', '!=', $authUserId)
-                     ->whereIn('role', ['staff', 'doctor', 'admin']) 
+                     ->whereIn('role', ['staff', 'doctor', 'admin','customer']) 
                      ->get();
 
         if ($selectedUserId) {
@@ -47,6 +49,51 @@ class MessageController extends Controller
         }
 
         return view('messages.inbox', compact('users', 'messages', 'selectedUserId'));
+    }
+   public function delete(Request $request, $id)
+    {
+        $message = Message::findOrFail($id);
+
+        // Ensure only the sender can delete their message
+        if ($message->sender_id !== Auth::id()) {
+            abort(403);
+        }
+
+        $message->delete();
+        return redirect()->back()->with('success', 'Message deleted successfully.');
+    }
+ public function edit($id)
+    {
+        $message = Message::findOrFail($id);
+
+        // Ensure only the sender can edit their message
+        if ($message->sender_id !== Auth::id()) {
+            abort(403);
+        }
+
+        return view('messages.edit', compact('message'));
+    }
+
+    public function update(Request $request, $id)
+    {
+        $request->validate([
+            'message' => 'required|string|max:1000',
+        ]);
+
+        $message = Message::findOrFail($id);
+
+        // Ensure only the sender can update their message
+        if ($message->sender_id !== Auth::id()) {
+            abort(403);
+        }
+
+        $message->update([
+            'message' => $request->message,
+        ]);
+
+        // Redirect back to the inbox with the correct receiver_id
+    return redirect()->route('messages.inbox', ['receiver_id' => $message->receiver_id])
+                     ->with('success', 'Message updated successfully.');
     }
 
     
