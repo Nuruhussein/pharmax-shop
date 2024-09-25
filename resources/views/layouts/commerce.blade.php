@@ -23,125 +23,175 @@
 </head>
 <body>
     @if (!request()->is('payment/success/*'))
-       <header class=" shadow-md top-0 z-50 fixed w-full mb-16 bg-white" id='nav'>
-        <div class="px-4 mx-auto sm:px-6 lg:px-8">
-            <div class="flex items-center justify-between h-16 lg:h-20">
-                <div class="flex-shrink-0">
-                    <a href="#" title="" class="flex">
-                        <img class="w-auto h-16" src="https://th.bing.com/th/id/R.47b05b1a9609e27246898478bc3dc5ad?rik=EYTJ7VM4PKfc4Q&pid=ImgRaw&r=0" alt="" />
-                    </a>
-                </div>
+<header class="shadow-md top-0 z-50 fixed w-full mb-16 bg-white" id='nav'>
+    <div class="px-4 mx-auto sm:px-6 lg:px-8">
+        <div class="flex items-center justify-between h-16 lg:h-20">
+            <div class="flex-shrink-0">
+                <a href="#" title="" class="flex">
+                    <img class="w-auto h-16" src="https://th.bing.com/th/id/R.47b05b1a9609e27246898478bc3dc5ad?rik=EYTJ7VM4PKfc4Q&pid=ImgRaw&r=0" alt="" />
+                </a>
+            </div>
 
-                <button type="button" class="inline-flex p-1 text-black transition-all duration-200 border border-black lg:hidden focus:bg-gray-100 hover:bg-gray-100">
-                    <!-- Menu open: "hidden", Menu closed: "block" -->
-                    <svg class="block w-6 h-6" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h16" />
-                    </svg>
-
-                    <!-- Menu open: "block", Menu closed: "hidden" -->
-                    <svg class="hidden w-6 h-6" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"></path>
-                    </svg>
-                </button>
-
-                <div class="hidden ml-auto lg:flex lg:items-center lg:justify-center lg:space-x-10">
-                  @if (request()->is('ecommerce'))
-                    <a href="#feauters" title="" class="text-base font-semibold text-black transition-all duration-200 hover:text-opacity-80"> Features </a>
-              @else
-                    <a href="/ecommerce" title="" class="text-base font-semibold text-black transition-all duration-200 hover:text-opacity-80"> Home </a>
-
-                    <a href="/ecommerce#feauters" title="" class="text-base font-semibold text-black transition-all duration-200 hover:text-opacity-80"> Feauters </a>
-
-  @endif
-                    <a href="{{ route('ecommerce.about') }}" title="" class="text-base font-semibold text-black transition-all duration-200 hover:text-opacity-80"> About us </a>
-                
-                    <a href="{{ route('ecommerce.shop') }}" title="" class="text-base font-semibold text-black transition-all duration-200 hover:text-opacity-80"> shoping </a>
-  @if (request()->is('ecommerce'))
-                    <a href="#store" title="" class="text-base font-semibold text-black transition-all duration-200 hover:text-opacity-80"> Store </a>
-@else
-                    <a href="/ecommerce#store" title="" class="text-base font-semibold text-black transition-all duration-200 hover:text-opacity-80"> Store </a>
-@endif
-                    <div class="w-px h-5 bg-black/20"></div>
-                    
- <a href="{{ route('cart') }}" class="fixed  bottom-24  right-16 text-gray-300 m-0 p-0">
-    <span id="cart-count" class="absolute bottom-10 -right-3 z-10    font-bold  transform translate-x-1/2 -translate-y-1/2  text-white text-xl rounded-full bg-red-500 w-8 h-8 flex  items-center justify-center">
-        {{ count((array) session('cart')) }}
-    </span>
-    <i class="fas fa-shopping-cart absolute bottom-10 right-3 z-0 w-6 h-6 text-5xl text-blue-400 dark:text-white"></i>
-    
-</a>
-  @if (Auth::check())
-<a href="{{ route('messages.inbox') }}" class="fixed bottom-10 right-14 text-gray-300 m-0 p-0">
-   {{-- <i class="fa-solid fa-messages w-6 h-6 text-5xl z-0 text-blue-400 dark:text-white"></i> --}}
-  <i class="fas fa-comments absolute bottom-5  right-3 w-6 h-6 text-blue-400 text-3xl z-0 shadow-2xl  dark:text-white"></i>
-</a>
-@endif
-
- {{-- <a href="{{ route('cart') }}" class=" text-red-500 m-0 p-0 ">
-    <span id="cart-count" class="  text-white text-xs rounded-full bg-red-500 w-5 h-5 flex items-center justify-center">
-        {{ count((array) session('cart')) }}
-    </span>
-    <i class="fas fa-shopping-cart w-6 h-6 text-lg text-blue-400 dark:text-white"></i>
-</a> --}}
-
-
-  
-
-  @if (Auth::check())
-    <div class="hidden sm:flex sm:items-center sm:ml-6">
-               <x-dropdown align="right" width="48">
-    <x-slot name="trigger">
-        <button class="inline-flex items-center px-3 py-2 border border-transparent text-sm leading-4 font-medium rounded-md text-gray-500 hover:text-gray-700 focus:outline-none transition ease-in-out duration-150">
-            <i class="fa-solid text-green-500 text-xl fa-user"></i>
-            <div class="ml-1">
-                <svg class="fill-current h-4 w-4" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20">
-                    <path fill-rule="evenodd" d="M5.293 7.293a1 1 0 011.414 0L10 10.586l3.293-3.293a1 1 0 111.414 1.414l-4 4a1 1 0 01-1.414 0l-4-4a1 1 0 010-1.414z" clip-rule="evenodd" />
+            <!-- Mobile Menu Toggle Button -->
+            <button 
+                type="button" 
+                class="inline-flex p-1 text-black transition-all duration-200 border border-black lg:hidden focus:bg-gray-100 hover:bg-gray-100"
+                onclick="toggleMenu()"
+            >
+                <!-- Toggle Menu Icon -->
+                <svg id="menu-icon-open" xmlns="http://www.w3.org/2000/svg" class="w-6 h-6 block" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h16"/>
                 </svg>
-            </div>
-        </button>
-    </x-slot>
+                <svg id="menu-icon-close" xmlns="http://www.w3.org/2000/svg" class="w-6 h-6 hidden" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"/>
+                </svg>
+            </button>
 
-    <x-slot name="content">
-        <!-- Conditional Navigation Based on User Role -->
-        @if (Auth::user()->role === 'doctor')
-            <x-dropdown-link :href="route('orders.index')">
-                {{ __('orders') }}
-            </x-dropdown-link>
-        @elseif (Auth::user()->role === 'admin' || Auth::user()->role === 'staff')
-            <x-dropdown-link :href="route('dashboard')">
-                {{ __('Dashboard') }}
-            </x-dropdown-link>
-        @endif
+            <!-- Desktop Menu -->
+            <div class="hidden ml-auto lg:flex lg:items-center lg:justify-center lg:space-x-10">
+                @if (request()->is('ecommerce'))
+                    <a href="#feauters" class="text-base font-semibold text-black transition-all duration-200 hover:text-opacity-80">Features</a>
+                @else
+                    <a href="/ecommerce" class="text-base font-semibold text-black transition-all duration-200 hover:text-opacity-80">Home</a>
+                    <a href="/ecommerce#feauters" class="text-base font-semibold text-black transition-all duration-200 hover:text-opacity-80">Features</a>
+                @endif
+                <a href="{{ route('ecommerce.about') }}" class="text-base font-semibold text-black transition-all duration-200 hover:text-opacity-80">About Us</a>
+                <a href="{{ route('ecommerce.shop') }}" class="text-base font-semibold text-black transition-all duration-200 hover:text-opacity-80">Shopping</a>
+                @if (request()->is('ecommerce'))
+                    <a href="#store" class="text-base font-semibold text-black transition-all duration-200 hover:text-opacity-80">Store</a>
+                @else
+                    <a href="/ecommerce#store" class="text-base font-semibold text-black transition-all duration-200 hover:text-opacity-80">Store</a>
+                @endif
+                <div class="w-px h-5 bg-black/20"></div>
 
-        <!-- Profile and Logout Links -->
-        <x-dropdown-link :href="route('profile.edit')">
-            {{ __('Profile') }}
-        </x-dropdown-link>
+                <!-- Cart - Visible on larger screens, hidden on mobile -->
+                <a href="{{ route('cart') }}" class="fixed bottom-24 right-16 text-gray-300 m-0 p-0 hidden lg:block">
+                    <span id="cart-count" class="absolute bottom-14 -right-7 z-10 font-bold text-white text-xl rounded-full bg-red-500 w-8 h-8 flex items-center justify-center">
+                        {{ count((array) session('cart')) }}
+                    </span>
+                    <i class="fas fa-shopping-cart absolute bottom-10 right-3 z-0 w-6 h-6 text-5xl text-blue-400 dark:text-white"></i>
+                </a>
 
-        <form method="POST" action="{{ route('logout') }}">
-            @csrf
-            <x-dropdown-link :href="route('logout')"
-                    onclick="event.preventDefault();
-                                this.closest('form').submit();">
-                {{ __('Log Out') }}
-            </x-dropdown-link>
-        </form>
-    </x-slot>
-</x-dropdown>
+                @if (Auth::check())
+                    <!-- Messages - Visible on larger screens, hidden on mobile -->
+                    <a href="{{ route('messages.inbox') }}" class="fixed bottom-10 right-14 text-gray-300 m-0 p-0 hidden lg:block">
+                        <i class="fas fa-comments absolute bottom-5 right-3 w-6 h-6 text-blue-400 text-3xl z-0 shadow-2xl dark:text-white"></i>
+                    </a>
+                @endif
 
-            </div>
-@else
-    <a href="{{ route('login') }}" title="" class="text-base font-semibold text-black transition-all duration-200 hover:text-opacity-80"> 
-        Log in 
-    </a>
-@endif
+                @if (Auth::check())
+                    <div class="hidden sm:flex sm:items-center sm:ml-6">
+                        <x-dropdown align="right" width="48">
+                            <x-slot name="trigger">
+                                <button class="inline-flex items-center px-3 py-2 border border-transparent text-sm leading-4 font-medium rounded-md text-gray-500 hover:text-gray-700 focus:outline-none transition ease-in-out duration-150">
+                                    <i class="fa-solid text-green-500 text-xl fa-user"></i>
+                                    <div class="ml-1">
+                                        <svg class="fill-current h-4 w-4" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20">
+                                            <path fill-rule="evenodd" d="M5.293 7.293a1 1 0 011.414 0L10 10.586l3.293-3.293a1 1 0 111.414 1.414l-4 4a1 1 0 01-1.414 0l-4-4a1 1 0 010-1.414z" clip-rule="evenodd" />
+                                        </svg>
+                                    </div>
+                                </button>
+                            </x-slot>
 
+                            <x-slot name="content">
+                                @if (Auth::user()->role === 'doctor')
+                                    <x-dropdown-link :href="route('orders.index')">
+                                        {{ __('Orders') }}
+                                    </x-dropdown-link>
+                                @elseif (Auth::user()->role === 'admin' || Auth::user()->role === 'staff')
+                                    <x-dropdown-link :href="route('dashboard')">
+                                        {{ __('Dashboard') }}
+                                    </x-dropdown-link>
+                                @endif
 
-                    <a href="#contact" title="" class="inline-flex items-center justify-center px-5 py-2.5 text-base font-semibold text-black border-2 border-black hover:bg-black hover:text-white transition-all duration-200 focus:bg-black focus:text-white" role="button"> Contact us</a>
-                </div>
+                                <x-dropdown-link :href="route('profile.edit')">
+                                    {{ __('Profile') }}
+                                </x-dropdown-link>
+
+                                <form method="POST" action="{{ route('logout') }}">
+                                    @csrf
+                                    <x-dropdown-link :href="route('logout')"
+                                        onclick="event.preventDefault(); this.closest('form').submit();">
+                                        {{ __('Log Out') }}
+                                    </x-dropdown-link>
+                                </form>
+                            </x-slot>
+                        </x-dropdown>
+                    </div>
+                @else
+                    <a href="{{ route('login') }}" class="text-base font-semibold text-black transition-all duration-200 hover:text-opacity-80">Log in</a>
+                @endif
+
+                <a href="#contact" class="inline-flex items-center justify-center px-5 py-2.5 text-base font-semibold text-black border-2 border-black hover:bg-black hover:text-white transition-all duration-200 focus:bg-black focus:text-white">Contact us</a>
             </div>
         </div>
-    </header>
+
+        <!-- Mobile Menu -->
+        <div id="mobile-menu" class="hidden lg:hidden">
+            <div class="flex flex-col mt-4 space-y-3 text-sm text-black">
+                @if (request()->is('ecommerce'))
+                    <a href="#feauters" class="block text-gray-500 font-semibold text-2xl transition-all duration-200 hover:text-opacity-80">Features</a>
+                @else
+                    <a href="/ecommerce" class="block text-gray-500 font-semibold text-2xl  transition-all duration-200 hover:text-opacity-80">Home</a>
+                    <a href="/ecommerce#feauters" class="block text-gray-500 font-semibold text-2xl transition-all duration-200 hover:text-opacity-80">Features</a>
+                @endif
+                <a href="{{ route('ecommerce.about') }}" class="block text-gray-500 text-2xl font-semibold transition-all duration-200 hover:text-opacity-80">About Us</a>
+                <a href="{{ route('ecommerce.shop') }}" class="block text-gray-500 text-2xl font-semibold transition-all duration-200 hover:text-opacity-80">Shopping</a>
+                <a href="#contact" class="block text-2xl text-gray-500 font-semibold transition-all duration-200 hover:text-opacity-80">Contact us</a>
+                
+                @if (request()->is('ecommerce'))
+                    <a href="#store" class="block font-semibold text-gray-500 text-2xl transition-all duration-200 hover:text-opacity-80">Store</a>
+                @else
+                    <a href="/ecommerce#store" class="block text-gray-500 text-2xl font-semibold transition-all duration-200 hover:text-opacity-80">Store</a>
+                @endif
+
+                @if (Auth::check())
+                    <div class="mt-4">
+                        <a href="{{ route('profile.edit') }}" class="block text-blue-400 text-2xl font-semibold transition-all duration-200 hover:text-opacity-80">Profile</a>
+                        <a href="{{ route('logout') }}" class="block font-semibold text-blue-400 text-2xl transition-all duration-200 hover:text-opacity-80"
+                            onclick="event.preventDefault(); document.getElementById('logout-form').submit();">Log Out</a>
+                        <form id="logout-form" method="POST" action="{{ route('logout') }}" class="hidden">
+                            @csrf
+                        </form>
+                    </div>
+                @else
+                    <a href="{{ route('login') }}" class="block text-2xl font-semibold transition-all duration-200 hover:text-opacity-80">Log in</a>
+                @endif
+
+            </div>
+        </div>
+
+        <!-- Mobile Icons for Cart and Messages -->
+        <div class="fixed bottom-28  right-8 flex justify-around lg:hidden">
+            <a href="{{ route('cart') }}" class="text-gray-300">
+                <span id="cart-count" class="absolute bottom-5 -right-3 z-10 font-bold text-white text-xl rounded-full bg-red-500 w-6 h-6 flex items-center justify-center">
+                    {{ count((array) session('cart')) }}
+                </span>
+                <i class="fas fa-shopping-cart text-3xl text-blue-400"></i>
+            </a>
+
+            @if (Auth::check())
+                <a href="{{ route('messages.inbox') }}" class=" absolute top-11 text-gray-300">
+                    <i class="fas fa-comments text-3xl text-blue-400"></i>
+                </a>
+            @endif
+        </div>
+    </div>
+</header>
+
+
+<script>
+    function toggleMenu() {
+        const mobileMenu = document.getElementById('mobile-menu');
+        const openIcon = document.getElementById('menu-icon-open');
+        const closeIcon = document.getElementById('menu-icon-close');
+
+        mobileMenu.classList.toggle('hidden');
+        openIcon.classList.toggle('hidden');
+        closeIcon.classList.toggle('hidden');
+    }
+</script>
+
 @endif
     @yield('content')
 

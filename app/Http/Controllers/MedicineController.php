@@ -6,6 +6,8 @@ use App\Models\Medicine;
 use App\Models\Category;
 use App\Models\Supplier;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Storage;
+
 
 class MedicineController extends Controller
 {
@@ -64,7 +66,7 @@ public function expiringSoon(Request $request)
         }
     
         // Get the filtered or unfiltered list of medicines
-        $medicines = $medicinesQuery->paginate(6);
+        $medicines = $medicinesQuery->latest()->paginate(6);
     
         // Return the results to the view
         return view('medicines.index', compact('medicines', 'categories'));
@@ -100,7 +102,7 @@ public function expiringSoon(Request $request)
 
     $medicine->save();
 
-    return redirect()->route('dashboard')->with('success', 'Medicine added successfully!');
+    return redirect()->route('medicines.index')->with('success', 'Medicine added successfully!');
 } catch (\Exception $e) {
     return redirect()->back()->with('error', 'Failed to add medicine. Please try again.');
 }
@@ -140,13 +142,13 @@ public function expiringSoon(Request $request)
 
         $medicine->update($data);
 
-        return redirect()->route('dashboard')->with('success', 'Medicine updated successfully.');
+        return redirect()->route('medicines.index')->with('success', 'Medicine updated successfully.');
     }
 
   public function destroy(Medicine $medicine)
     {
         $medicine->delete();
-        return redirect()->route('dashboard')->with('success', 'Medicine deleted successfully.');
+        return redirect()->route('medicines.index')->with('success', 'Medicine deleted successfully.');
     }
      public function show(Medicine $medicine)  //object yetegegnechwa
     {

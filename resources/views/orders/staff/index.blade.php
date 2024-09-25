@@ -14,7 +14,11 @@
             </div>
         </form>
     </div>
-
+ @if (session('success'))
+        <div class="alert alert-success text-blue-500">
+            {{ session('success') }}
+        </div>
+    @endif
     @if (session('error'))
         <div class="bg-red-100 border border-red-400 text-red-700 px-4 py-3 rounded relative" role="alert">
             <strong class="font-bold">Error!</strong>
@@ -72,10 +76,6 @@
         {{ $orders->links() }}
     </div>
 
-    @if (session('success'))
-        <div class="alert alert-success text-blue-500">
-            {{ session('success') }}
-        </div>
-    @endif
+   
 </div>
 </x-app-layout>

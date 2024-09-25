@@ -22,12 +22,12 @@
                         </div>
                     </h1>
 
-                    <p class="mt-8 text-base text-black sm:text-xl">Amet minim mollit non deserunt ullamco est sit aliqua dolor do amet sint. Velit officia consequat duis enim velit mollit. Exercitation veniam consequat.</p>
+                    <p class="mt-8 text-base leading-relaxed text-gray-600 sm:text-xl">Amet minim mollit non deserunt ullamco est sit aliqua dolor do amet sint. Velit officia consequat duis enim velit mollit. Exercitation veniam consequat.</p>
 
                     <div class="mt-10 sm:flex sm:items-center sm:space-x-8">
                         {{-- <a href="#" title="" class="inline-flex items-center justify-center px-10 py-4 text-base font-semibold text-white  duration-200  hover:bg-orange-600 focus:bg-orange-600  bg-orange-600" role="button"> Start exploring </a> --}}
                         {{-- <button  class=" items-center justify-center px-16 mr-8 py-3 text-base font-semibold text-white transition-all duration-200 hover:bg-orange-600 focus:bg-orange-600" style="background-color: #F97316;" > Start exploring </button> --}}
-                         <a href="#getstart" title="" class="inline-flex items-center justify-center px-5 py-4 mt-8 text-base font-semibold text-white transition-all duration-200 rounded-md hover:opacity-90 focus:opacity-90 lg:mt-auto bg-gradient-to-r from-fuchsia-600 to-blue-600" role="button">
+                         <a href="#getstart" title="" class="inline-flex items-center  justify-center px-5 py-4 mt-2 sm:mt-8 text-base font-semibold text-white transition-all duration-200 rounded-md hover:opacity-90 focus:opacity-90 lg:mt-auto bg-gradient-to-r from-fuchsia-600 to-blue-600" role="button">
                     Get started now
                     <svg class="w-5 h-5 ml-8 -mr-1" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20" fill="currentColor">
                         <path fill-rule="evenodd" d="M10.293 3.293a1 1 0 011.414 0l6 6a1 1 0 010 1.414l-6 6a1 1 0 01-1.414-1.414L14.586 11H3a1 1 0 110-2h11.586l-4.293-4.293a1 1 0 010-1.414z" clip-rule="evenodd" />
@@ -35,7 +35,7 @@
                 </a>
                 {{-- /* From Uiverse.io by nathAd17 */  --}}
 <a href="{{ route('ecommerce.shop') }}"
-  class="font-sans flex justify-center gap-2 items-center mx-auto shadow-xl text-lg bg-gray-50 backdrop-blur-md lg:font-semibold isolation-auto border-gray-50 before:absolute before:w-full before:transition-all before:duration-700 before:hover:w-full before:-left-full before:hover:left-0 before:rounded-full before:bg-emerald-500 hover:text-gray-50 before:-z-10 before:aspect-square before:hover:scale-150 before:hover:duration-700 relative z-10 px-4 py-2 overflow-hidden border-2 rounded-full group"
+  class="font-sans hidden sm:flex justify-center gap-2 items-center mx-auto shadow-xl text-lg bg-gray-50 backdrop-blur-md lg:font-semibold isolation-auto border-gray-50 before:absolute before:w-full before:transition-all before:duration-700 before:hover:w-full before:-left-full before:hover:left-0 before:rounded-full before:bg-emerald-500 hover:text-gray-50 before:-z-10 before:aspect-square before:hover:scale-150 before:hover:duration-700 relative z-10 px-4 py-2 overflow-hidden border-2 rounded-full group"
   type="submit"
 >
 
@@ -65,7 +65,7 @@
                 <div>
                     
                     <div class="relative">
-    <img class="w-64 animate-pulse rounded-full z-10 absolute top-0 left-0" src="https://th.bing.com/th/id/OIP.6t39rqGtAzPnc35mZ59rpgHaEP?rs=1&pid=ImgDetMain" alt="" />
+    <img class="w-64 animate-pulse rounded-full z-10 absolute top-0 -left-6 sm:left-0" src="https://th.bing.com/th/id/OIP.6t39rqGtAzPnc35mZ59rpgHaEP?rs=1&pid=ImgDetMain" alt="" />
     <img class="w-full z-0" src="https://th.bing.com/th/id/R.99400b6481d40b2997bcfc96b1f83f84?rik=dmYSeVUOU4AcdA&pid=ImgRaw&r=0" alt="" />
 </div>
 
@@ -83,7 +83,7 @@
 <section id="category" class="text-gray-600 body-font">
     <div class="container px-5 py-24 mx-auto">
         <div class="flex items-end py-9 justify-between">
-            <div class="flex-1 text-center lg:text-left">
+            <div class=" hidden sm:block flex-1 text-center lg:text-left">
                 <h2 class="text-3xl font-bold leading-tight text-black sm:text-4xl lg:text-5xl">Latest from Category</h2>
                 <p class="max-w-xl mx-auto mt-4 text-base leading-relaxed text-gray-600 lg:mx-0">Amet minim mollit non deserunt ullamco est sit aliqua dolor do amet sint. Velit officia consequat duis.</p>
             </div>
@@ -108,7 +108,7 @@
 
         <div class="flex flex-wrap -m-4">
             @foreach($categories as $category)
-                <div class="p-4 md:w-1/3">
+                <div class="p-4 w-96 md:w-1/3">
                     <div class="h-full border-2 border-gray-200 border-opacity-60 rounded-lg overflow-hidden">
                         @if($category->photo)
                             <img class="lg:h-48 md:h-36 w-full object-cover object-center" src="{{ asset('storage/' . $category->photo) }}" alt="category photo">
@@ -118,7 +118,8 @@
                         <div class="p-6">
                             {{-- <h2 class="tracking-widest text-xs title-font font-medium text-gray-400 mb-1">{{ $category->name }}</h2> --}}
                             <h1 class="title-font text-lg font-medium text-gray-400 mb-3">{{ $category->name }}</h1>
-                            <p class="leading-relaxed mb-3">{{ $category->description ?? 'No description available.' }}</p>
+                            <p class="leading-relaxed mb-3">{{ \Illuminate\Support\Str::limit($category->description ?? 'No description available.', 100) }}</p>
+
                             <div class="flex items-center flex-wrap ">
                                 <a href="{{ route('ecommerce.category.show', $category->id) }}" class="text-indigo-500 inline-flex items-center md:mb-2 lg:mb-0">Learn More
                                     <svg class="w-4 h-4 ml-2" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2" fill="none" stroke-linecap="round" stroke-linejoin="round">
@@ -209,22 +210,22 @@
     <h1 class="text-3xl">Shop Now</h1>
 </div>
 
-<section id="Medicines" class="w-fit mx-auto grid grid-cols-1 lg:grid-cols-3 md:grid-cols-2 justify-items-center justify-center gap-y-20 gap-x-14 mt-10 mb-14">
+<section id="Medicines" class="w-full px-4 grid grid-cols-2 md:grid-cols-2 lg:grid-cols-3 gap-y-10 gap-x-8 sm:gap-x-2 mt-10 mb-14">
     @foreach ($medicines as $medicine)
     <!-- Medicine card -->
-    <div class="w-72 bg-white shadow-md rounded-xl duration-500 hover:scale-105 hover:shadow-xl">
+    <div class="w-full max-w-xs bg-white shadow-md rounded-xl duration-500 hover:scale-105 hover:shadow-xl mx-auto">
         <a href="#">
-            <img src="{{ asset('storage/'.$medicine->image) }}" alt="Medicine Image" class="h-80 w-72 object-cover rounded-t-xl" />
-            <div class="px-4 py-3 w-72">
+            <img src="{{ asset('storage/'.$medicine->image) }}" alt="Medicine Image" class="h-64 w-full object-cover rounded-t-xl" />
+            <div class="px-4 py-3">
                 <span class="text-gray-400 mr-3 uppercase text-xs">Medicine</span>
-                <p class="text-lg font-bold text-black truncate block capitalize">{{ $medicine->name }}</p>
-                <div class="flex items-center justify-between">
-                    <p class="text-lg font-semibold text-black cursor-auto my-3">${{ $medicine->price }}</p>
+                <p class="text-lg font-bold text-black truncate capitalize">{{ $medicine->name }}</p>
+                <div class="flex items-center justify-between mt-3">
+                    <p class="text-lg font-semibold text-black">${{ $medicine->price }}</p>
                     <!-- Add to Cart Button -->
-                    <a href="#" data-id="{{ $medicine->id }}" class="add-to-cart relative mx-auto py-3 px-4 transition-all duration-200 ease-in-out border-none bg-transparent cursor-pointer group">
-                        <span class="relative z-10 font-ubuntu text-lg font-bold tracking-wide text-[#234567]">Add to Cart</span>
-                        <i class="fas fa-arrow-right ml-2 text-[#234567]"></i>
-                        <span class="absolute top-0 left-0 block rounded-full bg-gradient-to-r from-fuchsia-100 to-blue-600 w-11 h-11 transition-all duration-300 ease-in-out group-hover:w-full"></span>
+                    <a href="#" data-id="{{ $medicine->id }}" class="add-to-cart relative py-2 px-4 transition-all duration-200 ease-in-out border-none bg-transparent cursor-pointer group">
+                        <span class="relative z-10 font-ubuntu text-xs sm:text-lg font-bold tracking-wide text-[#234567]">Add to Cart</span>
+                        <div class="hidden sm:inline"><i class="fas fa-arrow-right  ml-2 text-[#234567]"></i></div>
+                        <span class="absolute top-1 left-0 block rounded-full bg-gradient-to-r from-fuchsia-100 to-blue-600 w-11 h-10 sm:11 transition-all duration-300 ease-in-out group-hover:w-full"></span>
                     </a>
                 </div>
             </div>
@@ -232,6 +233,7 @@
     </div>
     @endforeach
 </section>
+
 
 <div class="mt-4 mb-4 flex justify-center">
     {{ $medicines->links('vendor.pagination.tailwind') }}
@@ -272,7 +274,7 @@
                 <h2 class="text-3xl font-bold leading-tight text-black sm:text-4xl lg:text-5xl">keep upto dated  with us.</h2>
                 <p class="mt-4 text-base leading-relaxed text-gray-600">Amet minim mollit non deserunt ullamco est sit aliqua dolor do amet sint. Velit officia consequat duis enim velit mollit. Exercitation veniam consequat sunt nostrud amet.</p>
 
-                <a href="/messages/inbox" title="" class="inline-flex items-center justify-center px-8 py-3 mt-8 text-base font-semibold text-white transition-all duration-200 bg-gradient-to-r from-fuchsia-600 to-blue-600 rounded-md hover:bg-blue-700 focus:bg-blue-700" role="button"> messaging with us</a>
+                <a href="/messages/inbox" title="" class="inline-flex items-center justify-center px-4 py-3 mt-8 text-base font-semibold text-white transition-all duration-200 bg-gradient-to-r from-fuchsia-600 to-blue-600 rounded-md hover:bg-blue-700 focus:bg-blue-700" role="button"> messaging with us</a>
             </div>
         </div>
     </div>
@@ -301,32 +303,29 @@
     </div>
     
      
-    <div class="mb-4 grid gap-4 sm:grid-cols-2 md:mb-8 lg:grid-cols-3 xl:grid-cols-4">
-   
-  
-      
+  <div class="mb-4 grid gap-4 grid-cols-2  sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-3 xl:grid-cols-4">
     @foreach ($category->medicines as $medicine)
-  <div class="w-72 bg-white shadow-md rounded-xl duration-500 hover:scale-105 hover:shadow-xl">
+    <div class="w-full bg-white shadow-md rounded-xl duration-500 hover:scale-105 hover:shadow-xl">
         <a href="#">
-            <img src="{{ asset('storage/'.$medicine->image) }}" alt="Medicine Image" class="h-80 w-72 object-cover rounded-t-xl" />
-            <div class="px-4 py-3 w-72">
+            <img src="{{ asset('storage/'.$medicine->image) }}" alt="Medicine Image" class="h-80 w-full object-cover rounded-t-xl" />
+            <div class="px-4 py-3">
                 <span class="text-gray-400 mr-3 uppercase text-xs">Medicine</span>
                 <p class="text-lg font-bold text-black truncate block capitalize">{{ $medicine->name }}</p>
                 <div class="flex items-center justify-between">
                     <p class="text-lg font-semibold text-black cursor-auto my-3">${{ $medicine->price }}</p>
                     <!-- Add to Cart Button -->
                     <a href="#" data-id="{{ $medicine->id }}" class="add-to-cart relative mx-auto py-3 px-4 transition-all duration-200 ease-in-out border-none bg-transparent cursor-pointer group">
-                        <span class="relative z-10 font-ubuntu text-lg font-bold tracking-wide text-[#234567]">Add to Cart</span>
-                        <i class="fas fa-arrow-right ml-2 text-[#234567]"></i>
+                        <span class="relative z-10 font-ubuntu text-xs sm:text-lg font-bold tracking-wide text-[#234567]">Add to Cart</span>
+                       <div class="hidden sm:inline"> <i class="fas fa-arrow-right ml-2 text-[#234567]"></i></div>
                         <span class="absolute top-0 left-0 block rounded-full bg-gradient-to-r from-fuchsia-300 to-blue-600 w-11 h-11 transition-all duration-300 ease-in-out group-hover:w-full"></span>
                     </a>
                 </div>
             </div>
         </a>
     </div>
-  @endforeach
-       
-    </div>
+    @endforeach
+</div>
+
     {{-- <div class="w-full text-center">
       <button type="button" class="rounded-lg border border-gray-200 bg-white px-5 py-2.5 text-sm font-medium text-gray-900 hover:bg-gray-100 hover:text-primary-700 focus:z-10 focus:outline-none focus:ring-4 focus:ring-gray-100 dark:border-gray-600 dark:bg-gray-800 dark:text-gray-400 dark:hover:bg-gray-700 dark:hover:text-white dark:focus:ring-gray-700">Show more</button>
     </div> --}}

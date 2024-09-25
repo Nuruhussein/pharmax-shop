@@ -20,7 +20,7 @@ class EcommerceController extends Controller
      
  $categories = Category::with(['medicines' => function($query) {
         $query->where('expiry_date', '>', now())->take(4); // Limit to 4 medicines per category
-    }])->latest()->paginate(3);
+    }])->paginate(3);
     // if ($request->query('category')) {
     //     $categoryId = $request->query('category');
     //     $query->where('category_id', $categoryId);
@@ -81,6 +81,6 @@ class EcommerceController extends Controller
     {
         return view('ecommerce.components.aboutus');
     }
-    
+
     
 }

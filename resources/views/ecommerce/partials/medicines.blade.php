@@ -1,5 +1,5 @@
 
-<div class="grid grid-cols-1 gap-8 mt-8 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4">
+<div class="grid grid-cols-2 gap-8 mt-8 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4">
     @foreach ($medicines as $medicine)
         <div class="flex flex-col items-center justify-center w-full max-w-lg mx-auto">
             <img class="object-cover w-full rounded-md h-72 xl:h-80" src="{{ asset('storage/'.$medicine->image) }}" alt="{{ $medicine->name }}">

@@ -29,7 +29,7 @@ class StaffOrderController extends Controller
             return redirect()->back()->with('error', 'Order not found.');
         }
 
-        $orders = Order::with('user')->paginate(10);
+        $orders = Order::with('user')->latest()->paginate(10);
         return view('orders.staff.index', compact('orders'));
     }
 
