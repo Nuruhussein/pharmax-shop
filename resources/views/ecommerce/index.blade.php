@@ -223,9 +223,9 @@
                     <p class="text-lg font-semibold text-black">${{ $medicine->price }}</p>
                     <!-- Add to Cart Button -->
                     <a href="#" data-id="{{ $medicine->id }}" class="add-to-cart relative py-2 px-4 transition-all duration-200 ease-in-out border-none bg-transparent cursor-pointer group">
-                        <span class="relative z-10 font-ubuntu text-xs sm:text-lg font-bold tracking-wide text-[#234567]">Add to Cart</span>
+                        <span class="relative z-10 font-ubuntu text-xs sm:text-lg font-bold tracking-wide text-[#234567]">Add <span class="hidden sm:inline">to Cart</span></span>
                         <div class="hidden sm:inline"><i class="fas fa-arrow-right  ml-2 text-[#234567]"></i></div>
-                        <span class="absolute top-1 left-0 block rounded-full bg-gradient-to-r from-fuchsia-100 to-blue-600 w-11 h-10 sm:11 transition-all duration-300 ease-in-out group-hover:w-full"></span>
+                        <span class="absolute top-1 left-2 sm:left-0 block rounded-full bg-gradient-to-r from-fuchsia-100 to-blue-600 w-11 h-10 sm:11 transition-all duration-300 ease-in-out group-hover:w-full"></span>
                     </a>
                 </div>
             </div>
@@ -315,7 +315,7 @@
                     <p class="text-lg font-semibold text-black cursor-auto my-3">${{ $medicine->price }}</p>
                     <!-- Add to Cart Button -->
                     <a href="#" data-id="{{ $medicine->id }}" class="add-to-cart relative mx-auto py-3 px-4 transition-all duration-200 ease-in-out border-none bg-transparent cursor-pointer group">
-                        <span class="relative z-10 font-ubuntu text-xs sm:text-lg font-bold tracking-wide text-[#234567]">Add to Cart</span>
+                        <span class="relative z-10 font-ubuntu text-xs sm:text-lg font-bold tracking-wide text-[#234567]">Add <span class="hidden sm:inline">to Cart</span></span>
                        <div class="hidden sm:inline"> <i class="fas fa-arrow-right ml-2 text-[#234567]"></i></div>
                         <span class="absolute top-0 left-0 block rounded-full bg-gradient-to-r from-fuchsia-300 to-blue-600 w-11 h-11 transition-all duration-300 ease-in-out group-hover:w-full"></span>
                     </a>
