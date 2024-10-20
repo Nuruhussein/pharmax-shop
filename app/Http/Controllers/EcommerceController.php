@@ -5,6 +5,7 @@ use App\Models\Medicine;
 use App\Models\Category;
 use Illuminate\Http\Request;
 
+
 class EcommerceController extends Controller
 {
     public function index(Request $request)
@@ -40,6 +41,9 @@ class EcommerceController extends Controller
         //     return view('ecommerce.partials.medicines', compact('medicines'))->render();
         // }
         // Return the data to the view
+
+
+
         return view('ecommerce.index', compact('medicines', 'categories'));
     }
 
@@ -47,7 +51,7 @@ class EcommerceController extends Controller
     {
         return view('ecommerce.category.show', compact('category'));
     }
-    
+
 
  public function shop(Request $request)
     {

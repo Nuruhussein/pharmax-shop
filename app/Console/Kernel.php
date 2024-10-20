@@ -13,10 +13,20 @@ class Kernel extends ConsoleKernel
      * @param  \Illuminate\Console\Scheduling\Schedule  $schedule
      * @return void
      */
-    protected function schedule(Schedule $schedule)
-    {
-        // $schedule->command('inspire')->hourly();
-    }
+  protected function schedule(Schedule $schedule)
+{
+    $schedule->call(function () {
+        $categories = Category::withCount('medicines')->get();
+        $lowStockCategories = $categories->filter(function ($category) {
+            return $category->medicines_count < 3;
+        });
+
+        if ($lowStockCategories->isNotEmpty()) {
+            Mail::to('nuruhussen943@gmail.com')->send(new LowStockAlert($lowStockCategories));
+        }
+    })->daily(); // Adjust frequency as needed
+}
+
 
     /**
      * Register the commands for the application.

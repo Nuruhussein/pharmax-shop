@@ -33,6 +33,8 @@
                     <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">#</th>
                     <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Order Code</th>
                     <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">user</th>
+                     <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Patient</th>
+                    <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Patient's Card Number</th>
                     <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Status</th>
                     <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Total Amount</th>
                     <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Actions</th>
@@ -43,7 +45,17 @@
                     <tr>
                         <td class="px-6 py-4 whitespace-nowrap text-sm font-medium text-gray-900">{{ $order->id }}</td>
                         <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-500">{{ $order->order_code }}</td>
-                        <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-500">{{ $order->user->name }}</td>
+                       <td class="px-6 py-4 whitespace-nowrap text-sm {{ $order->user->role === 'doctor' ? 'text-blue-500' : 'text-gray-500' }}">
+    @if ($order->user->role === 'doctor')
+        <svg class="h-4 w-4 inline mr-1 text-blue-500" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 4.5v15m0 0L7.5 15m4.5 4.5L16.5 15M4.5 12h15"/>
+        </svg>
+    @endif
+    {{ $order->user->name }}
+</td>
+
+                         <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-500">{{ $order->user_name }}</td>
+                        <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-500">{{ $order->card_number}}</td>
                        <td class="px-6 py-4 whitespace-nowrap text-sm font-medium
     {{ $order->status == 'pending' ? 'text-yellow-500' : 
        ($order->status == 'cancelled' ? 'text-red-600' : 
@@ -51,6 +63,7 @@
 ">
     {{ $order->status }}
 </td>
+
 
                         <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-500">${{ $order->total_amount }}</td>
                         <td class="px-6 py-4 whitespace-nowrap text-sm font-medium">

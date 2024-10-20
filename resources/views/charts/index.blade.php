@@ -76,8 +76,8 @@
 
     <!-- Product Sales Bar Chart -->
     <div x-data="app({{ json_encode($chartData) }}, {{ json_encode($labels) }})" x-cloak class="px-4">
-        <div class="max-w-lg mx-auto py-10">
-            <div class="shadow p-6 rounded-lg bg-white">
+        <div class="max-w-lg  mx-auto py-10">
+            <div class="shadow  p-6 rounded-lg bg-white">
                 <div class="md:flex md:justify-between md:items-center">
                     <div>
                         <h2 class="text-xl text-gray-800 font-bold leading-tight">Product Sales</h2>
@@ -93,7 +93,7 @@
                     </div>
                 </div>
 
-                <div class="line my-8 relative">
+                <div class="line my-8 relative  overflow-x-hidden">
                     <!-- Tooltip -->
                     <template x-if="tooltipOpen == true">
                         <div x-ref="tooltipContainer" class="p-0 m-0 z-10 shadow-lg rounded-lg absolute h-auto block"
@@ -115,7 +115,7 @@
                         <template x-for="data in chartData">
 
                             <div class="px-2 w-1/6">
-                                <div :style="`height: ${data / 5}px`" 
+                                <div :style="`height: ${Math.round((data / Math.max(...chartData)) * 200)}px`" 
                                      class="transition ease-in duration-200 bg-blue-600 hover:bg-blue-400 relative"
                                      @mouseenter="showTooltip($event); tooltipOpen = true" 
                                      @mouseleave="hideTooltip($event)"

@@ -5,12 +5,22 @@ namespace App\Http\Controllers;
 
 use App\Models\Category;
 use Illuminate\Http\Request;
+use App\Mail\LowStockAlert;
+use Illuminate\Support\Facades\Mail;
 
 class CategoryController extends Controller
 {
     public function index()
     {
      $categories = Category::withCount('medicines')->get();
+     $lowStockCategories = $categories->filter(function ($category) {
+        return $category->medicines_count < 3; // Check if medicines count is below 3
+    });
+
+    // Send email if there are categories with low stock
+    if ($lowStockCategories->isNotEmpty()) {
+        Mail::to('nuruhussen943@gmail.com')->send(new LowStockAlert($lowStockCategories));
+    }
 
         return view('categories.index', compact('categories'));
     }

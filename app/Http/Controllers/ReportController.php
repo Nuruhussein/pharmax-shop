@@ -10,12 +10,12 @@ class ReportController extends Controller
 {
     public function report($type)
     {
-        // Initialize empty sales collection and title
+       
         $sales = collect();
         $title = "Sales Report";
         $now = Carbon::now();
         
-        // Determine the sales report based on the type
+       
         switch ($type) {
             case 'daily':
                 // Fetch approved sales for today
@@ -26,7 +26,7 @@ class ReportController extends Controller
                 break;
 
             case 'weekly':
-                // Fetch approved sales for the current week
+               
                 $sales = Sale::where('status', 'approved')
                     ->whereBetween('sale_date', [
                         Carbon::now()->startOfWeek(),
@@ -36,7 +36,7 @@ class ReportController extends Controller
                 break;
 
             case 'monthly':
-                // Fetch approved sales for the current month
+             
                 $sales = Sale::where('status', 'approved')
                     ->whereBetween('sale_date', [
                         Carbon::now()->startOfMonth(),
@@ -46,7 +46,7 @@ class ReportController extends Controller
                 break;
 
             case 'yearly':
-                // Fetch approved sales for the current year
+              
                 $sales = Sale::where('status', 'approved')
                     ->whereBetween('sale_date', [
                         Carbon::now()->startOfYear(),

@@ -18,6 +18,22 @@ class StaffController extends Controller
         return view('staff.create');
     }
 
+     public function edit(User $member)
+    {
+        return view('staff.edit', compact('member'));
+    }
+
+    public function update(Request $request, User $member)
+    {
+        $request->validate([
+            'name' => 'required|string|max:255',
+            'email' => 'nullable|email',
+
+        ]);
+
+        $member->update($request->all());
+        return redirect()->route('staff.index')->with('success', 'staff updated successfully.');
+    }
     public function store(Request $request)
     {
         $request->validate([

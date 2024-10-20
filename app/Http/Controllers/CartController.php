@@ -5,10 +5,14 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use App\Models\Medicine; 
  use App\Models\Order;
+  use App\Models\Sale;
+  use App\Models\SaleItem;
+
 use App\Models\OrderItem;
 use Chapa\Chapa\Facades\Chapa as Chapa;
 use Illuminate\Support\Facades\Auth;
-
+ use App\Mail\HelloMail;
+use Illuminate\Support\Facades\Mail;
 
 
 use Illuminate\Support\Facades\DB;
@@ -78,11 +82,10 @@ public function addToCart(Request $request, $id)
 
 
 
-   public function checkout(Request $request)
+public function checkout(Request $request)
 {
-
     $reference = $this->reference;
-    
+
     $cart = session('cart');
     if (!$cart || count($cart) == 0) {
         return redirect()->back()->with('error', 'Your cart is empty.');
@@ -91,9 +94,6 @@ public function addToCart(Request $request, $id)
     DB::beginTransaction();
 
     try {
-        // Generate a unique payment reference
-//    $reference = Chapa::generateTransactionReference();
-
         // Create an order
         $order = Order::create([
             'user_id' => Auth::id(),
@@ -102,6 +102,7 @@ public function addToCart(Request $request, $id)
             'total_amount' => $this->calculateTotal($cart),
         ]);
 
+        $orderedMedicines = [];
         // Create order items
         foreach ($cart as $id => $details) {
             $medicine = Medicine::find($id);
@@ -113,17 +114,17 @@ public function addToCart(Request $request, $id)
             if ($medicine->quantity < $details['quantity']) {
                 return redirect()->back()->with('error', 'Insufficient stock for ' . $medicine->name . '. Only ' . $medicine->quantity . ' left.');
             }
-        
+
             OrderItem::create([
                 'order_id' => $order->id,
                 'medicine_id' => $id,
                 'quantity' => $details['quantity'],
                 'price' => $details['price'],
             ]);
+
+            $orderedMedicines[] = $medicine;
         }
 
-        // Commit the order creation
-        DB::commit();
         // Prepare payment data
         $data = [
             'amount' => $this->calculateTotal($cart),
@@ -143,6 +144,34 @@ public function addToCart(Request $request, $id)
         $payment = Chapa::initializePayment($data);
 
         if ($payment['status'] === 'success') {
+            // Commit the order creation
+            DB::commit();
+
+            // Insert into the sales table after payment success
+            $sale = Sale::create([
+                'order_id' => $order->id,
+                'user_id' => Auth::id(),
+                'total_amount' => $order->total_amount,
+                'sale_date' => now(),
+                'status' => 'pending', // Set this as pending, can be updated later
+            ]);
+
+            // Insert sale items into the sale_items table
+            foreach ($cart as $id => $details) {
+                SaleItem::create([
+                    'sale_id' => $sale->id,
+                    'medicine_id' => $id,
+                    'quantity' => $details['quantity'],
+                    'sale_price' => $details['price'],
+                ]);
+            }
+
+            // Send email to the user with nearest expiration date
+            $nearestMedicine = collect($orderedMedicines)->sortBy('expiry_date')->first();
+            $nearestExpirationDate = $nearestMedicine ? $nearestMedicine->expiry_date : null;
+
+            Mail::to(Auth::user()->email)->send(new HelloMail($nearestExpirationDate)); // Pass the nearest expiration date
+
             return redirect($payment['data']['checkout_url']);
         } else {
             return redirect()->back()->with('error', 'Failed to initialize payment.');
@@ -153,6 +182,7 @@ public function addToCart(Request $request, $id)
         return redirect()->back()->with('error', 'There was an error processing your order: ' . $e->getMessage());
     }
 }
+
 
 public function paymentSuccess($reference)
 {
@@ -181,6 +211,10 @@ public function paymentSuccess($reference)
 
                 // Clear the cart after successful payment and order completion
                 session()->forget('cart');
+
+     
+
+   
 
                 return view('payment-success', ['order' => $order]); // Redirect to success page
 

@@ -2,9 +2,28 @@
     <div class="container mx-auto px-4 py-8">
         <h1 class="text-4xl font-bold mb-6 text-blue-500">Hello Doctor {{ Auth::user()->name }}</h1>
         <h2 class="text-2xl font-semibold mb-8 text-gray-800">Please Place Your Order</h2>
+         <!-- Display session error or success messages -->
+        @if (session('error'))
+            <div class="mb-4 p-4 text-red-700 bg-red-100 border border-red-300 rounded">
+                {{ session('error') }}
+            </div>
+        @endif
+
+        @if (session('success'))
+            <div class="mb-4 p-4 text-green-700 bg-green-100 border border-green-300 rounded">
+                {{ session('success') }}
+            </div>
+        @endif
         <form action="{{ route('orders.store') }}" method="POST" class="bg-white p-8 rounded-lg shadow-lg">
             @csrf
             <div class="space-y-6">
+                   <div class="form-group">
+                    <label for="user_name" class="block text-lg font-semibold text-gray-700 mb-2">User Name</label>
+                    <input type="text" name="user_name" id="user_name" class="block w-full border border-gray-300 rounded-md shadow-sm focus:border-indigo-500 focus:ring-indigo-500 focus:ring-opacity-50" placeholder="Enter User Name" nullable>
+
+                    <label for="card_number" class="block text-lg font-semibold text-gray-700 mb-2 mt-4">Card Number</label>
+                    <input type="text" name="card_number" id="card_number" class="block w-full border border-gray-300 rounded-md shadow-sm focus:border-indigo-500 focus:ring-indigo-500 focus:ring-opacity-50" placeholder="Enter Card Number" nullable>
+                </div>
                 <div class="form-group">
                     <label for="medicines" class="block text-lg font-semibold text-gray-700 mb-2">Medicines</label>
                     <div id="medicines-container" class="space-y-4">

@@ -21,9 +21,9 @@
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
 
 </head>
-<body>
+<body class="max-w-screen-2xl mx-auto">
     @if (!request()->is('payment/success/*'))
-<header class="shadow-md top-0 z-50 fixed w-full mb-16 bg-white" id='nav'>
+<header class="shadow-md top-0 z-50 max-w-screen-2xl fixed w-full mb-16 bg-white" id='nav'>
     <div class="px-4 mx-auto sm:px-6 lg:px-8">
         <div class="flex items-center justify-between h-16 lg:h-20">
             <div class="flex-shrink-0">
@@ -49,6 +49,30 @@
 
             <!-- Desktop Menu -->
             <div class="hidden ml-auto lg:flex lg:items-center lg:justify-center lg:space-x-10">
+          <div class="relative group inline-block">
+    <button class="text-base font-semibold text-black transition-all duration-200 hover:text-opacity-80">
+        Categories
+    </button>
+    <div class="opacity-0 invisible group-hover:opacity-100 group-hover:visible absolute w-72 mt-2 bg-white text-gray-800 border border-gray-300 rounded-lg shadow-lg py-2 z-10 grid grid-cols-2 gap-2">
+        @foreach($categories as $category)
+            <a href="{{ route('ecommerce.category.show', $category->id) }}" class="flex items-center px-4 py-2 hover:bg-gray-100 transition-all duration-200">
+                <div class="w-12 h-12 mr-2 overflow-hidden rounded-full">
+                    @if($category->photo)
+                        <img src="{{ asset('storage/' . $category->photo) }}" alt="{{ $category->name }}" class="object-cover w-full h-full">
+                    @else
+                        <img src="https://dummyimage.com/720x400" alt="default" class="object-cover w-full h-full">
+                    @endif
+                </div>
+                <span>{{ $category->name }}</span>
+            </a>
+        @endforeach
+    </div>
+</div>
+
+
+{{-- <a href="#features" class="text-base font-semibold text-black transition-all duration-200 hover:text-opacity-80">Categories</a> --}}
+
+
                 @if (request()->is('ecommerce'))
                     <a href="#feauters" class="text-base font-semibold text-black transition-all duration-200 hover:text-opacity-80">Features</a>
                 @else

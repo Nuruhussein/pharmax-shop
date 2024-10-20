@@ -1,5 +1,6 @@
 <x-app-layout>
     <div class="container mx-auto px-4 py-4">
+        
            <nav class="flex mb-4  justify-start ml-16 pl-4 mt-4 items-center h-36 text-gray-600 ju  py-2 px-4 rounded-lg shadow-xs dark:bg-gray-800" aria-label="Breadcrumb">
         <ol class="inline-flex items-center space-x-1 md:space-x-3">
             <li class="inline-flex items-center">
@@ -18,6 +19,18 @@
             </li>
         </ol>
     </nav>
+     <!-- Display session error or success messages -->
+        @if (session('error'))
+            <div class="mb-4 p-4 text-red-700 bg-red-100 border border-red-300 rounded">
+                {{ session('error') }}
+            </div>
+        @endif
+
+        @if (session('success'))
+            <div class="mb-4 p-4 text-green-700 bg-green-100 border border-green-300 rounded">
+                {{ session('success') }}
+            </div>
+        @endif
         <div class="flex justify-between items-center mb-6">
             <h1 class="text-3xl font-bold">Your Orders</h1>
             <!-- Button to redirect to the Create Order page -->
@@ -36,6 +49,8 @@
                     <tr>
                         <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">#</th>
                         <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Order Code</th>
+                             <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Patient</th>
+                    <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Patient's Card Number</th>
                         <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Status</th>
                         <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Total Amount</th>
                         <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Actions</th>
@@ -46,6 +61,8 @@
                         <tr>
                             <td class="px-6 py-4 whitespace-nowrap text-sm font-medium text-gray-900">{{ $order->id }}</td>
                             <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-500">{{ $order->order_code }}</td>
+                              <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-500">{{ $order->user_name }}</td>
+                        <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-500">{{ $order->card_number}}</td>
                             <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-500">{{ $order->status }}</td>
                             <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-500">${{ $order->total_amount }}</td>
                             <td class="px-6 py-4 whitespace-nowrap text-sm font-medium">

@@ -66,7 +66,7 @@ public function expiringSoon(Request $request)
         }
     
         // Get the filtered or unfiltered list of medicines
-        $medicines = $medicinesQuery->latest()->paginate(6);
+        $medicines = $medicinesQuery->latest()->paginate(10);
     
         // Return the results to the view
         return view('medicines.index', compact('medicines', 'categories'));

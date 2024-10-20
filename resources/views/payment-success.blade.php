@@ -3,7 +3,7 @@
 @section('content')
 <div class="flex flex-col h-screen w-full items-center justify-center bg-gray-600">
     <div class="w-80 rounded bg-gray-50 px-6 pt-8 shadow-lg">
-        <img src="https://upload.wikimedia.org/wikipedia/commons/d/d5/Tailwind_CSS_Logo.svg" alt="chippz" class="mx-auto w-16 py-4" />
+        <img src="https://th.bing.com/th/id/R.47b05b1a9609e27246898478bc3dc5ad?rik=EYTJ7VM4PKfc4Q&pid=ImgRaw&r=0" alt="chippz" class="mx-auto w-16 py-4" />
         <div class="flex flex-col justify-center items-center gap-2">
             <h4 class="font-semibold">Business Name</h4>
             <p class="text-xs">Some address goes here</p>

@@ -127,8 +127,11 @@ Route::middleware(['auth', 'role:admin,'])->group(function () {
     Route::delete('/categories/{category}', [CategoryController::class, 'destroy'])->name('categories.destroy');
     
     // Staff Routes
+     // Staff Routes
     Route::get('/staff', [StaffController::class, 'index'])->name('staff.index');
     Route::get('/staff/create', [StaffController::class, 'create'])->name('staff.create');
+    Route::get('/staff/{member}/edit', [StaffController::class, 'edit'])->name('staff.edit');
+    Route::put('/staff/{member}', [StaffController::class, 'update'])->name('staff.update');
     Route::post('/staff', [StaffController::class, 'store'])->name('staff.store');
     Route::delete('/staff/{staff}', [StaffController::class, 'destroy'])->name('staff.destroy');
    
