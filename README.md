@@ -62,3 +62,5 @@ Start the Laravel development server:
 php artisan serve
 
 The application will be accessible at http://localhost:8000.
+
+NB: the above feauters are in the pharmaco branch
