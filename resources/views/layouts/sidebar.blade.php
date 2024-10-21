@@ -198,6 +198,12 @@
     </ul>
 </li>
 
+<li>
+    <a href="{{ route('news.create') }}" 
+       class="flex items-center py-3 px-6 text-lg {{ Request::routeIs('news.create') ? 'text-white bg-gray-700' : 'text-gray-300' }} hover:text-white hover:bg-gray-700 rounded-lg transition duration-150 ease-in-out">
+        <i class="fas fa-newspaper mr-3"></i> Post News
+    </a>
+</li>
               <li>
                 <a href="{{ route('charts.index') }}" 
                    class="flex items-center py-3 px-6 text-lg {{ Request::routeIs('charts.index') ? 'text-white bg-gray-700' : 'text-gray-300' }} hover:text-white hover:bg-gray-700 rounded-lg transition duration-150 ease-in-out">

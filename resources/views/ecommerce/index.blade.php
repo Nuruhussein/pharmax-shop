@@ -77,6 +77,19 @@
 </div>
 
 
+<div class="news-section" style="text-align: center; padding-left: 50px; background-color: #f9f9f9;">
+    <h2 style="font-size: 2rem; margin-bottom: 20px;">What's New?</h2>
+    <div class="news-scroll-container" style="position: relative; overflow: hidden; white-space: nowrap;">
+        @foreach ($news as $newsItem)
+            <div class="news-item" style="display: inline-block; margin-right: 20px; margin-left: 20px; opacity: 0; transition: opacity 1s ease;">
+                <img src="{{ asset('storage/' . $newsItem->photo) }}" alt="{{ $newsItem->title }}" 
+                    style="width: 800px; max-width: 600px; height: 500px; border-radius: 10px; box-shadow: 0px 4px 6px rgba(0,0,0,0.1);">
+                <h3 style="font-size: 1.5rem; margin-top: 10px;">{{ $newsItem->title }}</h3>
+                <p style="font-size: 1rem; color: #666;">{{ Str::limit($newsItem->description, 100) }}</p>
+            </div>
+        @endforeach
+    </div>
+</div>
 
 {{-- categories --}}
 
@@ -355,7 +368,56 @@
         });
     });
 </script>
+<script>
+document.addEventListener("DOMContentLoaded", function() {
+    let scrollContainer = document.querySelector('.news-scroll-container');
+    let newsItems = document.querySelectorAll('.news-item');
+    let currentIndex = 0;
 
+    // Set the initial visibility for the first two items
+    newsItems[currentIndex].style.opacity = '1';
+    if (newsItems[currentIndex + 1]) {
+        newsItems[currentIndex + 1].style.opacity = '1'; // Make the second item visible
+    }
+
+    function scrollNextPair() {
+        // Hide the current two items
+        newsItems[currentIndex].style.opacity = '0';
+        if (newsItems[currentIndex + 1]) {
+            newsItems[currentIndex + 1].style.opacity = '0';
+        }
+
+        // Move to the next pair of items (or loop back to the start if we reach the end)
+        currentIndex = (currentIndex + 2) % newsItems.length;
+
+        // Calculate the new scroll position
+        let newScrollPosition = newsItems[currentIndex].offsetLeft;
+
+        // Scroll to the new position to show the next pair
+        scrollContainer.scrollTo({
+            left: newScrollPosition,
+            behavior: 'smooth'
+        });
+
+        // Show the next pair of items
+        setTimeout(function() {
+            newsItems[currentIndex].style.opacity = '1';
+            if (newsItems[currentIndex + 1]) {
+                newsItems[currentIndex + 1].style.opacity = '1'; // Show the second item in the pair
+            }
+        }, 500); // Small delay to sync with scrolling
+
+        // Call this function again after the pair has been visible for 3 seconds
+        setTimeout(scrollNextPair, 3000);
+    }
+
+    // Start the scroll loop after the first pair is visible for 3 seconds
+    setTimeout(scrollNextPair, 3000);
+});
+
+
+
+</script>
 @include('ecommerce.components.feauters')
 
   {{-- footer --}}

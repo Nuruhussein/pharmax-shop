@@ -4,49 +4,28 @@ namespace App\Http\Controllers;
 use App\Models\Medicine;
 use App\Models\Category;
 use Illuminate\Http\Request;
+use App\Models\News;
 
 
 class EcommerceController extends Controller
 {
-    public function index(Request $request)
+   public function index(Request $request)
     {
-        // Fetch the latest 3 products
-        // $products = Product::latest()->take(3)->get();
-          // $products = Product::all();
-        // Fetch the latest 3 categories
-        // $categories = Category::latest()->take(3)->get();
-        //  $categories = Category::latest()->paginate(3);
-        // $allCategories =Category::all();
-           $medicines = Medicine::where('expiry_date', '>', now())->paginate(6);
-     
- $categories = Category::with(['medicines' => function($query) {
-        $query->where('expiry_date', '>', now())->take(4); // Limit to 4 medicines per category
-    }])->paginate(3);
-    // if ($request->query('category')) {
-    //     $categoryId = $request->query('category');
-    //     $query->where('category_id', $categoryId);
-    // }
+        $medicines = Medicine::where('expiry_date', '>', now())->paginate(6);
+        $categories = Category::with(['medicines' => function($query) {
+            $query->where('expiry_date', '>', now())->take(4); 
+        }])->latest()->paginate(3);
 
-    // if ($request->query('sort')) {
-    //     if ($request->query('sort') == 'ascPrice') {
-    //         $query->orderBy('price', 'asc');
-    //     } elseif ($request->query('sort') == 'descPrice') {
-    //         $query->orderBy('price', 'desc');
-    //     }
-    // }
+        $news = News::latest()->take(5)->get(); // Fetch latest 5 news
 
-    // $medicines = $query->paginate(6); // Paginate results
-
-        //   if ($request->ajax()) {
-        //     return view('ecommerce.partials.medicines', compact('medicines'))->render();
-        // }
-        // Return the data to the view
-
-
-
-        return view('ecommerce.index', compact('medicines', 'categories'));
+        return view('ecommerce.index', compact('medicines', 'categories', 'news'));
     }
 
+    public function newsIndex()
+    {
+        $news = News::all();
+        return view('ecommerce.news.index', compact('news'));
+    }
  public function show(Category $category)
     {
         return view('ecommerce.category.show', compact('category'));

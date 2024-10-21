@@ -36,7 +36,7 @@ Route::get('/', function () {
 });
 
      
-            ///ecommerce 
+    Route::get('/ecommerce/news', [EcommerceController::class, 'newsIndex'])->name('ecommerce.news.index');        ///ecommerce 
  Route::get('/ecommerce', [EcommerceController::class, 'index'])->name('ecommerce.index');
   Route::get('/ecommerce/shop', [EcommerceController::class, 'shop'])->name('ecommerce.shop');
   Route::get('/ecommerce/aboutus', [EcommerceController::class, 'about'])->name('ecommerce.about');
@@ -163,7 +163,8 @@ Route::middleware(['role:staff,admin'])->group(function () {
     
 
     // // messages
-
+Route::get('/admin/news/create', [NewsController::class, 'create'])->name('news.create');
+Route::post('/admin/news/store', [NewsController::class, 'store'])->name('news.store');
 
 
       Route::get('/medicines/expiring-soon', [MedicineController::class, 'expiringSoon'])->name('medicines.expiring_soon');
