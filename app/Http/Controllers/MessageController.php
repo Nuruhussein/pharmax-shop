@@ -15,12 +15,22 @@ class MessageController extends Controller
         $request->validate([
             'receiver_id' => 'required|exists:users,id',
             'message' => 'required|string|max:255',
+            'image' => 'nullable|image|max:2048', // Validate image
         ]);
+
+
+         $imagePath = null;
+    if ($request->hasFile('image')) {
+        $imagePath = $request->file('image')->store('images', 'public'); // Store image
+    }
+
 
         Message::create([
             'sender_id' => auth()->id(),
             'receiver_id' => $request->receiver_id,
             'message' => $request->message,
+             'image' => $imagePath, // Store image path
+            
         ]);
 
         return back()->with('success', 'Message sent!');

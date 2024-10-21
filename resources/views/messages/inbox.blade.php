@@ -154,6 +154,7 @@
                             @csrf
                             <input type="hidden" name="receiver_id" value="{{ $selectedUserId }}">
                             <textarea name="message" id="message" rows="4" class="w-full border rounded-lg p-3 focus:ring-blue-500 focus:border-blue-500" required placeholder="Type your message..."></textarea>
+                             <input type="file" name="image" accept="image/*" class="border rounded-lg p-2 w-full">
                             <button type="submit" class="w-60 flex justify-center bg-blue-500 text-2xl text-white py-2 shadow-2xl rounded-lg hover:bg-gray-500">Send</button>
                         </form>
                     </div>

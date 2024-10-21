@@ -30,10 +30,10 @@
                 </div>
 
                 <!-- Order ID Input -->
-                <div class="mb-4">
+                {{-- <div class="mb-4">
                     <label for="order_id" class="block text-lg font-semibold text-gray-700 mb-2">Order ID (Optional)</label>
                     <input type="text" name="order_id" id="order_id" class="form-input block w-full border-gray-300 rounded-md shadow-sm focus:border-indigo-500 focus:ring focus:ring-indigo-500 focus:ring-opacity-50">
-                </div>
+                </div> --}}
 
                 <!-- Add More Items Button and JavaScript Section -->
                 <div id="items-container" class="space-y-4">
@@ -48,16 +48,25 @@
                     </div>
 
                     <div class="mb-4">
-                        <div class="flex items-center space-x-4 border border-gray-300 rounded-md p-4 shadow-sm bg-gray-50">
-                            <select name="items[0][medicine_id]" class="form-select select2 block w-1/3 border-gray-300 rounded-md shadow-sm focus:border-indigo-500 focus:ring focus:ring-indigo-500 focus:ring-opacity-50">
-                                <option value="">Select Medicine</option>
-                                @foreach ($medicines as $medicine)
-                                    <option value="{{ $medicine->id }}">{{ $medicine->name }} - ${{ $medicine->price }}</option>
-                                @endforeach
-                            </select>
-                            <input type="number" name="items[0][quantity]" class="form-input block w-24 border-gray-300 rounded-md shadow-sm focus:border-indigo-500 focus:ring focus:ring-indigo-500 focus:ring-opacity-50" placeholder="Quantity" min="1" required>
-                            <input type="number" name="items[0][sale_price]" class="form-input block w-24 border-gray-300 rounded-md shadow-sm focus:border-indigo-500 focus:ring focus:ring-indigo-500 focus:ring-opacity-50" placeholder="Sale Price" step="0.01" required>
-                        </div>
+                       <div class="flex items-center space-x-4 border border-gray-300 rounded-md p-4 shadow-sm bg-gray-50">
+    <select name="items[0][medicine_id]" class="form-select select2 block w-1/3 border-gray-300 rounded-md shadow-sm focus:border-indigo-500 focus:ring focus:ring-indigo-500 focus:ring-opacity-50" onchange="updatePrice(this)">
+        <option value="">Select Medicine</option>
+        @foreach ($medicines as $medicine)
+            <option value="{{ $medicine->id }}" data-price="{{ $medicine->price }}">{{ $medicine->name }} - ${{ $medicine->price }}</option>
+        @endforeach
+    </select>
+    <input type="number" name="items[0][quantity]" class="form-input block w-24 border-gray-300 rounded-md shadow-sm focus:border-indigo-500 focus:ring focus:ring-indigo-500 focus:ring-opacity-50" placeholder="Quantity" min="1" required>
+    <input type="number" name="items[0][sale_price]" class="form-input block w-24 border-gray-300 rounded-md shadow-sm focus:border-indigo-500 focus:ring focus:ring-indigo-500 focus:ring-opacity-50" placeholder="Sale Price" step="0.01" id="sale_price" required>
+</div>
+
+<script>
+    function updatePrice(selectElement) {
+        const selectedOption = selectElement.options[selectElement.selectedIndex];
+        const price = selectedOption.getAttribute('data-price');
+        document.getElementById('sale_price').value = price ? price : '';
+    }
+</script>
+
                     </div>
                 </div>
 

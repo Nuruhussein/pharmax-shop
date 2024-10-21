@@ -57,7 +57,7 @@ class PaymentController extends Controller
         $order = Order::where('order_code', $orderCode)->firstOrFail();
 
         // Generate the receipt PDF (you can use a package like Dompdf or Snappy)
-        $pdf = PDF::loadView('ecommerce.receipts.order', compact('order'));
+        $pdf = PDF::loadView('receipt', compact('order'));
 
         // Save the PDF to storage (optional)
         $pdfPath = 'receipts/' . $orderCode . '.pdf';

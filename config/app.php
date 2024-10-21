@@ -15,7 +15,7 @@ return [
     |
     */
 
-    'name' => env('APP_NAME', 'Laravel'),
+    'name' => env('APP_NAME', 'pharmax'),
 
     /*
     |--------------------------------------------------------------------------
@@ -211,7 +211,9 @@ return [
 
     'aliases' => Facade::defaultAliases()->merge([
         // 'ExampleClass' => App\Example\ExampleClass::class,
-       'PDF' => Barryvdh\DomPDF\Facade\Pdf::class,
+    //    'PDF' => Barryvdh\DomPDF\Facade\Pdf::class,
+       'Pdf' => Barryvdh\DomPDF\Facade\Pdf::class,
+
     ])->toArray(),
 
 ];
