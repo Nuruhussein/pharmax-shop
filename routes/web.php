@@ -134,6 +134,7 @@ Route::middleware(['auth', 'role:admin,'])->group(function () {
     Route::put('/staff/{member}', [StaffController::class, 'update'])->name('staff.update');
     Route::post('/staff', [StaffController::class, 'store'])->name('staff.store');
     Route::delete('/staff/{staff}', [StaffController::class, 'destroy'])->name('staff.destroy');
+    // Route::patch('staff/{user}/toggle-role', [StaffController::class, 'toggleRole'])->name('staff.toggleRole');
    
     //doctors route
  
@@ -179,6 +180,7 @@ Route::get('/reports/{type}', [ReportController::class, 'report'])->name('report
     Route::put('/staff/orders/{order_code}', [StaffOrderController::class, 'update'])->name('staff.orders.update');
     Route::get('/staff/orders/{order_code}', [StaffOrderController::class, 'show'])->name('staff.orders.show');
      Route::delete('/staff/orders/{order_code}', [StaffOrderController::class, 'destroy'])->name('staff.orders.destroy');
+     
     // Medicine Routes
     Route::get('/medicines', [MedicineController::class, 'index'])->name('medicines.index');
     Route::get('/medicines/{medicine}', [MedicineController::class, 'show'])->name('medicines.show');

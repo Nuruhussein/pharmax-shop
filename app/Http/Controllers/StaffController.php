@@ -57,4 +57,19 @@ class StaffController extends Controller
         $staff->delete();
         return redirect()->route('staff.index')->with('success', 'Staff member deleted successfully.');
     }
+    public function toggleRole(User $user)
+{
+    // Toggle between 'admin' and 'staff' role
+    if ($user->role === 'admin') {
+        $user->role = 'staff'; // Revoke admin role
+    } else {
+        $user->role = 'admin'; // Assign admin role
+    }
+
+    $user->save();
+
+    return redirect()->route('staff.index')->with('success', 'Role updated successfully.');
+}
+
+
 }
