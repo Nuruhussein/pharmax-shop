@@ -111,6 +111,10 @@
                                         @if ($message->sender_id == auth()->id())
                                             <div class="bg-blue-50 shadow-lg text-xl text-gray-800 p-3 rounded-lg max-w-xs text-right relative message-container">
                                                 <p>{{ $message->message }}</p>
+                                                @if ($message->image)
+                        <img src="{{ asset('storage/' . $message->image) }}" alt="Image" class="mt-2 max-w-xs rounded">
+                    @endif
+                                {{-- <img src="{{ asset('storage/' . $medicine->image) }}" alt="{{ $medicine->name }}" class="w-8 h-8 rounded-full mr-2 object-cover"> <!-- Adjusted margin-right --> --}}
 
                                                 <!-- Hidden Delete and Edit Buttons -->
                                                 <div class="hidden buttons absolute top-0 right-0 transform translate-x-3 -translate-y-3  space-x-2">
@@ -138,7 +142,10 @@
                                         @else
                                             <!-- Received Message -->
                                             <div class="bg-gray-50 shadow-lg text-xl text-black p-3 rounded-lg max-w-xs">
-                                                <p>{{ $message->message }}</p>
+                                                @if ($message->image)
+                        <img src="{{ asset('storage/' . $message->image) }}" alt="Image" class="mt-2 max-w-xs rounded">
+                    @endif
+                     <p>{{ $message->message }}</p>
                                             </div>
                                         @endif
                                     </li>
@@ -150,7 +157,7 @@
                     <!-- Message Input -->
                     <div class="message-input border-t pt-4">
                         <h3 class="text-lg font-semibold mb-3">Send a Message</h3>
-                        <form action="{{ route('messages.send') }}" method="POST" class="space-y-4">
+                        <form action="{{ route('messages.send') }}" method="POST" enctype="multipart/form-data" class="space-y-4" >
                             @csrf
                             <input type="hidden" name="receiver_id" value="{{ $selectedUserId }}">
                             <textarea name="message" id="message" rows="4" class="w-full border rounded-lg p-3 focus:ring-blue-500 focus:border-blue-500" required placeholder="Type your message..."></textarea>
